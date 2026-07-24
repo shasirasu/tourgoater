@@ -15,7 +15,8 @@ const schema = `
     name TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
     password_hash TEXT NOT NULL,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    role TEXT NOT NULL DEFAULT 'user' CHECK (role IN ('user', 'admin'))
   );
 
   CREATE TABLE IF NOT EXISTS saved_plans (
@@ -37,6 +38,21 @@ const schema = `
   );
 
   CREATE INDEX IF NOT EXISTS saved_plans_user_id_idx ON saved_plans(user_id);
+
+  CREATE TABLE IF NOT EXISTS catalog_destinations (
+    id TEXT PRIMARY KEY, name TEXT UNIQUE NOT NULL, capital TEXT NOT NULL,
+    best_for TEXT, about TEXT, climate TEXT, history TEXT, best_time TEXT, food TEXT,
+    daily_expenses INTEGER NOT NULL DEFAULT 1800, created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+  );
+  CREATE TABLE IF NOT EXISTS catalog_places (
+    id BIGSERIAL PRIMARY KEY, destination_id TEXT NOT NULL REFERENCES catalog_destinations(id) ON DELETE CASCADE,
+    name TEXT NOT NULL, city TEXT, info TEXT, map_url TEXT, UNIQUE(destination_id, name)
+  );
+  CREATE TABLE IF NOT EXISTS catalog_hotels (
+    id BIGSERIAL PRIMARY KEY, destination_id TEXT NOT NULL REFERENCES catalog_destinations(id) ON DELETE CASCADE,
+    name TEXT NOT NULL, type TEXT NOT NULL DEFAULT 'Hotel', area TEXT, price_per_night INTEGER NOT NULL,
+    rooms_available INTEGER NOT NULL DEFAULT 0, rating NUMERIC(2,1), UNIQUE(destination_id, name)
+  );
 `;
 
 function createSqlitePool() {
@@ -52,7 +68,12 @@ function createSqlitePool() {
     CREATE TABLE IF NOT EXISTS saved_plans (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE, destination_key TEXT NOT NULL, destination_name TEXT NOT NULL, place_name TEXT NOT NULL, place_location TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, UNIQUE (user_id, destination_key, place_name));
     CREATE TABLE IF NOT EXISTS user_preferences (user_id INTEGER PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE, trip_budget INTEGER NOT NULL DEFAULT 0 CHECK (trip_budget >= 0), trip_days INTEGER NOT NULL DEFAULT 3 CHECK (trip_days BETWEEN 1 AND 30), updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
     CREATE INDEX IF NOT EXISTS saved_plans_user_id_idx ON saved_plans(user_id);
+    CREATE TABLE IF NOT EXISTS catalog_destinations (id TEXT PRIMARY KEY, name TEXT UNIQUE NOT NULL, capital TEXT NOT NULL, best_for TEXT, about TEXT, climate TEXT, history TEXT, best_time TEXT, food TEXT, daily_expenses INTEGER NOT NULL DEFAULT 1800, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
+    CREATE TABLE IF NOT EXISTS catalog_places (id INTEGER PRIMARY KEY AUTOINCREMENT, destination_id TEXT NOT NULL REFERENCES catalog_destinations(id) ON DELETE CASCADE, name TEXT NOT NULL, city TEXT, info TEXT, map_url TEXT, UNIQUE(destination_id, name));
+    CREATE TABLE IF NOT EXISTS catalog_hotels (id INTEGER PRIMARY KEY AUTOINCREMENT, destination_id TEXT NOT NULL REFERENCES catalog_destinations(id) ON DELETE CASCADE, name TEXT NOT NULL, type TEXT NOT NULL DEFAULT 'Hotel', area TEXT, price_per_night INTEGER NOT NULL, rooms_available INTEGER NOT NULL DEFAULT 0, rating NUMERIC, UNIQUE(destination_id, name));
   `);
+  const userColumns = database.prepare("PRAGMA table_info(users)").all();
+  if (!userColumns.some((column) => column.name === "role")) database.exec("ALTER TABLE users ADD COLUMN role TEXT NOT NULL DEFAULT 'user'");
 
   console.log(`SQLite database ready at ${databasePath}`);
   return {
@@ -72,6 +93,7 @@ function createSqlitePool() {
 async function createPostgresPool() {
   const postgresPool = new Pool({ connectionString: databaseUrl });
   await postgresPool.query(schema);
+  await postgresPool.query("ALTER TABLE users ADD COLUMN IF NOT EXISTS role TEXT NOT NULL DEFAULT 'user'");
   console.log("PostgreSQL database connected and ready");
   return postgresPool;
 }

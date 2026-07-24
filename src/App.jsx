@@ -12,6 +12,7 @@ import BrowsePage from "./pages/BrowsePage.jsx";
 import DestinationPage from "./pages/DestinationPage.jsx";
 import SavedPlansPage from "./pages/SavedPlansPage.jsx";
 import CinematicMoments from "./components/CinematicMoments.jsx";
+import AdminPage from "./pages/AdminPage.jsx";
 import { clearAuthToken, getAuthToken, saveAuthToken } from "./data/authStorage.js";
 
 function HomePage({ user, onLogout }) {
@@ -170,6 +171,7 @@ export default function App() {
         <Route path="/browse" element={<BrowsePage user={user} onLogout={handleLogout} />} />
         <Route path="/destination/:id" element={<DestinationPage user={user} onLogout={handleLogout} />} />
         <Route path="/saved" element={user ? <SavedPlansPage user={user} onLogout={handleLogout} /> : <Navigate to="/login" />} />
+        <Route path="/admin" element={user?.role === "admin" ? <AdminPage user={user} onLogout={handleLogout} /> : <Navigate to="/" />} />
         <Route
           path="/signup"
           element={user ? <Navigate to="/" /> : <AuthForm mode="signup" onAuth={handleAuth} />}

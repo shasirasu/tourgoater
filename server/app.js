@@ -4,6 +4,7 @@ import express from "express";
 import authRoutes from "./routes/auth.js";
 import planRoutes from "./routes/plans.js";
 import preferenceRoutes from "./routes/preferences.js";
+import adminRoutes from "./routes/admin.js";
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.get("/api/health", (_request, response) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/plans", planRoutes);
 app.use("/api/preferences", preferenceRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.use((error, _request, response, _next) => {
   console.error(error);

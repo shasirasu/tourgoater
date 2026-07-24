@@ -13,6 +13,10 @@ function createToken(user) {
   });
 }
 
+function configuredRole(email) {
+  return process.env.ADMIN_EMAIL?.trim().toLowerCase() === email ? "admin" : "user";
+}
+
 router.post("/signup", async (request, response) => {
   const name = request.body.name?.trim();
   const email = request.body.email?.trim().toLowerCase();
@@ -33,10 +37,10 @@ router.post("/signup", async (request, response) => {
 
     const passwordHash = await bcrypt.hash(password, 12);
     const result = await pool.query(
-      `INSERT INTO users (name, email, password_hash)
-       VALUES ($1, $2, $3)
-       RETURNING id, name, email`,
-      [name, email, passwordHash],
+      `INSERT INTO users (name, email, password_hash, role)
+       VALUES ($1, $2, $3, $4)
+       RETURNING id, name, email, role`,
+      [name, email, passwordHash, configuredRole(email)],
     );
     const user = result.rows[0];
     response.status(201).json({ user, token: createToken(user) });
@@ -56,7 +60,7 @@ router.post("/login", async (request, response) => {
 
   try {
     const result = await pool.query(
-      "SELECT id, name, email, password_hash FROM users WHERE email = $1",
+      "SELECT id, name, email, password_hash, role FROM users WHERE email = $1",
       [email],
     );
     const user = result.rows[0];
@@ -66,8 +70,12 @@ router.post("/login", async (request, response) => {
       return response.status(401).json({ message: "Email or password is incorrect" });
     }
 
+    if (configuredRole(email) === "admin" && user.role !== "admin") {
+      await pool.query("UPDATE users SET role = 'admin' WHERE id = $1", [user.id]);
+      user.role = "admin";
+    }
     response.json({
-      user: { id: user.id, name: user.name, email: user.email },
+      user: { id: user.id, name: user.name, email: user.email, role: user.role },
       token: createToken(user),
     });
   } catch (error) {
@@ -79,7 +87,7 @@ router.post("/login", async (request, response) => {
 router.get("/me", requireAuth, async (request, response) => {
   try {
     const result = await pool.query(
-      "SELECT id, name, email FROM users WHERE id = $1",
+      "SELECT id, name, email, role FROM users WHERE id = $1",
       [request.user.id],
     );
     if (!result.rows[0]) return response.status(404).json({ message: "User not found" });

@@ -13,6 +13,7 @@ export default function SiteHeader({ user, onLogout }) {
             {user ? (
               <>
                 <Link to="/saved">Saved plan</Link>
+                {user.role === "admin" && <Link to="/admin">Admin</Link>}
                 <button className="nav-text-button" onClick={onLogout}>Log out</button>
               </>
             ) : (
