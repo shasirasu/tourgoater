@@ -1111,24 +1111,28 @@
       "tourist": [
         {
           "images": [
+            "/images/listings/goa/basilica.jpg",
             "/images/listings/posters/place-goa-basilica-of-bom-jesus.jpg",
             "/images/travel/state-goa.jpg"
           ]
         },
         {
           "images": [
+            "/images/listings/goa/fontainhas.jpg",
             "/images/listings/posters/place-goa-fontainhas.jpg",
             "/images/travel/state-goa.jpg"
           ]
         },
         {
           "images": [
+            "/images/listings/goa/palolem.jpg",
             "/images/listings/posters/place-goa-palolem-beach.jpg",
             "/images/travel/state-goa.jpg"
           ]
         },
         {
           "images": [
+            "/images/listings/goa/dudhsagar.jpg",
             "/images/listings/posters/place-goa-dudhsagar-falls.jpg",
             "/images/travel/state-goa.jpg"
           ]
