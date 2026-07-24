@@ -4,6 +4,7 @@ import DestinationCard from "../components/DestinationCard.jsx";
 import SiteHeader from "../components/SiteHeader.jsx";
 import SiteFooter from "../components/SiteFooter.jsx";
 import { buildTripEstimate } from "../data/tripPlanning.js";
+import { getAuthToken } from "../data/authStorage.js";
 
 export default function BrowsePage({ user, onLogout }) {
   const [budget, setBudget] = useState(() => localStorage.getItem("tripBudget") ?? "");
@@ -18,7 +19,7 @@ export default function BrowsePage({ user, onLogout }) {
 
   useEffect(() => {
     if (!user) return;
-    const token = localStorage.getItem("token");
+    const token = getAuthToken();
     fetch("/api/preferences", { headers: { Authorization: `Bearer ${token}` } })
       .then((response) => response.ok ? response.json() : Promise.reject())
       .then(({ preferences }) => {
@@ -57,7 +58,7 @@ export default function BrowsePage({ user, onLogout }) {
     localStorage.setItem("tripBudget", normalizedBudget);
     localStorage.setItem("tripDays", normalizedDays);
     if (user) {
-      const token = localStorage.getItem("token");
+      const token = getAuthToken();
       await fetch("/api/preferences", {
         method: "PUT",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },

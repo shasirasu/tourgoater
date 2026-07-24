@@ -12,6 +12,7 @@ import BrowsePage from "./pages/BrowsePage.jsx";
 import DestinationPage from "./pages/DestinationPage.jsx";
 import SavedPlansPage from "./pages/SavedPlansPage.jsx";
 import CinematicMoments from "./components/CinematicMoments.jsx";
+import { clearAuthToken, getAuthToken, saveAuthToken } from "./data/authStorage.js";
 
 function HomePage({ user, onLogout }) {
   const featuredDestinations = travelData.state.slice(1, 4);
@@ -130,7 +131,7 @@ export default function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = getAuthToken();
     if (!token) {
       setLoading(false);
       return;
@@ -144,18 +145,18 @@ export default function App() {
         return response.json();
       })
       .then((data) => setUser(data.user))
-      .catch(() => localStorage.removeItem("token"))
+      .catch(() => clearAuthToken())
       .finally(() => setLoading(false));
   }, []);
 
-  function handleAuth(data) {
-    localStorage.setItem("token", data.token);
+  function handleAuth(data, remember = true) {
+    saveAuthToken(data.token, remember);
     setUser(data.user);
     navigate("/");
   }
 
   function handleLogout() {
-    localStorage.removeItem("token");
+    clearAuthToken();
     setUser(null);
   }
 

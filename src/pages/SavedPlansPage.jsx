@@ -4,6 +4,7 @@ import travelData from "../data/travelData.js";
 import SafeImage from "../components/SafeImage.jsx";
 import SiteFooter from "../components/SiteFooter.jsx";
 import SiteHeader from "../components/SiteHeader.jsx";
+import { getAuthToken } from "../data/authStorage.js";
 
 export default function SavedPlansPage({ user, onLogout }) {
   const [plans, setPlans] = useState([]);
@@ -12,7 +13,7 @@ export default function SavedPlansPage({ user, onLogout }) {
   const [removingId, setRemovingId] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = getAuthToken();
     fetch("/api/plans", { headers: { Authorization: `Bearer ${token}` } })
       .then(async (response) => {
         const data = await response.json();
@@ -40,7 +41,7 @@ export default function SavedPlansPage({ user, onLogout }) {
     setRemovingId(plan.id);
     setError("");
     try {
-      const token = localStorage.getItem("token");
+      const token = getAuthToken();
       const response = await fetch(`/api/plans/${plan.id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },

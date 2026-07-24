@@ -6,6 +6,7 @@ import SafeImage from "../components/SafeImage.jsx";
 import SiteFooter from "../components/SiteFooter.jsx";
 import SiteHeader from "../components/SiteHeader.jsx";
 import { buildTripEstimate, getDestinationHotels } from "../data/tripPlanning.js";
+import { getAuthToken } from "../data/authStorage.js";
 
 const currencyFormatter = new Intl.NumberFormat("en-IN", {
   style: "currency",
@@ -26,7 +27,7 @@ export default function DestinationPage({ user, onLogout }) {
       return;
     }
 
-    const token = localStorage.getItem("token");
+    const token = getAuthToken();
     fetch(`/api/plans?destinationKey=${encodeURIComponent(destination.id)}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -39,7 +40,7 @@ export default function DestinationPage({ user, onLogout }) {
   }, [destination, user]);
 
   async function handleSavePlace(place) {
-    const token = localStorage.getItem("token");
+    const token = getAuthToken();
     setSavingPlaceName(place.name);
     setSaveError(null);
 
