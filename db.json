@@ -1035,6 +1035,820 @@
         }
       ],
       "food": "Gujarati cuisines vary in taste and flavour as one moves from region to region. The most distinct of them are the ones from Surat, Kathiawad, Kachchh and North Gujarat. The food is mostly vegetarian, and you can sense the hints of sweetness and spice distinctly in the dishes. As per tradition, the food here is served in metal platters or commonly known to people as a 'thali'. A typical Gujarati meal would include Dal, Kadhi, Salad, Puri, Chappatis, Pickles, Papad and some trendy sweets. Dhokla, Thepala, Fafda, Kachori, Khandvi, Handwoh, Ganthia, Oondhiya, Debra, Surat Paun are just some of the many Gujarati delicacies that define the food here. Other than these Basundi, Puran Poli, Shrikhand, Ghevar, Malpua are the traditional sweet dishes that you cannot miss and are famous all over the country."
+    },
+    {
+      "id": "9",
+      "name": "Tamil Nadu",
+      "capital": "Chennai",
+      "bestFor": "Temple pilgrimage",
+      "planType": "Devotional circuit",
+      "about": "Tamil Nadu offers one of India's richest temple journeys, linking living centres of Shiva, Shakti, Vishnu and Murugan worship with monumental Dravidian architecture. This devotional circuit follows a practical north-to-south route from Chennai to Kanniyakumari.",
+      "climate": "Tamil Nadu is generally warm. Temple visits are most comfortable in the early morning and evening; carry water, dress modestly and plan extra time during festivals and auspicious days.",
+      "history": "The state's sacred landscape was shaped over centuries by Pallava, Chola, Pandya and Nayak patronage. Its temples remain active places of worship as well as major works of architecture, sculpture, music and ritual tradition.",
+      "time": "November to February usually offers the most comfortable weather for a multi-city temple circuit. Check official temple notices before travel because darshan hours and festival access can change.",
+      "food": "Temple towns offer vegetarian meals, tiffin, filter coffee and regional dishes. Respect local fasting customs and allow time for prasadam where available.",
+      "tourist": [
+        {
+          "name": "Kapaleeshwarar Temple",
+          "city": "Chennai",
+          "info": "Begin in Mylapore at this landmark Shiva temple, known for its colourful Dravidian gopuram and active devotional atmosphere.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Kapaleeshwarar%20Temple%2C%20Chennai%2C%20Tamil%20Nadu"
+        },
+        {
+          "name": "Kamakshi Amman Temple",
+          "city": "Kanchipuram",
+          "info": "Visit one of Kanchipuram's major sacred sites, dedicated to Goddess Kamakshi and central to the city's Shakti tradition.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Kamakshi%20Amman%20Temple%2C%20Kanchipuram%2C%20Tamil%20Nadu"
+        },
+        {
+          "name": "Ekambareswarar Temple",
+          "city": "Kanchipuram",
+          "info": "Continue to this expansive Shiva temple, traditionally associated with the earth element among the Pancha Bhoota shrines.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Ekambareswarar%20Temple%2C%20Kanchipuram%2C%20Tamil%20Nadu"
+        },
+        {
+          "name": "Arunachaleswarar Temple",
+          "city": "Tiruvannamalai",
+          "info": "Seek darshan at the foot of Arunachala hill and, when suitable, experience part of the sacred hill circuit.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Arunachaleswarar%20Temple%2C%20Tiruvannamalai%2C%20Tamil%20Nadu"
+        },
+        {
+          "name": "Thillai Nataraja Temple",
+          "city": "Chidambaram",
+          "info": "Visit the celebrated temple of Shiva as Nataraja, where devotion, classical arts and Chola-era heritage meet.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Thillai%20Nataraja%20Temple%2C%20Chidambaram%2C%20Tamil%20Nadu"
+        },
+        {
+          "name": "Brihadeeswarar Temple",
+          "city": "Thanjavur",
+          "info": "Explore the monumental Chola temple dedicated to Shiva, admired for its scale, stonework and sacred architecture.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Brihadeeswarar%20Temple%2C%20Thanjavur%2C%20Tamil%20Nadu"
+        },
+        {
+          "name": "Sri Ranganathaswamy Temple",
+          "city": "Srirangam",
+          "info": "Enter the vast island temple complex dedicated to Ranganatha, an important centre of Sri Vaishnava worship.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Sri%20Ranganathaswamy%20Temple%2C%20Srirangam%2C%20Tamil%20Nadu"
+        },
+        {
+          "name": "Meenakshi Amman Temple",
+          "city": "Madurai",
+          "info": "Experience Madurai's defining temple complex, dedicated to Meenakshi and Sundareswarar and crowned by richly sculpted towers.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Meenakshi%20Amman%20Temple%2C%20Madurai%2C%20Tamil%20Nadu"
+        },
+        {
+          "name": "Ramanathaswamy Temple",
+          "city": "Rameswaram",
+          "info": "Complete darshan at this revered Shiva temple, one of the twelve Jyotirlinga shrines and a major pilgrimage destination.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Ramanathaswamy%20Temple%2C%20Rameswaram%2C%20Tamil%20Nadu"
+        },
+        {
+          "name": "Bhagavathy Amman Temple",
+          "city": "Kanniyakumari",
+          "info": "Conclude at India's southern tip with worship at the coastal shrine of Goddess Kanyakumari.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Bhagavathy%20Amman%20Temple%2C%20Kanniyakumari%2C%20Tamil%20Nadu"
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "name": "Andhra Pradesh",
+      "capital": "Amaravati",
+      "bestFor": "Culture and nature",
+      "about": "Andhra Pradesh brings together distinctive landscapes, heritage, food and living traditions. Use this starter collection to build a practical, budget-aware route through four representative places.",
+      "climate": "Conditions vary by region and season. Check local weather before travel and allow extra time during monsoon, winter or festival periods.",
+      "history": "Andhra Pradesh's historic sites, sacred places and cultural centres reflect the many communities and dynasties that shaped the region.",
+      "time": "Plan around local weather and festival calendars. Confirm attraction hours and access conditions shortly before departure.",
+      "food": "Explore regional dishes and locally run restaurants across Andhra Pradesh; food costs are included in the daily planning estimate.",
+      "tourist": [
+        {
+          "name": "Sri Venkateswara Temple",
+          "city": "Tirupati",
+          "info": "Sri Venkateswara Temple in Tirupati is one of Andhra Pradesh's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Sri%20Venkateswara%20Temple%2C%20Tirupati%2C%20Andhra%20Pradesh%2C%20India"
+        },
+        {
+          "name": "RK Beach",
+          "city": "Visakhapatnam",
+          "info": "RK Beach in Visakhapatnam is one of Andhra Pradesh's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=RK%20Beach%2C%20Visakhapatnam%2C%20Andhra%20Pradesh%2C%20India"
+        },
+        {
+          "name": "Araku Valley",
+          "city": "Araku",
+          "info": "Araku Valley in Araku is one of Andhra Pradesh's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Araku%20Valley%2C%20Araku%2C%20Andhra%20Pradesh%2C%20India"
+        },
+        {
+          "name": "Amaravati Stupa",
+          "city": "Amaravati",
+          "info": "Amaravati Stupa in Amaravati is one of Andhra Pradesh's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Amaravati%20Stupa%2C%20Amaravati%2C%20Andhra%20Pradesh%2C%20India"
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "name": "Arunachal Pradesh",
+      "capital": "Itanagar",
+      "bestFor": "Culture and nature",
+      "about": "Arunachal Pradesh brings together distinctive landscapes, heritage, food and living traditions. Use this starter collection to build a practical, budget-aware route through four representative places.",
+      "climate": "Conditions vary by region and season. Check local weather before travel and allow extra time during monsoon, winter or festival periods.",
+      "history": "Arunachal Pradesh's historic sites, sacred places and cultural centres reflect the many communities and dynasties that shaped the region.",
+      "time": "Plan around local weather and festival calendars. Confirm attraction hours and access conditions shortly before departure.",
+      "food": "Explore regional dishes and locally run restaurants across Arunachal Pradesh; food costs are included in the daily planning estimate.",
+      "tourist": [
+        {
+          "name": "Tawang Monastery",
+          "city": "Tawang",
+          "info": "Tawang Monastery in Tawang is one of Arunachal Pradesh's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Tawang%20Monastery%2C%20Tawang%2C%20Arunachal%20Pradesh%2C%20India"
+        },
+        {
+          "name": "Ziro Valley",
+          "city": "Ziro",
+          "info": "Ziro Valley in Ziro is one of Arunachal Pradesh's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Ziro%20Valley%2C%20Ziro%2C%20Arunachal%20Pradesh%2C%20India"
+        },
+        {
+          "name": "Namdapha National Park",
+          "city": "Changlang",
+          "info": "Namdapha National Park in Changlang is one of Arunachal Pradesh's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Namdapha%20National%20Park%2C%20Changlang%2C%20Arunachal%20Pradesh%2C%20India"
+        },
+        {
+          "name": "Sela Pass",
+          "city": "Tawang",
+          "info": "Sela Pass in Tawang is one of Arunachal Pradesh's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Sela%20Pass%2C%20Tawang%2C%20Arunachal%20Pradesh%2C%20India"
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "name": "Assam",
+      "capital": "Dispur",
+      "bestFor": "Culture and nature",
+      "about": "Assam brings together distinctive landscapes, heritage, food and living traditions. Use this starter collection to build a practical, budget-aware route through four representative places.",
+      "climate": "Conditions vary by region and season. Check local weather before travel and allow extra time during monsoon, winter or festival periods.",
+      "history": "Assam's historic sites, sacred places and cultural centres reflect the many communities and dynasties that shaped the region.",
+      "time": "Plan around local weather and festival calendars. Confirm attraction hours and access conditions shortly before departure.",
+      "food": "Explore regional dishes and locally run restaurants across Assam; food costs are included in the daily planning estimate.",
+      "tourist": [
+        {
+          "name": "Kaziranga National Park",
+          "city": "Golaghat",
+          "info": "Kaziranga National Park in Golaghat is one of Assam's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Kaziranga%20National%20Park%2C%20Golaghat%2C%20Assam%2C%20India"
+        },
+        {
+          "name": "Kamakhya Temple",
+          "city": "Guwahati",
+          "info": "Kamakhya Temple in Guwahati is one of Assam's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Kamakhya%20Temple%2C%20Guwahati%2C%20Assam%2C%20India"
+        },
+        {
+          "name": "Majuli Island",
+          "city": "Majuli",
+          "info": "Majuli Island in Majuli is one of Assam's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Majuli%20Island%2C%20Majuli%2C%20Assam%2C%20India"
+        },
+        {
+          "name": "Sivasagar Sivadol",
+          "city": "Sivasagar",
+          "info": "Sivasagar Sivadol in Sivasagar is one of Assam's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Sivasagar%20Sivadol%2C%20Sivasagar%2C%20Assam%2C%20India"
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "name": "Bihar",
+      "capital": "Patna",
+      "bestFor": "Culture and nature",
+      "about": "Bihar brings together distinctive landscapes, heritage, food and living traditions. Use this starter collection to build a practical, budget-aware route through four representative places.",
+      "climate": "Conditions vary by region and season. Check local weather before travel and allow extra time during monsoon, winter or festival periods.",
+      "history": "Bihar's historic sites, sacred places and cultural centres reflect the many communities and dynasties that shaped the region.",
+      "time": "Plan around local weather and festival calendars. Confirm attraction hours and access conditions shortly before departure.",
+      "food": "Explore regional dishes and locally run restaurants across Bihar; food costs are included in the daily planning estimate.",
+      "tourist": [
+        {
+          "name": "Mahabodhi Temple",
+          "city": "Bodh Gaya",
+          "info": "Mahabodhi Temple in Bodh Gaya is one of Bihar's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Mahabodhi%20Temple%2C%20Bodh%20Gaya%2C%20Bihar%2C%20India"
+        },
+        {
+          "name": "Nalanda Mahavihara",
+          "city": "Nalanda",
+          "info": "Nalanda Mahavihara in Nalanda is one of Bihar's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Nalanda%20Mahavihara%2C%20Nalanda%2C%20Bihar%2C%20India"
+        },
+        {
+          "name": "Vishwa Shanti Stupa",
+          "city": "Rajgir",
+          "info": "Vishwa Shanti Stupa in Rajgir is one of Bihar's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Vishwa%20Shanti%20Stupa%2C%20Rajgir%2C%20Bihar%2C%20India"
+        },
+        {
+          "name": "Takht Sri Patna Sahib",
+          "city": "Patna",
+          "info": "Takht Sri Patna Sahib in Patna is one of Bihar's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Takht%20Sri%20Patna%20Sahib%2C%20Patna%2C%20Bihar%2C%20India"
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "name": "Chhattisgarh",
+      "capital": "Raipur",
+      "bestFor": "Culture and nature",
+      "about": "Chhattisgarh brings together distinctive landscapes, heritage, food and living traditions. Use this starter collection to build a practical, budget-aware route through four representative places.",
+      "climate": "Conditions vary by region and season. Check local weather before travel and allow extra time during monsoon, winter or festival periods.",
+      "history": "Chhattisgarh's historic sites, sacred places and cultural centres reflect the many communities and dynasties that shaped the region.",
+      "time": "Plan around local weather and festival calendars. Confirm attraction hours and access conditions shortly before departure.",
+      "food": "Explore regional dishes and locally run restaurants across Chhattisgarh; food costs are included in the daily planning estimate.",
+      "tourist": [
+        {
+          "name": "Chitrakote Falls",
+          "city": "Bastar",
+          "info": "Chitrakote Falls in Bastar is one of Chhattisgarh's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Chitrakote%20Falls%2C%20Bastar%2C%20Chhattisgarh%2C%20India"
+        },
+        {
+          "name": "Tirathgarh Falls",
+          "city": "Bastar",
+          "info": "Tirathgarh Falls in Bastar is one of Chhattisgarh's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Tirathgarh%20Falls%2C%20Bastar%2C%20Chhattisgarh%2C%20India"
+        },
+        {
+          "name": "Kanger Valley National Park",
+          "city": "Jagdalpur",
+          "info": "Kanger Valley National Park in Jagdalpur is one of Chhattisgarh's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Kanger%20Valley%20National%20Park%2C%20Jagdalpur%2C%20Chhattisgarh%2C%20India"
+        },
+        {
+          "name": "Sirpur Heritage Site",
+          "city": "Mahasamund",
+          "info": "Sirpur Heritage Site in Mahasamund is one of Chhattisgarh's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Sirpur%20Heritage%20Site%2C%20Mahasamund%2C%20Chhattisgarh%2C%20India"
+        }
+      ]
+    },
+    {
+      "id": "15",
+      "name": "Goa",
+      "capital": "Panaji",
+      "bestFor": "Culture and nature",
+      "about": "Goa brings together distinctive landscapes, heritage, food and living traditions. Use this starter collection to build a practical, budget-aware route through four representative places.",
+      "climate": "Conditions vary by region and season. Check local weather before travel and allow extra time during monsoon, winter or festival periods.",
+      "history": "Goa's historic sites, sacred places and cultural centres reflect the many communities and dynasties that shaped the region.",
+      "time": "Plan around local weather and festival calendars. Confirm attraction hours and access conditions shortly before departure.",
+      "food": "Explore regional dishes and locally run restaurants across Goa; food costs are included in the daily planning estimate.",
+      "tourist": [
+        {
+          "name": "Basilica of Bom Jesus",
+          "city": "Old Goa",
+          "info": "Basilica of Bom Jesus in Old Goa is one of Goa's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Basilica%20of%20Bom%20Jesus%2C%20Old%20Goa%2C%20Goa%2C%20India"
+        },
+        {
+          "name": "Fontainhas",
+          "city": "Panaji",
+          "info": "Fontainhas in Panaji is one of Goa's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Fontainhas%2C%20Panaji%2C%20Goa%2C%20India"
+        },
+        {
+          "name": "Palolem Beach",
+          "city": "Canacona",
+          "info": "Palolem Beach in Canacona is one of Goa's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Palolem%20Beach%2C%20Canacona%2C%20Goa%2C%20India"
+        },
+        {
+          "name": "Dudhsagar Falls",
+          "city": "Sanguem",
+          "info": "Dudhsagar Falls in Sanguem is one of Goa's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Dudhsagar%20Falls%2C%20Sanguem%2C%20Goa%2C%20India"
+        }
+      ]
+    },
+    {
+      "id": "16",
+      "name": "Haryana",
+      "capital": "Chandigarh",
+      "bestFor": "Culture and nature",
+      "about": "Haryana brings together distinctive landscapes, heritage, food and living traditions. Use this starter collection to build a practical, budget-aware route through four representative places.",
+      "climate": "Conditions vary by region and season. Check local weather before travel and allow extra time during monsoon, winter or festival periods.",
+      "history": "Haryana's historic sites, sacred places and cultural centres reflect the many communities and dynasties that shaped the region.",
+      "time": "Plan around local weather and festival calendars. Confirm attraction hours and access conditions shortly before departure.",
+      "food": "Explore regional dishes and locally run restaurants across Haryana; food costs are included in the daily planning estimate.",
+      "tourist": [
+        {
+          "name": "Brahma Sarovar",
+          "city": "Kurukshetra",
+          "info": "Brahma Sarovar in Kurukshetra is one of Haryana's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Brahma%20Sarovar%2C%20Kurukshetra%2C%20Haryana%2C%20India"
+        },
+        {
+          "name": "Sultanpur National Park",
+          "city": "Gurugram",
+          "info": "Sultanpur National Park in Gurugram is one of Haryana's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Sultanpur%20National%20Park%2C%20Gurugram%2C%20Haryana%2C%20India"
+        },
+        {
+          "name": "Yadavindra Gardens",
+          "city": "Pinjore",
+          "info": "Yadavindra Gardens in Pinjore is one of Haryana's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Yadavindra%20Gardens%2C%20Pinjore%2C%20Haryana%2C%20India"
+        },
+        {
+          "name": "Morni Hills",
+          "city": "Panchkula",
+          "info": "Morni Hills in Panchkula is one of Haryana's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Morni%20Hills%2C%20Panchkula%2C%20Haryana%2C%20India"
+        }
+      ]
+    },
+    {
+      "id": "17",
+      "name": "Jharkhand",
+      "capital": "Ranchi",
+      "bestFor": "Culture and nature",
+      "about": "Jharkhand brings together distinctive landscapes, heritage, food and living traditions. Use this starter collection to build a practical, budget-aware route through four representative places.",
+      "climate": "Conditions vary by region and season. Check local weather before travel and allow extra time during monsoon, winter or festival periods.",
+      "history": "Jharkhand's historic sites, sacred places and cultural centres reflect the many communities and dynasties that shaped the region.",
+      "time": "Plan around local weather and festival calendars. Confirm attraction hours and access conditions shortly before departure.",
+      "food": "Explore regional dishes and locally run restaurants across Jharkhand; food costs are included in the daily planning estimate.",
+      "tourist": [
+        {
+          "name": "Baidyanath Dham",
+          "city": "Deoghar",
+          "info": "Baidyanath Dham in Deoghar is one of Jharkhand's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Baidyanath%20Dham%2C%20Deoghar%2C%20Jharkhand%2C%20India"
+        },
+        {
+          "name": "Betla National Park",
+          "city": "Latehar",
+          "info": "Betla National Park in Latehar is one of Jharkhand's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Betla%20National%20Park%2C%20Latehar%2C%20Jharkhand%2C%20India"
+        },
+        {
+          "name": "Hundru Falls",
+          "city": "Ranchi",
+          "info": "Hundru Falls in Ranchi is one of Jharkhand's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Hundru%20Falls%2C%20Ranchi%2C%20Jharkhand%2C%20India"
+        },
+        {
+          "name": "Dassam Falls",
+          "city": "Ranchi",
+          "info": "Dassam Falls in Ranchi is one of Jharkhand's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Dassam%20Falls%2C%20Ranchi%2C%20Jharkhand%2C%20India"
+        }
+      ]
+    },
+    {
+      "id": "18",
+      "name": "Karnataka",
+      "capital": "Bengaluru",
+      "bestFor": "Culture and nature",
+      "about": "Karnataka brings together distinctive landscapes, heritage, food and living traditions. Use this starter collection to build a practical, budget-aware route through four representative places.",
+      "climate": "Conditions vary by region and season. Check local weather before travel and allow extra time during monsoon, winter or festival periods.",
+      "history": "Karnataka's historic sites, sacred places and cultural centres reflect the many communities and dynasties that shaped the region.",
+      "time": "Plan around local weather and festival calendars. Confirm attraction hours and access conditions shortly before departure.",
+      "food": "Explore regional dishes and locally run restaurants across Karnataka; food costs are included in the daily planning estimate.",
+      "tourist": [
+        {
+          "name": "Hampi",
+          "city": "Vijayanagara",
+          "info": "Hampi in Vijayanagara is one of Karnataka's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Hampi%2C%20Vijayanagara%2C%20Karnataka%2C%20India"
+        },
+        {
+          "name": "Mysore Palace",
+          "city": "Mysuru",
+          "info": "Mysore Palace in Mysuru is one of Karnataka's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Mysore%20Palace%2C%20Mysuru%2C%20Karnataka%2C%20India"
+        },
+        {
+          "name": "Abbey Falls",
+          "city": "Kodagu",
+          "info": "Abbey Falls in Kodagu is one of Karnataka's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Abbey%20Falls%2C%20Kodagu%2C%20Karnataka%2C%20India"
+        },
+        {
+          "name": "Badami Cave Temples",
+          "city": "Badami",
+          "info": "Badami Cave Temples in Badami is one of Karnataka's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Badami%20Cave%20Temples%2C%20Badami%2C%20Karnataka%2C%20India"
+        }
+      ]
+    },
+    {
+      "id": "19",
+      "name": "Madhya Pradesh",
+      "capital": "Bhopal",
+      "bestFor": "Culture and nature",
+      "about": "Madhya Pradesh brings together distinctive landscapes, heritage, food and living traditions. Use this starter collection to build a practical, budget-aware route through four representative places.",
+      "climate": "Conditions vary by region and season. Check local weather before travel and allow extra time during monsoon, winter or festival periods.",
+      "history": "Madhya Pradesh's historic sites, sacred places and cultural centres reflect the many communities and dynasties that shaped the region.",
+      "time": "Plan around local weather and festival calendars. Confirm attraction hours and access conditions shortly before departure.",
+      "food": "Explore regional dishes and locally run restaurants across Madhya Pradesh; food costs are included in the daily planning estimate.",
+      "tourist": [
+        {
+          "name": "Khajuraho Temples",
+          "city": "Khajuraho",
+          "info": "Khajuraho Temples in Khajuraho is one of Madhya Pradesh's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Khajuraho%20Temples%2C%20Khajuraho%2C%20Madhya%20Pradesh%2C%20India"
+        },
+        {
+          "name": "Sanchi Stupa",
+          "city": "Sanchi",
+          "info": "Sanchi Stupa in Sanchi is one of Madhya Pradesh's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Sanchi%20Stupa%2C%20Sanchi%2C%20Madhya%20Pradesh%2C%20India"
+        },
+        {
+          "name": "Mahakaleshwar Temple",
+          "city": "Ujjain",
+          "info": "Mahakaleshwar Temple in Ujjain is one of Madhya Pradesh's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Mahakaleshwar%20Temple%2C%20Ujjain%2C%20Madhya%20Pradesh%2C%20India"
+        },
+        {
+          "name": "Kanha National Park",
+          "city": "Mandla",
+          "info": "Kanha National Park in Mandla is one of Madhya Pradesh's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Kanha%20National%20Park%2C%20Mandla%2C%20Madhya%20Pradesh%2C%20India"
+        }
+      ]
+    },
+    {
+      "id": "20",
+      "name": "Manipur",
+      "capital": "Imphal",
+      "bestFor": "Culture and nature",
+      "about": "Manipur brings together distinctive landscapes, heritage, food and living traditions. Use this starter collection to build a practical, budget-aware route through four representative places.",
+      "climate": "Conditions vary by region and season. Check local weather before travel and allow extra time during monsoon, winter or festival periods.",
+      "history": "Manipur's historic sites, sacred places and cultural centres reflect the many communities and dynasties that shaped the region.",
+      "time": "Plan around local weather and festival calendars. Confirm attraction hours and access conditions shortly before departure.",
+      "food": "Explore regional dishes and locally run restaurants across Manipur; food costs are included in the daily planning estimate.",
+      "tourist": [
+        {
+          "name": "Loktak Lake",
+          "city": "Moirang",
+          "info": "Loktak Lake in Moirang is one of Manipur's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Loktak%20Lake%2C%20Moirang%2C%20Manipur%2C%20India"
+        },
+        {
+          "name": "Kangla Fort",
+          "city": "Imphal",
+          "info": "Kangla Fort in Imphal is one of Manipur's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Kangla%20Fort%2C%20Imphal%2C%20Manipur%2C%20India"
+        },
+        {
+          "name": "INA Memorial",
+          "city": "Moirang",
+          "info": "INA Memorial in Moirang is one of Manipur's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=INA%20Memorial%2C%20Moirang%2C%20Manipur%2C%20India"
+        },
+        {
+          "name": "Shirui Hills",
+          "city": "Ukhrul",
+          "info": "Shirui Hills in Ukhrul is one of Manipur's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Shirui%20Hills%2C%20Ukhrul%2C%20Manipur%2C%20India"
+        }
+      ]
+    },
+    {
+      "id": "21",
+      "name": "Meghalaya",
+      "capital": "Shillong",
+      "bestFor": "Culture and nature",
+      "about": "Meghalaya brings together distinctive landscapes, heritage, food and living traditions. Use this starter collection to build a practical, budget-aware route through four representative places.",
+      "climate": "Conditions vary by region and season. Check local weather before travel and allow extra time during monsoon, winter or festival periods.",
+      "history": "Meghalaya's historic sites, sacred places and cultural centres reflect the many communities and dynasties that shaped the region.",
+      "time": "Plan around local weather and festival calendars. Confirm attraction hours and access conditions shortly before departure.",
+      "food": "Explore regional dishes and locally run restaurants across Meghalaya; food costs are included in the daily planning estimate.",
+      "tourist": [
+        {
+          "name": "Living Root Bridges",
+          "city": "Nongriat",
+          "info": "Living Root Bridges in Nongriat is one of Meghalaya's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Living%20Root%20Bridges%2C%20Nongriat%2C%20Meghalaya%2C%20India"
+        },
+        {
+          "name": "Umiam Lake",
+          "city": "Shillong",
+          "info": "Umiam Lake in Shillong is one of Meghalaya's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Umiam%20Lake%2C%20Shillong%2C%20Meghalaya%2C%20India"
+        },
+        {
+          "name": "Umngot River",
+          "city": "Dawki",
+          "info": "Umngot River in Dawki is one of Meghalaya's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Umngot%20River%2C%20Dawki%2C%20Meghalaya%2C%20India"
+        },
+        {
+          "name": "Nohkalikai Falls",
+          "city": "Cherrapunji",
+          "info": "Nohkalikai Falls in Cherrapunji is one of Meghalaya's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Nohkalikai%20Falls%2C%20Cherrapunji%2C%20Meghalaya%2C%20India"
+        }
+      ]
+    },
+    {
+      "id": "22",
+      "name": "Mizoram",
+      "capital": "Aizawl",
+      "bestFor": "Culture and nature",
+      "about": "Mizoram brings together distinctive landscapes, heritage, food and living traditions. Use this starter collection to build a practical, budget-aware route through four representative places.",
+      "climate": "Conditions vary by region and season. Check local weather before travel and allow extra time during monsoon, winter or festival periods.",
+      "history": "Mizoram's historic sites, sacred places and cultural centres reflect the many communities and dynasties that shaped the region.",
+      "time": "Plan around local weather and festival calendars. Confirm attraction hours and access conditions shortly before departure.",
+      "food": "Explore regional dishes and locally run restaurants across Mizoram; food costs are included in the daily planning estimate.",
+      "tourist": [
+        {
+          "name": "Reiek Tlang",
+          "city": "Reiek",
+          "info": "Reiek Tlang in Reiek is one of Mizoram's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Reiek%20Tlang%2C%20Reiek%2C%20Mizoram%2C%20India"
+        },
+        {
+          "name": "Vantawng Falls",
+          "city": "Serchhip",
+          "info": "Vantawng Falls in Serchhip is one of Mizoram's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Vantawng%20Falls%2C%20Serchhip%2C%20Mizoram%2C%20India"
+        },
+        {
+          "name": "Solomon's Temple",
+          "city": "Aizawl",
+          "info": "Solomon's Temple in Aizawl is one of Mizoram's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Solomon's%20Temple%2C%20Aizawl%2C%20Mizoram%2C%20India"
+        },
+        {
+          "name": "Phawngpui Peak",
+          "city": "Lawngtlai",
+          "info": "Phawngpui Peak in Lawngtlai is one of Mizoram's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Phawngpui%20Peak%2C%20Lawngtlai%2C%20Mizoram%2C%20India"
+        }
+      ]
+    },
+    {
+      "id": "23",
+      "name": "Nagaland",
+      "capital": "Kohima",
+      "bestFor": "Culture and nature",
+      "about": "Nagaland brings together distinctive landscapes, heritage, food and living traditions. Use this starter collection to build a practical, budget-aware route through four representative places.",
+      "climate": "Conditions vary by region and season. Check local weather before travel and allow extra time during monsoon, winter or festival periods.",
+      "history": "Nagaland's historic sites, sacred places and cultural centres reflect the many communities and dynasties that shaped the region.",
+      "time": "Plan around local weather and festival calendars. Confirm attraction hours and access conditions shortly before departure.",
+      "food": "Explore regional dishes and locally run restaurants across Nagaland; food costs are included in the daily planning estimate.",
+      "tourist": [
+        {
+          "name": "Kisama Heritage Village",
+          "city": "Kohima",
+          "info": "Kisama Heritage Village in Kohima is one of Nagaland's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Kisama%20Heritage%20Village%2C%20Kohima%2C%20Nagaland%2C%20India"
+        },
+        {
+          "name": "Dzukou Valley",
+          "city": "Kohima",
+          "info": "Dzukou Valley in Kohima is one of Nagaland's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Dzukou%20Valley%2C%20Kohima%2C%20Nagaland%2C%20India"
+        },
+        {
+          "name": "Kohima War Cemetery",
+          "city": "Kohima",
+          "info": "Kohima War Cemetery in Kohima is one of Nagaland's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Kohima%20War%20Cemetery%2C%20Kohima%2C%20Nagaland%2C%20India"
+        },
+        {
+          "name": "Longwa Village",
+          "city": "Mon",
+          "info": "Longwa Village in Mon is one of Nagaland's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Longwa%20Village%2C%20Mon%2C%20Nagaland%2C%20India"
+        }
+      ]
+    },
+    {
+      "id": "24",
+      "name": "Odisha",
+      "capital": "Bhubaneswar",
+      "bestFor": "Culture and nature",
+      "about": "Odisha brings together distinctive landscapes, heritage, food and living traditions. Use this starter collection to build a practical, budget-aware route through four representative places.",
+      "climate": "Conditions vary by region and season. Check local weather before travel and allow extra time during monsoon, winter or festival periods.",
+      "history": "Odisha's historic sites, sacred places and cultural centres reflect the many communities and dynasties that shaped the region.",
+      "time": "Plan around local weather and festival calendars. Confirm attraction hours and access conditions shortly before departure.",
+      "food": "Explore regional dishes and locally run restaurants across Odisha; food costs are included in the daily planning estimate.",
+      "tourist": [
+        {
+          "name": "Jagannath Temple",
+          "city": "Puri",
+          "info": "Jagannath Temple in Puri is one of Odisha's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Jagannath%20Temple%2C%20Puri%2C%20Odisha%2C%20India"
+        },
+        {
+          "name": "Sun Temple",
+          "city": "Konark",
+          "info": "Sun Temple in Konark is one of Odisha's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Sun%20Temple%2C%20Konark%2C%20Odisha%2C%20India"
+        },
+        {
+          "name": "Chilika Lake",
+          "city": "Satapada",
+          "info": "Chilika Lake in Satapada is one of Odisha's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Chilika%20Lake%2C%20Satapada%2C%20Odisha%2C%20India"
+        },
+        {
+          "name": "Udayagiri and Khandagiri Caves",
+          "city": "Bhubaneswar",
+          "info": "Udayagiri and Khandagiri Caves in Bhubaneswar is one of Odisha's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Udayagiri%20and%20Khandagiri%20Caves%2C%20Bhubaneswar%2C%20Odisha%2C%20India"
+        }
+      ]
+    },
+    {
+      "id": "25",
+      "name": "Sikkim",
+      "capital": "Gangtok",
+      "bestFor": "Culture and nature",
+      "about": "Sikkim brings together distinctive landscapes, heritage, food and living traditions. Use this starter collection to build a practical, budget-aware route through four representative places.",
+      "climate": "Conditions vary by region and season. Check local weather before travel and allow extra time during monsoon, winter or festival periods.",
+      "history": "Sikkim's historic sites, sacred places and cultural centres reflect the many communities and dynasties that shaped the region.",
+      "time": "Plan around local weather and festival calendars. Confirm attraction hours and access conditions shortly before departure.",
+      "food": "Explore regional dishes and locally run restaurants across Sikkim; food costs are included in the daily planning estimate.",
+      "tourist": [
+        {
+          "name": "Tsomgo Lake",
+          "city": "Gangtok",
+          "info": "Tsomgo Lake in Gangtok is one of Sikkim's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Tsomgo%20Lake%2C%20Gangtok%2C%20Sikkim%2C%20India"
+        },
+        {
+          "name": "Rumtek Monastery",
+          "city": "Gangtok",
+          "info": "Rumtek Monastery in Gangtok is one of Sikkim's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Rumtek%20Monastery%2C%20Gangtok%2C%20Sikkim%2C%20India"
+        },
+        {
+          "name": "Pemayangtse Monastery",
+          "city": "Pelling",
+          "info": "Pemayangtse Monastery in Pelling is one of Sikkim's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Pemayangtse%20Monastery%2C%20Pelling%2C%20Sikkim%2C%20India"
+        },
+        {
+          "name": "Gurudongmar Lake",
+          "city": "Mangan",
+          "info": "Gurudongmar Lake in Mangan is one of Sikkim's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Gurudongmar%20Lake%2C%20Mangan%2C%20Sikkim%2C%20India"
+        }
+      ]
+    },
+    {
+      "id": "26",
+      "name": "Telangana",
+      "capital": "Hyderabad",
+      "bestFor": "Culture and nature",
+      "about": "Telangana brings together distinctive landscapes, heritage, food and living traditions. Use this starter collection to build a practical, budget-aware route through four representative places.",
+      "climate": "Conditions vary by region and season. Check local weather before travel and allow extra time during monsoon, winter or festival periods.",
+      "history": "Telangana's historic sites, sacred places and cultural centres reflect the many communities and dynasties that shaped the region.",
+      "time": "Plan around local weather and festival calendars. Confirm attraction hours and access conditions shortly before departure.",
+      "food": "Explore regional dishes and locally run restaurants across Telangana; food costs are included in the daily planning estimate.",
+      "tourist": [
+        {
+          "name": "Charminar",
+          "city": "Hyderabad",
+          "info": "Charminar in Hyderabad is one of Telangana's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Charminar%2C%20Hyderabad%2C%20Telangana%2C%20India"
+        },
+        {
+          "name": "Golconda Fort",
+          "city": "Hyderabad",
+          "info": "Golconda Fort in Hyderabad is one of Telangana's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Golconda%20Fort%2C%20Hyderabad%2C%20Telangana%2C%20India"
+        },
+        {
+          "name": "Ramappa Temple",
+          "city": "Palampet",
+          "info": "Ramappa Temple in Palampet is one of Telangana's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Ramappa%20Temple%2C%20Palampet%2C%20Telangana%2C%20India"
+        },
+        {
+          "name": "Nagarjuna Sagar",
+          "city": "Nalgonda",
+          "info": "Nagarjuna Sagar in Nalgonda is one of Telangana's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Nagarjuna%20Sagar%2C%20Nalgonda%2C%20Telangana%2C%20India"
+        }
+      ]
+    },
+    {
+      "id": "27",
+      "name": "Tripura",
+      "capital": "Agartala",
+      "bestFor": "Culture and nature",
+      "about": "Tripura brings together distinctive landscapes, heritage, food and living traditions. Use this starter collection to build a practical, budget-aware route through four representative places.",
+      "climate": "Conditions vary by region and season. Check local weather before travel and allow extra time during monsoon, winter or festival periods.",
+      "history": "Tripura's historic sites, sacred places and cultural centres reflect the many communities and dynasties that shaped the region.",
+      "time": "Plan around local weather and festival calendars. Confirm attraction hours and access conditions shortly before departure.",
+      "food": "Explore regional dishes and locally run restaurants across Tripura; food costs are included in the daily planning estimate.",
+      "tourist": [
+        {
+          "name": "Ujjayanta Palace",
+          "city": "Agartala",
+          "info": "Ujjayanta Palace in Agartala is one of Tripura's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Ujjayanta%20Palace%2C%20Agartala%2C%20Tripura%2C%20India"
+        },
+        {
+          "name": "Neermahal",
+          "city": "Melaghar",
+          "info": "Neermahal in Melaghar is one of Tripura's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Neermahal%2C%20Melaghar%2C%20Tripura%2C%20India"
+        },
+        {
+          "name": "Unakoti Rock Carvings",
+          "city": "Unakoti",
+          "info": "Unakoti Rock Carvings in Unakoti is one of Tripura's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Unakoti%20Rock%20Carvings%2C%20Unakoti%2C%20Tripura%2C%20India"
+        },
+        {
+          "name": "Tripura Sundari Temple",
+          "city": "Udaipur",
+          "info": "Tripura Sundari Temple in Udaipur is one of Tripura's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Tripura%20Sundari%20Temple%2C%20Udaipur%2C%20Tripura%2C%20India"
+        }
+      ]
+    },
+    {
+      "id": "28",
+      "name": "Uttar Pradesh",
+      "capital": "Lucknow",
+      "bestFor": "Culture and nature",
+      "about": "Uttar Pradesh brings together distinctive landscapes, heritage, food and living traditions. Use this starter collection to build a practical, budget-aware route through four representative places.",
+      "climate": "Conditions vary by region and season. Check local weather before travel and allow extra time during monsoon, winter or festival periods.",
+      "history": "Uttar Pradesh's historic sites, sacred places and cultural centres reflect the many communities and dynasties that shaped the region.",
+      "time": "Plan around local weather and festival calendars. Confirm attraction hours and access conditions shortly before departure.",
+      "food": "Explore regional dishes and locally run restaurants across Uttar Pradesh; food costs are included in the daily planning estimate.",
+      "tourist": [
+        {
+          "name": "Taj Mahal",
+          "city": "Agra",
+          "info": "Taj Mahal in Agra is one of Uttar Pradesh's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Taj%20Mahal%2C%20Agra%2C%20Uttar%20Pradesh%2C%20India"
+        },
+        {
+          "name": "Dashashwamedh Ghat",
+          "city": "Varanasi",
+          "info": "Dashashwamedh Ghat in Varanasi is one of Uttar Pradesh's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Dashashwamedh%20Ghat%2C%20Varanasi%2C%20Uttar%20Pradesh%2C%20India"
+        },
+        {
+          "name": "Ram Mandir",
+          "city": "Ayodhya",
+          "info": "Ram Mandir in Ayodhya is one of Uttar Pradesh's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Ram%20Mandir%2C%20Ayodhya%2C%20Uttar%20Pradesh%2C%20India"
+        },
+        {
+          "name": "Fatehpur Sikri",
+          "city": "Agra",
+          "info": "Fatehpur Sikri in Agra is one of Uttar Pradesh's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Fatehpur%20Sikri%2C%20Agra%2C%20Uttar%20Pradesh%2C%20India"
+        }
+      ]
+    },
+    {
+      "id": "29",
+      "name": "West Bengal",
+      "capital": "Kolkata",
+      "bestFor": "Culture and nature",
+      "about": "West Bengal brings together distinctive landscapes, heritage, food and living traditions. Use this starter collection to build a practical, budget-aware route through four representative places.",
+      "climate": "Conditions vary by region and season. Check local weather before travel and allow extra time during monsoon, winter or festival periods.",
+      "history": "West Bengal's historic sites, sacred places and cultural centres reflect the many communities and dynasties that shaped the region.",
+      "time": "Plan around local weather and festival calendars. Confirm attraction hours and access conditions shortly before departure.",
+      "food": "Explore regional dishes and locally run restaurants across West Bengal; food costs are included in the daily planning estimate.",
+      "tourist": [
+        {
+          "name": "Victoria Memorial",
+          "city": "Kolkata",
+          "info": "Victoria Memorial in Kolkata is one of West Bengal's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Victoria%20Memorial%2C%20Kolkata%2C%20West%20Bengal%2C%20India"
+        },
+        {
+          "name": "Sundarbans National Park",
+          "city": "South 24 Parganas",
+          "info": "Sundarbans National Park in South 24 Parganas is one of West Bengal's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Sundarbans%20National%20Park%2C%20South%2024%20Parganas%2C%20West%20Bengal%2C%20India"
+        },
+        {
+          "name": "Tiger Hill",
+          "city": "Darjeeling",
+          "info": "Tiger Hill in Darjeeling is one of West Bengal's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Tiger%20Hill%2C%20Darjeeling%2C%20West%20Bengal%2C%20India"
+        },
+        {
+          "name": "Bishnupur Terracotta Temples",
+          "city": "Bankura",
+          "info": "Bishnupur Terracotta Temples in Bankura is one of West Bengal's representative visitor experiences, selected for its cultural, natural, spiritual or historic significance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Bishnupur%20Terracotta%20Temples%2C%20Bankura%2C%20West%20Bengal%2C%20India"
+        }
+      ]
     }
   ]
 }

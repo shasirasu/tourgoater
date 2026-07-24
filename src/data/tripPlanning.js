@@ -28,12 +28,19 @@ export const tripPlanning = {
     { id: "gujarat-budget", name: "Ahmedabad City Stay", type: "Hotel", area: "Ahmedabad", pricePerNight: 1800, roomsAvailable: 7, rating: 4.1, isSample: true },
     { id: "gujarat-heritage", name: "Heritage Courtyard Hotel", type: "Heritage stay", area: "Ahmedabad", pricePerNight: 3100, roomsAvailable: 4, rating: 4.5, isSample: true },
   ]},
+  "9": { dailyExpenses: 1700, hotels: [
+    { id: "tamilnadu-pilgrim", name: "Temple Route Residency", type: "Hotel", area: "Madurai", pricePerNight: 1900, roomsAvailable: 8, rating: 4.2, isSample: true },
+    { id: "tamilnadu-comfort", name: "Southern Pilgrim Comfort", type: "Hotel", area: "Rameswaram", pricePerNight: 3200, roomsAvailable: 5, rating: 4.5, isSample: true },
+  ]},
 };
 
 export function getDestinationHotels(destination) {
-  return destination.accommodations?.length
-    ? destination.accommodations
-    : (tripPlanning[destination.id]?.hotels ?? []);
+  if (destination.accommodations?.length) return destination.accommodations;
+  if (tripPlanning[destination.id]?.hotels?.length) return tripPlanning[destination.id].hotels;
+  return [
+    { id: `${destination.id}-value`, name: `${destination.capital} Value Stay`, type: "Hotel", area: destination.capital, pricePerNight: 1800, roomsAvailable: 6, rating: 4.1, isSample: true },
+    { id: `${destination.id}-comfort`, name: `${destination.name} Comfort Hotel`, type: "Hotel", area: destination.capital, pricePerNight: 3100, roomsAvailable: 4, rating: 4.4, isSample: true },
+  ];
 }
 
 export function buildTripEstimate(destination, days, budget = Infinity) {

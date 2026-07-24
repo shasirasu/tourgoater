@@ -576,6 +576,68 @@
           "images": "/images/travel/e7deb23dc640c2b1ed.webp"
         }
       ]
+    },
+    {
+      "img": [
+        "/images/travel/tamil-nadu-01.jpg",
+        "/images/travel/tamil-nadu-02.jpg",
+        "/images/travel/tamil-nadu-03.jpg",
+        "/images/travel/tamil-nadu-04.jpg",
+        "/images/travel/tamil-nadu-05.jpg",
+        "/images/travel/tamil-nadu-06.jpg"
+      ],
+      "tourist": [
+        {
+          "images": [
+            "/images/travel/tamil-nadu-01.jpg"
+          ]
+        },
+        {
+          "images": [
+            "/images/travel/tamil-nadu-02.jpg"
+          ]
+        },
+        {
+          "images": [
+            "/images/travel/tamil-nadu-03.jpg"
+          ]
+        },
+        {
+          "images": [
+            "/images/travel/tamil-nadu-04.jpg"
+          ]
+        },
+        {
+          "images": [
+            "/images/travel/tamil-nadu-05.jpg"
+          ]
+        },
+        {
+          "images": [
+            "/images/travel/tamil-nadu-06.jpg"
+          ]
+        },
+        {
+          "images": [
+            "/images/travel/tamil-nadu-07.jpg"
+          ]
+        },
+        {
+          "images": [
+            "/images/travel/tamil-nadu-08.jpg"
+          ]
+        },
+        {
+          "images": [
+            "/images/travel/tamil-nadu-10.jpg"
+          ]
+        },
+        {
+          "images": [
+            "/images/travel/tamil-nadu-10.jpg"
+          ]
+        }
+      ]
     }
   ]
 }

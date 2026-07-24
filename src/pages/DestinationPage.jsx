@@ -110,7 +110,7 @@ export default function DestinationPage({ user, onLogout }) {
             <div className="destination-facts" aria-label={`${destination.name} information`}>
               <div><span>Capital</span><strong>{destination.capital}</strong></div>
               <div><span>Places listed</span><strong>{touristPlaces.length}</strong></div>
-              <div><span>Best for</span><strong>Exploring</strong></div>
+              <div><span>Best for</span><strong>{destination.bestFor ?? "Exploring"}</strong></div>
             </div>
           </div>
           <div className="destination-hero-image">

@@ -6,3 +6,13 @@ server/data/*.db
 server/data/*.db-shm
 server/data/*.db-wal
 
+# Local media-generation environments and outputs
+.venv-faceswap/
+.faceswap-models/
+video-output/
+face_swap_video.py
+promo_concat.txt
+render_background_replacement.ps1
+render_cinematic_promo.ps1
+render_lyrics_video.ps1
+

@@ -11,9 +11,10 @@ function optimizedUrl(source, width) {
 }
 
 export default function SafeImage({ sources, alt, fallbackLabel, sizes = "100vw", className = "", onLoad, loading, ...imageProps }) {
+  const sourceKey = (Array.isArray(sources) ? sources : [sources]).filter(Boolean).join("\n");
   const availableSources = useMemo(
-    () => (Array.isArray(sources) ? sources.filter(Boolean) : [sources].filter(Boolean)),
-    [sources],
+    () => sourceKey.split("\n").filter(Boolean),
+    [sourceKey],
   );
   const candidates = useMemo(() => availableSources.flatMap((source) => canOptimize(source)
     ? [{
@@ -22,12 +23,10 @@ export default function SafeImage({ sources, alt, fallbackLabel, sizes = "100vw"
       }, { src: source }]
     : [{ src: source }]), [availableSources]);
   const [candidateIndex, setCandidateIndex] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     setCandidateIndex(0);
-    setIsLoaded(false);
-  }, [candidates]);
+  }, [sourceKey]);
 
   if (!candidates[candidateIndex]) {
     return (
@@ -49,7 +48,7 @@ export default function SafeImage({ sources, alt, fallbackLabel, sizes = "100vw"
   return (
     <img
       {...imageProps}
-      className={`safe-image ${isLoaded ? "is-loaded" : ""} ${className}`.trim()}
+      className={`safe-image ${className}`.trim()}
       src={candidates[candidateIndex].src}
       srcSet={candidates[candidateIndex].srcSet}
       sizes={candidates[candidateIndex].srcSet ? sizes : undefined}
@@ -57,12 +56,8 @@ export default function SafeImage({ sources, alt, fallbackLabel, sizes = "100vw"
       loading={loading ?? (imageProps.fetchPriority === "high" ? "eager" : "lazy")}
       decoding="async"
       referrerPolicy="no-referrer"
-      onLoad={(event) => {
-        setIsLoaded(true);
-        onLoad?.(event);
-      }}
+      onLoad={onLoad}
       onError={() => {
-        setIsLoaded(false);
         setCandidateIndex((currentIndex) => currentIndex + 1);
       }}
     />

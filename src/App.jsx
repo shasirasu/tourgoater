@@ -10,8 +10,8 @@ import RouteTransition from "./components/RouteTransition.jsx";
 import CinematicHero from "./components/CinematicHero.jsx";
 import BrowsePage from "./pages/BrowsePage.jsx";
 import DestinationPage from "./pages/DestinationPage.jsx";
-import CinematicMoments from "./components/CinematicMoments.jsx";
 import SavedPlansPage from "./pages/SavedPlansPage.jsx";
+import CinematicMoments from "./components/CinematicMoments.jsx";
 
 function HomePage({ user, onLogout }) {
   const featuredDestinations = travelData.state.slice(1, 4);

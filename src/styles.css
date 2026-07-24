@@ -30,9 +30,8 @@ a { color: inherit; }
 button, input { font: inherit; }
 button, a { touch-action: manipulation; }
 img { max-width: 100%; }
-.safe-image { opacity: 0; transition: opacity 480ms ease, transform 300ms ease; }
-.safe-image.is-loaded { opacity: 1; }
-.safe-image.destination-image, .safe-image.stay-image { transition: opacity 480ms ease, transform 300ms ease; }
+.safe-image { opacity: 1; }
+.safe-image.destination-image, .safe-image.stay-image { transition: transform 300ms ease; }
 
 :focus-visible { outline: 3px solid var(--color-ring); outline-offset: 3px; }
 .shell { width: min(1160px, calc(100% - 48px)); margin-inline: auto; }
@@ -78,37 +77,35 @@ img { max-width: 100%; }
 .welcome-card p { margin: 0; }
 .welcome-card .button { width: fit-content; margin-top: 14px; }
 
-.cinematic-section { padding-top: 96px; background: var(--color-foreground); color: white; }
-.cinematic-intro { display: flex; align-items: end; justify-content: space-between; gap: 40px; padding-bottom: 36px; }
-.cinematic-intro .eyebrow { color: #fb923c; }
-.cinematic-intro h2 { max-width: 720px; margin: 0; font-size: clamp(2.1rem, 5vw, 4.4rem); line-height: 1.06; letter-spacing: -.045em; }
-.cinematic-intro > p { max-width: 380px; margin: 0 0 8px; color: #cbd5e1; font-size: 1.08rem; }
-.cinematic-player { position: relative; min-height: min(82vh, 900px); overflow: hidden; isolation: isolate; background: #020617; }
-.cinematic-scenes, .cinematic-scene { position: absolute; inset: 0; }
-.cinematic-scene { opacity: 0; transition: opacity 1100ms ease; }
-.cinematic-scene.is-active { z-index: 1; opacity: 1; }
-.cinematic-media { width: 100%; height: 100%; display: block; object-fit: cover; transform: scale(1.06); }
-.cinematic-scene.is-active .cinematic-media { animation: cinematic-camera 7s cubic-bezier(.2, .65, .3, 1) both; }
-.cinematic-shade { position: absolute; z-index: 2; inset: 0; background: linear-gradient(90deg, rgba(2, 6, 23, .86) 0%, rgba(2, 6, 23, .34) 56%, rgba(2, 6, 23, .12) 100%), linear-gradient(0deg, rgba(2, 6, 23, .92) 0%, transparent 48%); }
-.cinematic-content { position: absolute; z-index: 3; top: 50%; right: 0; left: 0; transform: translateY(-54%); }
-.cinematic-eyebrow { margin: 0 0 12px; color: #67e8f9; font-size: .8rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
-.cinematic-content h3 { max-width: 760px; margin: 0 0 16px; font-size: clamp(2.7rem, 7vw, 6.8rem); line-height: .98; letter-spacing: -.055em; text-wrap: balance; }
-.cinematic-content > p { margin: 0 0 28px; color: #e2e8f0; font-size: clamp(1rem, 2vw, 1.25rem); }
-.cinematic-link { min-height: 48px; display: inline-flex; align-items: center; gap: 12px; padding: 11px 18px; border: 1px solid rgba(255, 255, 255, .58); border-radius: 999px; background: rgba(15, 23, 42, .28); color: white; font-weight: 800; text-decoration: none; backdrop-filter: blur(10px); transition: background-color 200ms ease, gap 200ms ease; }
-.cinematic-link:hover { gap: 17px; background: rgba(15, 23, 42, .68); }
-.cinematic-controls { position: absolute; z-index: 4; right: 0; bottom: 28px; left: 0; display: flex; align-items: end; gap: 24px; }
-.cinematic-play { width: 46px; height: 46px; flex: 0 0 auto; display: grid; place-items: center; border: 1px solid rgba(255, 255, 255, .55); border-radius: 50%; background: rgba(15, 23, 42, .44); color: white; cursor: pointer; backdrop-filter: blur(10px); }
-.cinematic-timeline { width: 100%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-.cinematic-timeline button { position: relative; display: grid; grid-template-columns: auto 1fr; gap: 5px 10px; padding: 12px 0 0; overflow: hidden; border: 0; background: transparent; color: rgba(255, 255, 255, .55); text-align: left; cursor: pointer; }
-.cinematic-timeline button::before { content: ""; position: absolute; top: 0; right: 0; left: 0; height: 2px; background: rgba(255, 255, 255, .3); }
-.cinematic-progress { position: absolute; z-index: 1; top: 0; left: 0; width: 100%; height: 2px; background: #fb923c; transform: scaleX(0); transform-origin: left; }
-.cinematic-timeline button.is-active .cinematic-progress { animation: cinematic-progress var(--moment-duration) linear both; }
-.cinematic-timeline button.is-active { color: white; }
-.cinematic-timeline b { font-size: .72rem; }
-.cinematic-timeline button > span:last-child { overflow: hidden; font-size: .83rem; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
-
-@keyframes cinematic-camera { from { transform: scale(1.06); } to { transform: scale(1.14) translate3d(-1.2%, -.8%, 0); } }
-@keyframes cinematic-progress { to { transform: scaleX(1); } }
+.moments-section { padding-top: 96px; background: var(--color-foreground); color: white; }
+.moments-intro { display: flex; align-items: end; justify-content: space-between; gap: 40px; padding-bottom: 36px; }
+.moments-intro .eyebrow { color: #fb923c; }
+.moments-intro h2 { max-width: 720px; margin: 0; font-size: clamp(2.1rem, 5vw, 4.4rem); line-height: 1.06; letter-spacing: -.045em; }
+.moments-intro > p { max-width: 380px; margin: 0 0 8px; color: #cbd5e1; font-size: 1.08rem; }
+.moments-player { position: relative; min-height: min(82vh, 900px); overflow: hidden; isolation: isolate; background: #020617; }
+.moments-scenes, .moments-scene { position: absolute; inset: 0; }
+.moments-scene { opacity: 0; transition: opacity 1100ms ease; }
+.moments-scene.is-active { z-index: 1; opacity: 1; }
+.moments-media { width: 100%; height: 100%; display: block; object-fit: cover; transform: scale(1.06); }
+.moments-scene.is-active .moments-media { animation: moments-camera 7s cubic-bezier(.2, .65, .3, 1) both; }
+.moments-shade { position: absolute; z-index: 2; inset: 0; background: linear-gradient(90deg, rgba(2, 6, 23, .86) 0%, rgba(2, 6, 23, .34) 56%, rgba(2, 6, 23, .12) 100%), linear-gradient(0deg, rgba(2, 6, 23, .92) 0%, transparent 48%); }
+.moments-content { position: absolute; z-index: 3; top: 50%; right: 0; left: 0; transform: translateY(-54%); }
+.moments-eyebrow { margin: 0 0 12px; color: #67e8f9; font-size: .8rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+.moments-content h3 { max-width: 760px; margin: 0 0 16px; font-size: clamp(2.7rem, 7vw, 6.8rem); line-height: .98; letter-spacing: -.055em; text-wrap: balance; }
+.moments-content > p { margin: 0 0 28px; color: #e2e8f0; font-size: clamp(1rem, 2vw, 1.25rem); }
+.moments-link { min-height: 48px; display: inline-flex; align-items: center; gap: 12px; padding: 11px 18px; border: 1px solid rgba(255, 255, 255, .58); border-radius: 999px; background: rgba(15, 23, 42, .28); color: white; font-weight: 800; text-decoration: none; backdrop-filter: blur(10px); }
+.moments-controls { position: absolute; z-index: 4; right: 0; bottom: 28px; left: 0; display: flex; align-items: end; gap: 24px; }
+.moments-play { width: 46px; height: 46px; flex: 0 0 auto; display: grid; place-items: center; border: 1px solid rgba(255, 255, 255, .55); border-radius: 50%; background: rgba(15, 23, 42, .44); color: white; cursor: pointer; }
+.moments-timeline { width: 100%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.moments-timeline button { position: relative; display: grid; grid-template-columns: auto 1fr; gap: 5px 10px; padding: 12px 0 0; overflow: hidden; border: 0; background: transparent; color: rgba(255, 255, 255, .55); text-align: left; cursor: pointer; }
+.moments-timeline button::before { content: ""; position: absolute; top: 0; right: 0; left: 0; height: 2px; background: rgba(255, 255, 255, .3); }
+.moments-progress { position: absolute; z-index: 1; top: 0; left: 0; width: 100%; height: 2px; background: #fb923c; transform: scaleX(0); transform-origin: left; }
+.moments-timeline button.is-active .moments-progress { animation: moments-progress var(--moment-duration) linear both; }
+.moments-timeline button.is-active { color: white; }
+.moments-timeline b { font-size: .72rem; }
+.moments-timeline button > span:last-child { overflow: hidden; font-size: .83rem; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+@keyframes moments-camera { from { transform: scale(1.06); } to { transform: scale(1.14) translate3d(-1.2%, -.8%, 0); } }
+@keyframes moments-progress { to { transform: scaleX(1); } }
 
 .mood-section { padding-block: 104px; background: white; }
 .mood-heading { display: flex; align-items: end; justify-content: space-between; gap: 48px; }
@@ -493,17 +490,17 @@ body:has(.cinematic-hero) .brand, body:has(.cinematic-hero) .nav-links > a:not(.
   .hero-actions > * { width: 100%; }
   .hero-proof { gap: 20px; }
   .hero-visual { min-height: 430px; border-radius: 24px 24px 70px 24px; }
-  .cinematic-section { padding-top: 68px; }
-  .cinematic-intro { align-items: flex-start; flex-direction: column; gap: 14px; padding-bottom: 28px; }
-  .cinematic-player { min-height: 760px; }
-  .cinematic-shade { background: linear-gradient(0deg, rgba(2, 6, 23, .96) 0%, rgba(2, 6, 23, .42) 72%, rgba(2, 6, 23, .18) 100%); }
-  .cinematic-content { top: auto; bottom: 190px; transform: none; }
-  .cinematic-content h3 { font-size: clamp(2.7rem, 14vw, 4.5rem); }
-  .cinematic-controls { bottom: 24px; align-items: flex-start; }
-  .cinematic-timeline { grid-template-columns: repeat(4, minmax(38px, 1fr)); gap: 8px; }
-  .cinematic-timeline button { display: block; min-height: 43px; }
-  .cinematic-timeline button > span:last-child { display: none; }
-  .cinematic-timeline b { display: block; padding-top: 3px; }
+  .moments-section { padding-top: 68px; }
+  .moments-intro { align-items: flex-start; flex-direction: column; gap: 14px; padding-bottom: 28px; }
+  .moments-player { min-height: 760px; }
+  .moments-shade { background: linear-gradient(0deg, rgba(2, 6, 23, .96) 0%, rgba(2, 6, 23, .42) 72%, rgba(2, 6, 23, .18) 100%); }
+  .moments-content { top: auto; bottom: 190px; transform: none; }
+  .moments-content h3 { font-size: clamp(2.7rem, 14vw, 4.5rem); }
+  .moments-controls { bottom: 24px; align-items: flex-start; }
+  .moments-timeline { grid-template-columns: repeat(4, minmax(38px, 1fr)); gap: 8px; }
+  .moments-timeline button { display: block; min-height: 43px; }
+  .moments-timeline button > span:last-child { display: none; }
+  .moments-timeline b { display: block; padding-top: 3px; }
   .mood-section { padding-block: 72px; }
   .mood-selector { display: grid; grid-template-columns: 1fr 1fr; }
   .mood-stage { min-height: 650px; border-radius: 24px; }
