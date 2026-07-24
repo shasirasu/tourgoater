@@ -20,3 +20,13 @@ Tourgoater is a budget-focused trip planner. This Week 9 base contains user sign
 - Log out
 
 Destination and trip-planning features are future checkpoints.
+
+## Deploying to Vercel
+
+1. Connect a Neon Postgres database to the Vercel project and confirm that it supplies `DATABASE_URL`.
+2. Add `JWT_SECRET` in Vercel Project Settings > Environment Variables. Use a long random value and enable it for Production and Preview.
+3. Set `CLIENT_URL` to the production site URL, for example `https://tourgoater.vercel.app`.
+4. Push the repository to the Git provider connected to Vercel, then redeploy.
+5. Open `/api/health` on the deployed domain. It should return `{"message":"Tourgoater API is running"}`.
+
+The deployed API uses PostgreSQL and creates its tables automatically. Local development continues to use `server/data/tourgoater.db` when `DATABASE_URL` is not set.
