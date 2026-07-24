@@ -6,7 +6,8 @@ import pg from "pg";
 
 const { Pool } = pg;
 const serverDirectory = path.dirname(fileURLToPath(import.meta.url));
-const databaseUrl = process.env.DATABASE_URL;
+const databaseUrl = process.env.DATABASE_URL
+  || Object.entries(process.env).find(([name, value]) => name.endsWith("_DATABASE_URL") && value)?.[1];
 
 const schema = `
   CREATE TABLE IF NOT EXISTS users (
