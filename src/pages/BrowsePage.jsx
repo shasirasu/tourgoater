@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { CalendarDays, Compass, IndianRupee, MapPinned, Search, Sparkles, WalletCards } from "lucide-react";
 import travelData from "../data/travelData.js";
 import DestinationCard from "../components/DestinationCard.jsx";
 import SiteHeader from "../components/SiteHeader.jsx";
@@ -11,6 +12,7 @@ export default function BrowsePage({ user, onLogout }) {
   const [days, setDays] = useState(() => localStorage.getItem("tripDays") ?? "3");
   const [savedBudget, setSavedBudget] = useState(() => localStorage.getItem("tripBudget") ?? "");
   const [savedDays, setSavedDays] = useState(() => localStorage.getItem("tripDays") ?? "3");
+  const [searchQuery, setSearchQuery] = useState("");
   const dailyBudget = useMemo(() => {
     const total = Number(savedBudget);
     const tripDays = Number(savedDays);
@@ -35,6 +37,7 @@ export default function BrowsePage({ user, onLogout }) {
       })
       .catch(() => {});
   }, [user]);
+
   const matchingDestinations = useMemo(() => {
     if (!Number(savedBudget)) return travelData.state;
     return travelData.state
@@ -45,6 +48,14 @@ export default function BrowsePage({ user, onLogout }) {
       .filter(Boolean)
       .sort((a, b) => b.estimatedTripCost - a.estimatedTripCost);
   }, [savedBudget, savedDays]);
+
+  const visibleDestinations = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+    if (!query) return matchingDestinations;
+    return matchingDestinations.filter((destination) =>
+      [destination.name, destination.capital, destination.about].some((value) => value?.toLowerCase().includes(query)),
+    );
+  }, [matchingDestinations, searchQuery]);
 
   async function handleBudgetSubmit(event) {
     event.preventDefault();
@@ -73,27 +84,34 @@ export default function BrowsePage({ user, onLogout }) {
       <main className="browse-page" id="main-content">
         <div className="shell">
           <header className="browse-header">
-            <p className="eyebrow">Explore destinations</p>
-            <h1>Find a place that fits your kind of trip.</h1>
-            <p>Discover memorable places across India and start shaping a trip around your budget.</p>
+            <div className="browse-header-copy">
+              <p className="eyebrow"><Sparkles size={15} /> Explore incredible India</p>
+              <h1>Go farther.<br /><em>Spend smarter.</em></h1>
+              <p>Explore every Indian state, compare realistic trip costs, and find the places that fit the way you want to travel.</p>
+            </div>
+            <div className="browse-stats" aria-label="Tourgoater destination summary">
+              <div><MapPinned size={21} /><strong>28</strong><span>Indian states</span></div>
+              <div><Compass size={21} /><strong>190</strong><span>places to see</span></div>
+              <div><WalletCards size={21} /><strong>1</strong><span>budget-first plan</span></div>
+            </div>
           </header>
 
           <section className="budget-planner" aria-labelledby="budget-title">
             <div className="budget-copy">
-              <p className="eyebrow">Plan within your limits</p>
+              <p className="eyebrow"><WalletCards size={15} /> Plan within your limits</p>
               <h2 id="budget-title">What is your trip budget?</h2>
               <p>Tell us your total budget and trip length. We’ll turn it into a simple daily target.</p>
             </div>
             <form className="budget-form" onSubmit={handleBudgetSubmit}>
               <label>
                 <span>Total budget</span>
-                <span className="budget-input-wrap"><b>₹</b><input type="number" min="1000" step="500" value={budget} onChange={(event) => setBudget(event.target.value)} placeholder="25,000" required /></span>
+                <span className="budget-input-wrap"><IndianRupee size={17} /><input type="number" min="1000" step="500" value={budget} onChange={(event) => setBudget(event.target.value)} placeholder="25,000" required /></span>
               </label>
               <label>
                 <span>Trip length</span>
-                <span className="budget-input-wrap"><input type="number" min="1" max="30" value={days} onChange={(event) => setDays(event.target.value)} required /><b>days</b></span>
+                <span className="budget-input-wrap"><CalendarDays size={17} /><input type="number" min="1" max="30" value={days} onChange={(event) => setDays(event.target.value)} required /><b>days</b></span>
               </label>
-              <button className="button" type="submit">Set my budget</button>
+              <button className="button" type="submit"><Sparkles size={17} /> Match trips</button>
             </form>
             {dailyBudget > 0 && (
               <div className="budget-result" role="status">
@@ -109,19 +127,24 @@ export default function BrowsePage({ user, onLogout }) {
               <p className="eyebrow">{savedBudget ? "Matched to your budget" : "Explore India"}</p>
               <h2>{savedBudget ? `${matchingDestinations.length} trips you can afford` : "Choose your next destination"}</h2>
             </div>
-            {savedBudget && <p>Estimates include a comfortable stay, food, and local travel for {savedDays} days.</p>}
+            <label className="destination-search">
+              <Search size={18} />
+              <input type="search" value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} placeholder="Search state or capital" aria-label="Search state or capital" />
+            </label>
           </div>
+          {savedBudget && <p className="results-note">Estimates include a comfortable stay, food, and local travel for {savedDays} days.</p>}
 
-          {matchingDestinations.length > 0 ? (
+          {visibleDestinations.length > 0 ? (
             <section className="destination-grid" aria-label={savedBudget ? "Trips within your budget" : "Destinations"}>
-              {matchingDestinations.map((destination) => (
+              {visibleDestinations.map((destination) => (
                 <DestinationCard key={destination.id} destination={destination} estimate={destination} budget={Number(savedBudget)} />
               ))}
             </section>
           ) : (
             <div className="budget-empty" role="status">
-              <h2>No trips fit this budget yet</h2>
-              <p>Increase your budget or shorten the trip length to see hotel-inclusive plans.</p>
+              <Search size={30} />
+              <h2>{searchQuery ? "No destinations match your search" : "No trips fit this budget yet"}</h2>
+              <p>{searchQuery ? "Try another state, capital, or clear the search." : "Increase your budget or shorten the trip length to see hotel-inclusive plans."}</p>
             </div>
           )}
         </div>
