@@ -41,8 +41,8 @@ img { max-width: 100%; }
 .site-header { position: relative; z-index: 10; border-bottom: 1px solid rgba(234, 88, 12, .12); background: rgba(255, 247, 237, .92); backdrop-filter: blur(14px); }
 .nav { min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .brand { min-height: 48px; display: inline-flex; align-items: center; gap: 10px; color: var(--color-foreground); font-size: 1.2rem; font-weight: 700; text-decoration: none; }
-.brand-mark { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 11px; background: var(--color-primary); color: white; box-shadow: var(--shadow-sm); }
-.brand-mark svg { width: 23px; height: 23px; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.brand-mark { width: 42px; height: 42px; display: grid; place-items: center; }
+.brand-mark img { width: 42px; height: 42px; display: block; object-fit: contain; }
 .nav-links { display: flex; align-items: center; gap: 8px; }
 .nav-links > a:not(.button), .nav-text-button { min-height: 44px; display: inline-flex; align-items: center; padding: 0 12px; border: 0; background: transparent; color: #334155; font-weight: 600; text-decoration: none; cursor: pointer; transition: color 200ms ease, background-color 200ms ease; }
 .nav-links > a:not(.button):hover, .nav-text-button:hover { color: var(--color-primary-dark); background: rgba(234, 88, 12, .06); border-radius: 8px; }
@@ -539,8 +539,8 @@ body:has(.cinematic-hero) .brand, body:has(.cinematic-hero) .nav-links > a:not(.
 .route-transition-curtain { position: absolute; inset: 0; background: var(--color-foreground); transform-origin: top; animation: route-curtain 560ms cubic-bezier(.76, 0, .24, 1) both; }
 .route-transition-curtain::after { content: ""; position: absolute; right: 0; bottom: 0; left: 0; height: 5px; background: linear-gradient(90deg, var(--color-primary), #fb923c 48%, var(--color-secondary)); }
 .route-transition-brand { position: absolute; z-index: 1; top: 50%; left: 50%; display: flex; align-items: center; gap: 12px; color: white; font-family: "Lexend", system-ui, sans-serif; font-size: clamp(1.15rem, 2vw, 1.4rem); font-weight: 700; transform: translate(-50%, -50%); animation: route-brand 440ms cubic-bezier(.22, .8, .3, 1) both; }
-.route-transition-mark { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 13px; background: var(--color-primary); box-shadow: 0 12px 28px rgba(0, 0, 0, .22); }
-.route-transition-mark svg { width: 26px; height: 26px; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.route-transition-mark { width: 54px; height: 54px; display: grid; place-items: center; filter: drop-shadow(0 12px 22px rgba(0, 0, 0, .3)); }
+.route-transition-mark img { width: 54px; height: 54px; display: block; object-fit: contain; }
 
 @keyframes route-layer {
   0%, 99% { visibility: visible; }
