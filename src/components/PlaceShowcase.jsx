@@ -62,6 +62,7 @@ export default function PlaceShowcase({
               alt=""
               fallbackLabel={place.name}
               loading="lazy"
+              sizes="100vw"
               width="1440"
               height="900"
             />
@@ -72,6 +73,7 @@ export default function PlaceShowcase({
                 alt={`View of ${place.name}`}
                 fallbackLabel={place.name}
                 loading="lazy"
+                sizes="(max-width: 680px) 88vw, 74vw"
                 width="1200"
                 height="760"
               />

@@ -1,20 +1,38 @@
 import { useEffect, useMemo, useState } from "react";
 
-export default function SafeImage({ sources, alt, fallbackLabel, ...imageProps }) {
+const RESPONSIVE_WIDTHS = [640, 960, 1280, 1920, 2560, 3840];
+
+function canOptimize(source) {
+  return /^https?:\/\//i.test(source) && !source.includes("wsrv.nl/");
+}
+
+function optimizedUrl(source, width) {
+  return `https://wsrv.nl/?url=${encodeURIComponent(source)}&w=${width}&output=webp&q=88`;
+}
+
+export default function SafeImage({ sources, alt, fallbackLabel, sizes = "100vw", className = "", onLoad, loading, ...imageProps }) {
   const availableSources = useMemo(
     () => (Array.isArray(sources) ? sources.filter(Boolean) : [sources].filter(Boolean)),
     [sources],
   );
-  const [sourceIndex, setSourceIndex] = useState(0);
+  const candidates = useMemo(() => availableSources.flatMap((source) => canOptimize(source)
+    ? [{
+        src: optimizedUrl(source, 1920),
+        srcSet: RESPONSIVE_WIDTHS.map((width) => `${optimizedUrl(source, width)} ${width}w`).join(", "),
+      }, { src: source }]
+    : [{ src: source }]), [availableSources]);
+  const [candidateIndex, setCandidateIndex] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    setSourceIndex(0);
-  }, [availableSources]);
+    setCandidateIndex(0);
+    setIsLoaded(false);
+  }, [candidates]);
 
-  if (!availableSources[sourceIndex]) {
+  if (!candidates[candidateIndex]) {
     return (
       <div
-        className={`image-fallback ${imageProps.className || ""}`}
+        className={`image-fallback ${className}`}
         role="img"
         aria-label={`${alt}. Image unavailable.`}
       >
@@ -31,10 +49,22 @@ export default function SafeImage({ sources, alt, fallbackLabel, ...imageProps }
   return (
     <img
       {...imageProps}
-      src={availableSources[sourceIndex]}
+      className={`safe-image ${isLoaded ? "is-loaded" : ""} ${className}`.trim()}
+      src={candidates[candidateIndex].src}
+      srcSet={candidates[candidateIndex].srcSet}
+      sizes={candidates[candidateIndex].srcSet ? sizes : undefined}
       alt={alt}
+      loading={loading ?? (imageProps.fetchPriority === "high" ? "eager" : "lazy")}
+      decoding="async"
       referrerPolicy="no-referrer"
-      onError={() => setSourceIndex((currentIndex) => currentIndex + 1)}
+      onLoad={(event) => {
+        setIsLoaded(true);
+        onLoad?.(event);
+      }}
+      onError={() => {
+        setIsLoaded(false);
+        setCandidateIndex((currentIndex) => currentIndex + 1);
+      }}
     />
   );
 }

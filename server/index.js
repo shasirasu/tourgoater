@@ -3,6 +3,7 @@ import cors from "cors";
 import express from "express";
 import authRoutes from "./routes/auth.js";
 import planRoutes from "./routes/plans.js";
+import preferenceRoutes from "./routes/preferences.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -15,6 +16,7 @@ app.get("/api/health", (_request, response) => {
 });
 app.use("/api/auth", authRoutes);
 app.use("/api/plans", planRoutes);
+app.use("/api/preferences", preferenceRoutes);
 
 app.use((error, _request, response, _next) => {
   console.error(error);

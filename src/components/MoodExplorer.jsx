@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import travelData from "../../db.json";
+import travelData from "../data/travelData.js";
 import InkReveal from "./InkReveal.jsx";
 import SafeImage from "./SafeImage.jsx";
 
@@ -81,6 +81,7 @@ export default function MoodExplorer() {
             alt={`${selectedMood.label} trip recommendation in ${leadDestination?.name}`}
             fallbackLabel={leadDestination?.name}
             loading="lazy"
+            sizes="(max-width: 1160px) 100vw, 1160px"
             width="1200"
             height="680"
           />

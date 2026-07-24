@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import SafeImage from "./SafeImage.jsx";
 
-export default function DestinationCard({ destination }) {
+export default function DestinationCard({ destination, estimate, budget }) {
   const placeCount = destination.tourist?.length ?? 0;
 
   return (
@@ -13,6 +13,7 @@ export default function DestinationCard({ destination }) {
           alt={`Scenic view of ${destination.name}`}
           fallbackLabel={destination.name}
           loading="lazy"
+          sizes="(max-width: 680px) 100vw, (max-width: 980px) 50vw, 34vw"
           width="640"
           height="420"
         />
@@ -25,6 +26,13 @@ export default function DestinationCard({ destination }) {
         <h2>{destination.name}</h2>
         <p className="destination-capital">Capital · {destination.capital}</p>
         <p className="destination-description">{destination.about}</p>
+        {estimate?.estimatedTripCost && (
+          <div className="trip-estimate">
+            <span>{estimate.hotel.name}</span>
+            <strong>₹{estimate.estimatedTripCost.toLocaleString("en-IN")}</strong>
+            <small>Hotel ₹{estimate.hotelCost.toLocaleString("en-IN")} for {estimate.nights} {estimate.nights === 1 ? "night" : "nights"} · ₹{(budget - estimate.estimatedTripCost).toLocaleString("en-IN")} left</small>
+          </div>
+        )}
       </div>
     </Link>
   );

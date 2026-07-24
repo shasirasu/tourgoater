@@ -4,10 +4,9 @@ Tourgoater is a budget-focused trip planner. This Week 9 base contains user sign
 
 ## Setup
 
-1. Create a PostgreSQL database: `createdb -U postgres tourgoater`.
-2. Create the tables: `psql -U postgres -d tourgoater -f server/schema.sql`.
-3. Add sample destinations and hotels: `psql -U postgres -d tourgoater -f server/seed.sql`.
-4. Copy `.env.example` to `.env` and enter your database password and a secure `JWT_SECRET`.
+1. Run `npm install` to install the app and SQLite dependency.
+2. Copy `.env.example` to `.env` and enter a secure `JWT_SECRET`.
+3. Start the API with `npm run server`. The SQLite database and tables are created automatically in `server/data/tourgoater.db`.
 5. Install packages with `npm install`.
 6. Start the backend with `npm run server`.
 7. In a second terminal, start React with `npm run dev`.

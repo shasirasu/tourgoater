@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import travelData from "../../db.json";
+import travelData from "../data/travelData.js";
 import PlaceShowcase from "../components/PlaceShowcase.jsx";
 import SafeImage from "../components/SafeImage.jsx";
 import SiteFooter from "../components/SiteFooter.jsx";
 import SiteHeader from "../components/SiteHeader.jsx";
+import { buildTripEstimate, getDestinationHotels } from "../data/tripPlanning.js";
 
 const currencyFormatter = new Intl.NumberFormat("en-IN", {
   style: "currency",
@@ -82,7 +83,17 @@ export default function DestinationPage({ user, onLogout }) {
   }
 
   const touristPlaces = destination.tourist ?? [];
-  const accommodations = destination.accommodations ?? [];
+  const accommodations = getDestinationHotels(destination);
+  const savedBudget = Number(localStorage.getItem("tripBudget")) || 0;
+  const savedDays = Math.max(1, Number(localStorage.getItem("tripDays")) || 3);
+  const tripEstimate = savedBudget ? buildTripEstimate(destination, savedDays, savedBudget) : null;
+  const itinerary = Array.from({ length: savedDays }, (_, dayIndex) => ({
+    day: dayIndex + 1,
+    places: [
+      touristPlaces[(dayIndex * 2) % touristPlaces.length],
+      touristPlaces[(dayIndex * 2 + 1) % touristPlaces.length],
+    ].filter((place, index, places) => place && places.findIndex((item) => item.name === place.name) === index),
+  }));
 
   return (
     <>
@@ -110,8 +121,67 @@ export default function DestinationPage({ user, onLogout }) {
               fallbackLabel={destination.name}
               width="760"
               height="760"
+              sizes="(max-width: 980px) 100vw, 50vw"
               fetchPriority="high"
             />
+          </div>
+        </section>
+
+        <section className="trip-plan-section">
+          <div className="shell">
+            <header className="places-heading">
+              <div>
+                <p className="eyebrow">Your budget plan</p>
+                <h2>{savedDays} days in {destination.name}.</h2>
+              </div>
+              <p>A practical starting itinerary based on your saved budget and the places available in this area.</p>
+            </header>
+
+            {!savedBudget ? (
+              <div className="budget-empty">
+                <h2>Set your trip budget first</h2>
+                <p>Choose a budget and trip length so we can build an affordable plan for {destination.name}.</p>
+                <Link className="button" to="/browse">Set my budget</Link>
+              </div>
+            ) : tripEstimate ? (
+              <div className="trip-plan-layout">
+                <aside className="plan-summary">
+                  <p className="plan-summary-label">Estimated total</p>
+                  <strong className="plan-total">{currencyFormatter.format(tripEstimate.estimatedTripCost)}</strong>
+                  <p className="plan-budget-note">within your {currencyFormatter.format(savedBudget)} budget</p>
+                  <dl className="plan-costs">
+                    <div><dt>{tripEstimate.hotel.name}</dt><dd>{currencyFormatter.format(tripEstimate.hotelCost)}</dd></div>
+                    <div><dt>{tripEstimate.nights} {tripEstimate.nights === 1 ? "night" : "nights"}</dt><dd>{currencyFormatter.format(tripEstimate.hotel.pricePerNight)}/night</dd></div>
+                    <div><dt>Food, activities & local travel</dt><dd>{currencyFormatter.format(tripEstimate.dailyExpenses * savedDays)}</dd></div>
+                    <div className="plan-money-left"><dt>Money left</dt><dd>{currencyFormatter.format(savedBudget - tripEstimate.estimatedTripCost)}</dd></div>
+                  </dl>
+                  <small>Planning estimate only; live prices may vary.</small>
+                </aside>
+
+                <div className="day-plan-list">
+                  {itinerary.map(({ day, places }) => (
+                    <article className="day-plan" key={day}>
+                      <div className="day-number"><span>Day</span><strong>{String(day).padStart(2, "0")}</strong></div>
+                      <div>
+                        <h3>{places.length ? places.map((place) => place.name).join(" & ") : "Explore the local area"}</h3>
+                        <p>{day === 1 ? `Check in at ${tripEstimate.hotel.name}, then start exploring.` : "Continue from your hotel and discover more of the area."}</p>
+                        <div className="day-stops">
+                          {places.map((place) => place.location ? (
+                            <a key={place.name} href={place.location} target="_blank" rel="noreferrer">{place.name} <span aria-hidden="true">↗</span></a>
+                          ) : <span key={place.name}>{place.name}</span>)}
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="budget-empty">
+                <h2>This trip needs a little more budget</h2>
+                <p>No available sample hotel fits {currencyFormatter.format(savedBudget)} for {savedDays} days. Increase the budget or shorten the trip.</p>
+                <Link className="button" to="/browse">Change my budget</Link>
+              </div>
+            )}
           </div>
         </section>
 
@@ -122,7 +192,7 @@ export default function DestinationPage({ user, onLogout }) {
                 <p className="eyebrow">Sample accommodation</p>
                 <h2>Hotels and resorts in {destination.name}.</h2>
               </div>
-              <p>Prices and room counts are example data for your Week 9 MVP, not live booking information.</p>
+              <p>Sample planning estimates only. Prices and availability are not live booking information.</p>
             </header>
 
             {accommodations.length > 0 ? (
@@ -139,6 +209,7 @@ export default function DestinationPage({ user, onLogout }) {
                           alt={`${stay.name} sample accommodation`}
                           fallbackLabel={stay.name}
                           loading="lazy"
+                          sizes="(max-width: 680px) 100vw, (max-width: 980px) 50vw, 34vw"
                           width="640"
                           height="420"
                         />
@@ -161,8 +232,8 @@ export default function DestinationPage({ user, onLogout }) {
               </div>
             ) : (
               <div className="empty-state">
-                <h3>Accommodation data is coming next</h3>
-                <p>Kerala currently contains the first sample hotel and resort records.</p>
+                <h3>No accommodation estimates available</h3>
+                <p>Hotel options for this destination will be added soon.</p>
               </div>
             )}
           </div>
@@ -175,7 +246,7 @@ export default function DestinationPage({ user, onLogout }) {
                 <p className="eyebrow">Places to discover</p>
                 <h2>Make time for these stops.</h2>
               </div>
-              <p>These places come directly from the tourist information saved in `db.json`.</p>
+              <p>These places come directly from the saved tourist information.</p>
             </header>
 
             {saveError?.placeName === "" && (
@@ -194,7 +265,7 @@ export default function DestinationPage({ user, onLogout }) {
             ) : (
               <div className="empty-state">
                 <h3>No tourist places added yet</h3>
-                <p>Add a `tourist` array for this state in `db.json`.</p>
+                <p>Tourist information for this state will be added soon.</p>
               </div>
             )}
           </div>

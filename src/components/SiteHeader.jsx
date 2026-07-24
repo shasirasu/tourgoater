@@ -11,7 +11,10 @@ export default function SiteHeader({ user, onLogout }) {
           <nav className="nav-links" aria-label="Main navigation">
             <Link to="/browse">Destinations</Link>
             {user ? (
-              <button className="nav-text-button" onClick={onLogout}>Log out</button>
+              <>
+                <Link to="/saved">Saved plan</Link>
+                <button className="nav-text-button" onClick={onLogout}>Log out</button>
+              </>
             ) : (
               <>
                 <Link to="/login">Log in</Link>

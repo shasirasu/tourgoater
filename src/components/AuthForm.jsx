@@ -23,12 +23,14 @@ export default function AuthForm({ mode, onAuth }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      const data = await response.json();
+      const data = await response.json().catch(() => ({}));
 
       if (!response.ok) throw new Error(data.message || "Something went wrong");
       onAuth(data);
     } catch (requestError) {
-      setError(requestError.message);
+      setError(requestError.message === "Failed to fetch"
+        ? "The login server is not running. Start it with npm.cmd run server."
+        : requestError.message);
     } finally {
       setSubmitting(false);
     }

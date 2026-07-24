@@ -3,11 +3,12 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { pool } from "../db.js";
 import { requireAuth } from "../middleware/requireAuth.js";
+import { getJwtSecret } from "../config.js";
 
 const router = Router();
 
 function createToken(user) {
-  return jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, {
+  return jwt.sign({ id: user.id, email: user.email }, getJwtSecret(), {
     expiresIn: "1d",
   });
 }

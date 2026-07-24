@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { getJwtSecret } from "../config.js";
 
 export function requireAuth(request, response, next) {
   const authHeader = request.headers.authorization;
@@ -7,7 +8,7 @@ export function requireAuth(request, response, next) {
   if (!token) return response.status(401).json({ message: "Please log in" });
 
   try {
-    request.user = jwt.verify(token, process.env.JWT_SECRET);
+    request.user = jwt.verify(token, getJwtSecret());
     next();
   } catch {
     response.status(401).json({ message: "Your session is invalid or expired" });

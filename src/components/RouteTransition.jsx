@@ -1,19 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import transitionImage from "../assets/tourgoater-transition.png";
 
-const TRANSITION_DURATION = 420;
+const TRANSITION_DURATION = 560;
 
 export default function RouteTransition() {
   const location = useLocation();
   const previousPathRef = useRef(location.pathname);
   const timeoutRef = useRef(null);
   const [transition, setTransition] = useState(null);
-
-  useEffect(() => {
-    const image = new Image();
-    image.src = transitionImage;
-  }, []);
 
   useEffect(() => {
     if (previousPathRef.current === location.pathname) return undefined;
@@ -40,21 +34,15 @@ export default function RouteTransition() {
 
   return (
     <div className="route-transition" aria-hidden="true" key={transition.key}>
-      <img
-        className="route-transition-backdrop"
-        src={transitionImage}
-        alt=""
-        width="1920"
-        height="1080"
-      />
-      <div className="route-transition-media">
-        <img
-          className="route-transition-image"
-          src={transitionImage}
-          alt=""
-          width="1792"
-          height="1024"
-        />
+      <div className="route-transition-curtain" />
+      <div className="route-transition-brand">
+        <span className="route-transition-mark">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 21s6-5.1 6-11a6 6 0 1 0-12 0c0 5.9 6 11 6 11Z" />
+            <path d="m9.7 12.3 1.2-4.1 3.4-1.6-1.2 4.2-3.4 1.5Z" />
+          </svg>
+        </span>
+        <span>Tourgoater</span>
       </div>
     </div>
   );

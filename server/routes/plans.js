@@ -65,4 +65,23 @@ router.post("/", async (request, response) => {
   }
 });
 
+router.delete("/:id", async (request, response) => {
+  const planId = Number(request.params.id);
+  if (!Number.isInteger(planId) || planId < 1) {
+    return response.status(400).json({ message: "Invalid saved place" });
+  }
+
+  try {
+    const result = await pool.query(
+      "DELETE FROM saved_plans WHERE id = $1 AND user_id = $2",
+      [planId, request.user.id],
+    );
+    if (!result.rowCount) return response.status(404).json({ message: "Saved place not found" });
+    response.json({ message: "Place removed from your plan" });
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({ message: "Could not remove this place" });
+  }
+});
+
 export default router;

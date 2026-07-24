@@ -1,25 +1,27 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate, Route, Routes, useNavigate } from "react-router-dom";
-import travelData from "../db.json";
+import travelData from "./data/travelData.js";
 import AuthForm from "./components/AuthForm.jsx";
 import DestinationCard from "./components/DestinationCard.jsx";
 import SiteHeader from "./components/SiteHeader.jsx";
 import SiteFooter from "./components/SiteFooter.jsx";
-import SafeImage from "./components/SafeImage.jsx";
 import MoodExplorer from "./components/MoodExplorer.jsx";
 import RouteTransition from "./components/RouteTransition.jsx";
+import CinematicHero from "./components/CinematicHero.jsx";
 import BrowsePage from "./pages/BrowsePage.jsx";
 import DestinationPage from "./pages/DestinationPage.jsx";
+import CinematicMoments from "./components/CinematicMoments.jsx";
+import SavedPlansPage from "./pages/SavedPlansPage.jsx";
 
 function HomePage({ user, onLogout }) {
-  const heroDestination = travelData.state[3];
   const featuredDestinations = travelData.state.slice(1, 4);
 
   return (
     <>
       <SiteHeader user={user} onLogout={onLogout} />
       <main id="main-content">
-        <section className="hero shell">
+        <CinematicHero destinations={travelData.state} />
+        {/* <section className="hero shell">
           <div className="hero-copy">
             <p className="eyebrow">Plan smart · travel happy</p>
             <h1>See more of the world, without losing sight of your budget.</h1>
@@ -51,6 +53,7 @@ function HomePage({ user, onLogout }) {
               fallbackLabel="Kerala"
               width="760"
               height="900"
+              sizes="(max-width: 980px) 100vw, 50vw"
               fetchPriority="high"
             />
             <div className="hero-float-card">
@@ -59,8 +62,9 @@ function HomePage({ user, onLogout }) {
               <span>{heroDestination.tourist.length} places to discover</span>
             </div>
           </div>
-        </section>
+        </section> */}
 
+        <CinematicMoments />
         <MoodExplorer />
 
         <section className="how-section">
@@ -164,6 +168,7 @@ export default function App() {
         <Route path="/" element={<HomePage user={user} onLogout={handleLogout} />} />
         <Route path="/browse" element={<BrowsePage user={user} onLogout={handleLogout} />} />
         <Route path="/destination/:id" element={<DestinationPage user={user} onLogout={handleLogout} />} />
+        <Route path="/saved" element={user ? <SavedPlansPage user={user} onLogout={handleLogout} /> : <Navigate to="/login" />} />
         <Route
           path="/signup"
           element={user ? <Navigate to="/" /> : <AuthForm mode="signup" onAuth={handleAuth} />}
