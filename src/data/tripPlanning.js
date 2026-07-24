@@ -33,14 +33,15 @@ export const tripPlanning = {
     { id: "tamilnadu-comfort", name: "Southern Pilgrim Comfort", type: "Hotel", area: "Rameswaram", pricePerNight: 3200, roomsAvailable: 5, rating: 4.5, isSample: true },
   ]},
 };
-
+import hotelImages from "./hotel-images.json";
 export function getDestinationHotels(destination) {
-  if (destination.accommodations?.length) return destination.accommodations;
-  if (tripPlanning[destination.id]?.hotels?.length) return tripPlanning[destination.id].hotels;
-  return [
+  const hotels = destination.accommodations?.length ? destination.accommodations
+    : tripPlanning[destination.id]?.hotels?.length ? tripPlanning[destination.id].hotels
+    : [
     { id: `${destination.id}-value`, name: `${destination.capital} Value Stay`, type: "Hotel", area: destination.capital, pricePerNight: 1800, roomsAvailable: 6, rating: 4.1, isSample: true },
     { id: `${destination.id}-comfort`, name: `${destination.name} Comfort Hotel`, type: "Hotel", area: destination.capital, pricePerNight: 3100, roomsAvailable: 4, rating: 4.4, isSample: true },
   ];
+  return hotels.map((hotel) => ({ ...hotel, image: hotelImages[destination.id]?.[hotel.name] || hotel.image }));
 }
 
 export function buildTripEstimate(destination, days, budget = Infinity) {
