@@ -22,6 +22,17 @@ const stateQueries = new Map([
   ["Uttar Pradesh", "Taj Mahal Agra Uttar Pradesh"], ["West Bengal", "Victoria Memorial Kolkata West Bengal"],
 ]);
 
+// If Commons has no searchable result, keep the experience fully local with a
+// geographically related landscape until a state-specific photograph is added.
+const localFallbacks = new Map([
+  ["Meghalaya", "/images/travel/state-assam.jpg"],
+  ["Mizoram", "/images/travel/state-manipur.jpg"],
+  ["Nagaland", "/images/travel/state-manipur.jpg"],
+  ["Sikkim", "/images/travel/state-arunachal-pradesh.jpg"],
+  ["Telangana", "/images/travel/state-karnataka.jpg"],
+  ["Tripura", "/images/travel/state-assam.jpg"],
+]);
+
 function slug(value) { return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
 
 async function downloadStateImage(stateName, query) {
@@ -34,7 +45,7 @@ async function downloadStateImage(stateName, query) {
   const search = await fetch(api, options);
   if (!search.ok) throw new Error(`search ${search.status}`);
   const data = await search.json();
-  const page = Object.values(data.query?.pages ?? {}).find((item) => !/map|logo|icon|flag|seal/i.test(item.title));
+  const page = Object.values(data.query?.pages ?? {}).find((item) => item.imageinfo?.[0] && !/map|logo|icon|flag|seal/i.test(item.title));
   if (!page?.imageinfo?.[0]) throw new Error("no image result");
   let response = await fetch(page.imageinfo[0].thumburl || page.imageinfo[0].url, options);
   if (response.status === 429) { await new Promise((resolve) => setTimeout(resolve, 5000)); response = await fetch(page.imageinfo[0].thumburl || page.imageinfo[0].url, options); }
@@ -54,7 +65,13 @@ for (const [stateName, query] of stateQueries) {
     catalog.state[stateIndex] = { img: [image], tourist: database.state[stateIndex].tourist.map(() => ({ images: [image] })) };
     console.log(`Cached ${stateName}`);
   } catch (error) {
-    console.error(`Skipped ${stateName}: ${error.message}`);
+    const fallback = localFallbacks.get(stateName);
+    if (fallback) {
+      catalog.state[stateIndex] = { img: [fallback], tourist: database.state[stateIndex].tourist.map(() => ({ images: [fallback] })) };
+      console.warn(`Used local regional fallback for ${stateName}: ${error.message}`);
+    } else {
+      console.error(`Skipped ${stateName}: ${error.message}`);
+    }
   }
   await new Promise((resolve) => setTimeout(resolve, 900));
 }

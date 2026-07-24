@@ -39,8 +39,8 @@ function HomePage({ user, onLogout }) {
               </div>
             )}
             <div className="hero-proof" aria-label="Tourgoater content summary">
-              <div><strong>8</strong><span>featured states</span></div>
-              <div><strong>91+</strong><span>places to explore</span></div>
+              <div><strong>28</strong><span>Indian states</span></div>
+              <div><strong>190</strong><span>places to explore</span></div>
               <div><strong>1</strong><span>clear trip budget</span></div>
             </div>
           </div>

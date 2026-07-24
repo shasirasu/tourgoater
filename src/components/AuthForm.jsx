@@ -45,8 +45,8 @@ export default function AuthForm({ mode, onAuth }) {
           <h2>One place for destinations, stays, routes, and your budget.</h2>
           <p>Start with a destination. Tourgoater helps you turn it into a trip you can afford.</p>
           <div className="auth-stat-row" aria-label="Tourgoater highlights">
-            <div><strong>8</strong><span>destinations</span></div>
-            <div><strong>91+</strong><span>places to see</span></div>
+            <div><strong>28</strong><span>Indian states</span></div>
+            <div><strong>190</strong><span>places to see</span></div>
           </div>
         </div>
       </section>
