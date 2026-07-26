@@ -19,7 +19,18 @@ export default function PlaceShowcase({
   onSave,
 }) {
   const showcaseRef = useRef(null);
+  const playbackTimerRef = useRef(null);
   const [activePlace, setActivePlace] = useState(places[0]?.name ?? "");
+  const [playingPlace, setPlayingPlace] = useState("");
+
+  function playMoment(placeName) {
+    window.clearTimeout(playbackTimerRef.current);
+    setPlayingPlace("");
+    window.requestAnimationFrame(() => {
+      setPlayingPlace(placeName);
+      playbackTimerRef.current = window.setTimeout(() => setPlayingPlace(""), 7000);
+    });
+  }
 
   useEffect(() => {
     const sections = showcaseRef.current?.querySelectorAll("[data-place-story]");
@@ -40,6 +51,8 @@ export default function PlaceShowcase({
     return () => observer.disconnect();
   }, [places]);
 
+  useEffect(() => () => window.clearTimeout(playbackTimerRef.current), []);
+
   return (
     <div className="place-showcase" ref={showcaseRef}>
       {places.map((place, index) => {
@@ -48,10 +61,11 @@ export default function PlaceShowcase({
         const remainingWords = titleWords.join(" ");
         const isSaved = savedPlaceNames.has(place.name);
         const isSaving = savingPlaceName === place.name;
+        const isPlaying = playingPlace === place.name;
 
         return (
           <article
-            className={`place-story ${activePlace === place.name ? "is-active" : ""}`}
+            className={`place-story ${activePlace === place.name ? "is-active" : ""} ${isPlaying ? "is-playing" : ""}`}
             data-place-story
             data-place-name={place.name}
             key={place.name}
@@ -66,7 +80,7 @@ export default function PlaceShowcase({
               width="1440"
               height="900"
             />
-            <div className="place-story-media">
+            <button className="place-story-media" type="button" onClick={() => playMoment(place.name)} aria-label={`Play a seven second cinematic view of ${place.name}`}>
               <SafeImage
                 className="place-story-image"
                 sources={place.images}
@@ -77,7 +91,12 @@ export default function PlaceShowcase({
                 width="1200"
                 height="760"
               />
-            </div>
+              <span className="place-moment-play" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="m9 7 8 5-8 5V7Z" /></svg>
+                {isPlaying ? "Playing moment" : "Play 7s moment"}
+              </span>
+              {isPlaying && <span className="place-moment-progress" aria-hidden="true"><i /></span>}
+            </button>
 
             <div className="place-story-title" aria-hidden="true">
               <span>{firstWord}</span>
