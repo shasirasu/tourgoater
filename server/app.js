@@ -5,6 +5,7 @@ import authRoutes from "./routes/auth.js";
 import planRoutes from "./routes/plans.js";
 import preferenceRoutes from "./routes/preferences.js";
 import adminRoutes from "./routes/admin.js";
+import flightRoutes from "./routes/flights.js";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/plans", planRoutes);
 app.use("/api/preferences", preferenceRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/flights", flightRoutes);
 
 app.use((error, _request, response, _next) => {
   console.error(error);
