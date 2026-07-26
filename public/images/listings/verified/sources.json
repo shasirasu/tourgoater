@@ -1,0 +1,65 @@
+{
+  "andaman-and-nicobar-neil-island": {
+    "place": "NEIL ISLAND",
+    "state": "Andaman & Nicobar",
+    "title": "Neil Island",
+    "articleUrl": "https://en.wikipedia.org/wiki/Neil_Island",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Keshet_neal_island_india.jpg"
+  },
+  "andaman-and-nicobar-cellular-jail-port-blair": {
+    "place": "CELLULAR JAIL,PORT BLAIR",
+    "state": "Andaman & Nicobar",
+    "title": "Port Blair",
+    "articleUrl": "https://en.wikipedia.org/wiki/Port_Blair",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9b/View_from_South_Point%2C_%28Port_Blair%2C_India%29.jpg"
+  },
+  "andaman-and-nicobar-corbyn-s-cove-port-blair": {
+    "place": "CORBYN'S COVE,PORT BLAIR",
+    "state": "Andaman & Nicobar",
+    "title": "Port Blair",
+    "articleUrl": "https://en.wikipedia.org/wiki/Port_Blair",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9b/View_from_South_Point%2C_%28Port_Blair%2C_India%29.jpg"
+  },
+  "andaman-and-nicobar-samudrika-naval-marine-museum-port-blair": {
+    "place": "SAMUDRIKA NAVAL MARINE MUSEUM,PORT BLAIR",
+    "state": "Andaman & Nicobar",
+    "title": "Andaman and Nicobar Islands",
+    "articleUrl": "https://en.wikipedia.org/wiki/Andaman_and_Nicobar_Islands",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2f/The_Coral_Reef_at_the_Andaman_Islands.jpg"
+  },
+  "punjab-jallianwala-bagh": {
+    "place": "JALLIANWALA BAGH",
+    "state": "Punjab",
+    "title": "Jallianwala Bagh",
+    "articleUrl": "https://en.wikipedia.org/wiki/Jallianwala_Bagh",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b5/Jallianwala_Bagh%2C_Amritsar_01.jpg"
+  },
+  "punjab-bhakra-nangal-dam": {
+    "place": "BHAKRA NANGAL DAM",
+    "state": "Punjab",
+    "title": "Nangal",
+    "articleUrl": "https://en.wikipedia.org/wiki/Nangal",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Bhakra_Dam_Aug_15_2008.JPG"
+  },
+  "punjab-sukhna-lake": {
+    "place": "SUKHNA LAKE",
+    "state": "Punjab",
+    "title": "Sukhna Lake",
+    "articleUrl": "https://en.wikipedia.org/wiki/Sukhna_Lake",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e6/Sukhna_Lake_Chandigarh_India.jpg"
+  },
+  "uttarakhand-auli": {
+    "place": "Auli",
+    "state": "Uttarakhand",
+    "title": "Auli, India",
+    "articleUrl": "https://en.wikipedia.org/wiki/Auli,_India",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/83/Auli_Himalayas.jpg"
+  },
+  "uttarakhand-dehradun": {
+    "place": "Dehradun",
+    "state": "Uttarakhand",
+    "title": "Dehradun",
+    "articleUrl": "https://en.wikipedia.org/wiki/Dehradun",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e2/Dehradun_view_from_maggi_point.jpg"
+  }
+}

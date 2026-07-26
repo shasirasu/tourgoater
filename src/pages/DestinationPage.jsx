@@ -6,7 +6,7 @@ import PlaceShowcase from "../components/PlaceShowcase.jsx";
 import SafeImage from "../components/SafeImage.jsx";
 import SiteFooter from "../components/SiteFooter.jsx";
 import SiteHeader from "../components/SiteHeader.jsx";
-import { buildTripEstimate, getDestinationHotels } from "../data/tripPlanning.js";
+import { buildTripEstimate } from "../data/tripPlanning.js";
 import { getAuthToken } from "../data/authStorage.js";
 
 const currencyFormatter = new Intl.NumberFormat("en-IN", {
@@ -19,13 +19,6 @@ export default function DestinationPage({ user, onLogout }) {
   const { id } = useParams();
   const destination = travelData.state.find((state) => state.id === id);
 
-  function bookingLinks(stay) {
-    const destinationQuery = `${stay.type || "hotel"} in ${stay.area}, ${destination.name}, India`;
-    return {
-      google: `https://www.google.com/travel/hotels?q=${encodeURIComponent(destinationQuery)}`,
-      booking: `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(`${stay.area}, ${destination.name}, India`)}`,
-    };
-  }
   const [savedPlaceNames, setSavedPlaceNames] = useState(new Set());
   const [savingPlaceName, setSavingPlaceName] = useState("");
   const [saveError, setSaveError] = useState(null);
@@ -233,7 +226,6 @@ export default function DestinationPage({ user, onLogout }) {
   }
 
   const touristPlaces = destination.tourist ?? [];
-  const accommodations = getDestinationHotels(destination);
   const savedBudget = Number(localStorage.getItem("tripBudget")) || 0;
   const savedDays = Math.max(1, Number(localStorage.getItem("tripDays")) || 3);
   const selectedPlaces = touristPlaces.filter((place) => selectedPlaceNames.includes(place.name));
@@ -485,56 +477,13 @@ export default function DestinationPage({ user, onLogout }) {
               </div>
             )}
 
-            {!hotelsLoading && liveHotels.length === 0 && <p className="sample-hotel-label">Planning estimates</p>}
-            {!hotelsLoading && liveHotels.length === 0 && (accommodations.length > 0 ? (
-              <div className="stay-grid">
-                {accommodations.map((stay) => {
-                  const isAvailable = stay.roomsAvailable > 0;
-                  const providers = bookingLinks(stay);
-
-                  return (
-                    <article className="stay-card" key={stay.id}>
-                      <div className="stay-image-wrap">
-                        <SafeImage
-                          className="stay-image"
-                          sources={[stay.image, ...destination.img]}
-                          alt={`${stay.name} sample accommodation`}
-                          fallbackLabel={stay.name}
-                          loading="lazy"
-                          sizes="(max-width: 680px) 100vw, (max-width: 980px) 50vw, 34vw"
-                          width="640"
-                          height="420"
-                        />
-                        <span className={`availability-badge ${isAvailable ? "available" : "unavailable"}`}>
-                          {isAvailable ? `${stay.roomsAvailable} rooms available` : "Currently unavailable"}
-                        </span>
-                      </div>
-                      <div className="stay-content">
-                        <div className="stay-meta"><span>{stay.type}</span><span>{stay.rating} / 5</span></div>
-                        <h3>{stay.name}</h3>
-                        <p>{stay.area}</p>
-                        <div className="stay-price">
-                          <strong>{currencyFormatter.format(stay.pricePerNight)}</strong>
-                          <span>per night</span>
-                        </div>
-                        <div className="booking-options" aria-label={`Booking options for stays near ${stay.area}`}>
-                          <span>Check live availability</span>
-                          <div>
-                            <a href={providers.google} target="_blank" rel="noopener noreferrer"><Search size={16} /> Google Hotels</a>
-                            <a href={providers.booking} target="_blank" rel="noopener noreferrer">Booking.com <ExternalLink size={15} /></a>
-                          </div>
-                        </div>
-                      </div>
-                    </article>
-                  );
-                })}
+            {!hotelsLoading && !hotelsError && liveHotels.length === 0 && (
+              <div className="empty-state hotel-search-empty">
+                <BedDouble size={30} />
+                <h3>Search real hotels for your dates</h3>
+                <p>Choose check-in and check-out dates above. Only live API results will appear here.</p>
               </div>
-            ) : (
-              <div className="empty-state">
-                <h3>No accommodation estimates available</h3>
-                <p>Hotel options for this destination will be added soon.</p>
-              </div>
-            ))}
+            )}
           </div>
         </section>
 
