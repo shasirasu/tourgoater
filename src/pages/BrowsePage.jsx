@@ -61,6 +61,11 @@ export default function BrowsePage({ user, onLogout }) {
     if (Number(normalizedBudget) < 1000) return;
     setBudget(normalizedBudget); setDays(normalizedDays); setSavedBudget(normalizedBudget); setSavedDays(normalizedDays);
     localStorage.setItem("tripBudget", normalizedBudget); localStorage.setItem("tripDays", normalizedDays);
+    window.setTimeout(() => {
+      const resultsSection = document.querySelector(".browse-flow-results");
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      resultsSection?.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+    }, 120);
     if (user) {
       const token = getAuthToken();
       await fetch("/api/preferences", {
