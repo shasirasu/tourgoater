@@ -61,5 +61,1139 @@
     "title": "Dehradun",
     "articleUrl": "https://en.wikipedia.org/wiki/Dehradun",
     "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e2/Dehradun_view_from_maggi_point.jpg"
+  },
+  "andaman-and-nicobar-havelock-island-swaraj-dweep": {
+    "place": "HAVELOCK ISLAND(SWARAJ DWEEP)",
+    "state": "Andaman & Nicobar",
+    "title": "Havelock Island",
+    "articleUrl": "https://en.wikipedia.org/wiki/Havelock_Island",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Havelock%2C_Andaman_%26_Nicobar_Islands.JPG/1920px-Havelock%2C_Andaman_%26_Nicobar_Islands.JPG"
+  },
+  "punjab-golden-temple": {
+    "place": "GOLDEN TEMPLE",
+    "state": "Punjab",
+    "title": "Golden Temple",
+    "articleUrl": "https://en.wikipedia.org/wiki/Golden_Temple",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/The_Golden_Temple_of_Amrithsar_7.jpg/1920px-The_Golden_Temple_of_Amrithsar_7.jpg"
+  },
+  "punjab-wagah-border": {
+    "place": "WAGAH BORDER",
+    "state": "Punjab",
+    "title": "Wagah",
+    "articleUrl": "https://en.wikipedia.org/wiki/Wagah",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Wagah_border_ceremony2.jpg/1920px-Wagah_border_ceremony2.jpg"
+  },
+  "punjab-shahpur-kandi-fort": {
+    "place": "SHAHPUR KANDI FORT ",
+    "state": "Punjab",
+    "title": "Punjab, India",
+    "articleUrl": "https://en.wikipedia.org/wiki/Punjab,_India",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Golden_Temple%2C_Amritsar%2C_Punjab_UNAG.jpg/1920px-Golden_Temple%2C_Amritsar%2C_Punjab_UNAG.jpg"
+  },
+  "rajasthan-jaipur": {
+    "place": "Jaipur",
+    "state": "Rajasthan",
+    "title": "Jaipur",
+    "articleUrl": "https://en.wikipedia.org/wiki/Jaipur",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/East_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_01.jpg/1920px-East_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_01.jpg"
+  },
+  "rajasthan-amber-palace": {
+    "place": "Amber Palace",
+    "state": "Rajasthan",
+    "title": "Amber Fort",
+    "articleUrl": "https://en.wikipedia.org/wiki/Amber_Fort",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/20191219_Fort_Amber%2C_Amer%2C_Jaipur_0955_9481.jpg/1920px-20191219_Fort_Amber%2C_Amer%2C_Jaipur_0955_9481.jpg"
+  },
+  "rajasthan-jantar-mantar": {
+    "place": "Jantar Mantar",
+    "state": "Rajasthan",
+    "title": "Jantar Mantar",
+    "articleUrl": "https://en.wikipedia.org/wiki/Jantar_Mantar",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Jantar_Mantar_at_Jaipur.jpg/1920px-Jantar_Mantar_at_Jaipur.jpg"
+  },
+  "rajasthan-hawa-mahal": {
+    "place": "Hawa Mahal",
+    "state": "Rajasthan",
+    "title": "Hawa Mahal",
+    "articleUrl": "https://en.wikipedia.org/wiki/Hawa_Mahal",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/East_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_01.jpg/1920px-East_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_01.jpg"
+  },
+  "rajasthan-albert-hall-museum-central-museum": {
+    "place": "Albert Hall Museum(Central  Museum)",
+    "state": "Rajasthan",
+    "title": "Albert Hall Museum",
+    "articleUrl": "https://en.wikipedia.org/wiki/Albert_Hall_Museum",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Albert_Hall_%28_Jaipur_%29.jpg/1920px-Albert_Hall_%28_Jaipur_%29.jpg"
+  },
+  "rajasthan-jal-mahal": {
+    "place": "Jal Mahal",
+    "state": "Rajasthan",
+    "title": "Jal Mahal",
+    "articleUrl": "https://en.wikipedia.org/wiki/Jal_Mahal",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Jaipur_03-2016_39_Jal_Mahal_-_Water_Palace.jpg/1920px-Jaipur_03-2016_39_Jal_Mahal_-_Water_Palace.jpg"
+  },
+  "rajasthan-chittorgarh-fort": {
+    "place": "Chittorgarh Fort",
+    "state": "Rajasthan",
+    "title": "Chittor Fort",
+    "articleUrl": "https://en.wikipedia.org/wiki/Chittor_Fort",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Chittorgarh_fort.JPG/1920px-Chittorgarh_fort.JPG"
+  },
+  "rajasthan-jaisalmer-fort": {
+    "place": "Jaisalmer fort",
+    "state": "Rajasthan",
+    "title": "Jaisalmer Fort",
+    "articleUrl": "https://en.wikipedia.org/wiki/Jaisalmer_Fort",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Jaisalmer_forteresse.jpg/1920px-Jaisalmer_forteresse.jpg"
+  },
+  "kerala-munnar": {
+    "place": "Munnar",
+    "state": "Kerala",
+    "title": "Munnar",
+    "articleUrl": "https://en.wikipedia.org/wiki/Munnar",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Munnar_Overview.jpg/1920px-Munnar_Overview.jpg"
+  },
+  "kerala-alleppey": {
+    "place": "Alleppey",
+    "state": "Kerala",
+    "title": "Alappuzha",
+    "articleUrl": "https://en.wikipedia.org/wiki/Alappuzha",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Alappuzha_Boat_Beauty_W.jpg/1920px-Alappuzha_Boat_Beauty_W.jpg"
+  },
+  "kerala-wayanad": {
+    "place": "Wayanad",
+    "state": "Kerala",
+    "title": "Wayanad district",
+    "articleUrl": "https://en.wikipedia.org/wiki/Wayanad_district",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Blue%2C_Green_%26_White.jpg/1920px-Blue%2C_Green_%26_White.jpg"
+  },
+  "kerala-thekkady": {
+    "place": "Thekkady",
+    "state": "Kerala",
+    "title": "Thekkady",
+    "articleUrl": "https://en.wikipedia.org/wiki/Thekkady",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Thekkady.jpg/1920px-Thekkady.jpg"
+  },
+  "kerala-varkala": {
+    "place": "Varkala",
+    "state": "Kerala",
+    "title": "Varkala",
+    "articleUrl": "https://en.wikipedia.org/wiki/Varkala",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/49/Varkala_Beach%2C_Varkala%2C_Kerala.jpg"
+  },
+  "kerala-poovar": {
+    "place": "Poovar",
+    "state": "Kerala",
+    "title": "Poovar",
+    "articleUrl": "https://en.wikipedia.org/wiki/Poovar",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Poovar_Kerala.jpg/1920px-Poovar_Kerala.jpg"
+  },
+  "kerala-kovalam": {
+    "place": "Kovalam",
+    "state": "Kerala",
+    "title": "Kovalam",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kovalam",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Kovalam_beach_trivandrum_kerala.jpg/1920px-Kovalam_beach_trivandrum_kerala.jpg"
+  },
+  "kerala-sabarimala": {
+    "place": "Sabarimala",
+    "state": "Kerala",
+    "title": "Sabarimala (place)",
+    "articleUrl": "https://en.wikipedia.org/wiki/Sabarimala_(place)",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/MOUNTAINS_SABARIMALA_KERALA_-_panoramio.jpg/1920px-MOUNTAINS_SABARIMALA_KERALA_-_panoramio.jpg"
+  },
+  "kerala-kumarakom": {
+    "place": "Kumarakom",
+    "state": "Kerala",
+    "title": "Kumarakom",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kumarakom",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Kumarkom.jpg/1920px-Kumarkom.jpg"
+  },
+  "kerala-kollam": {
+    "place": "Kollam",
+    "state": "Kerala",
+    "title": "Kollam",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kollam",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Location_map_India_Kollam_EN.svg/1920px-Location_map_India_Kollam_EN.svg.png"
+  },
+  "kerala-trivandrum": {
+    "place": "Trivandrum",
+    "state": "Kerala",
+    "title": "Thiruvananthapuram",
+    "articleUrl": "https://en.wikipedia.org/wiki/Thiruvananthapuram",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Padmanabhaswamy_Temple_Thiruvananthapuram.jpg/1920px-Padmanabhaswamy_Temple_Thiruvananthapuram.jpg"
+  },
+  "maharashtra-mumbai": {
+    "place": "Mumbai",
+    "state": "Maharashtra",
+    "title": "Mumbai",
+    "articleUrl": "https://en.wikipedia.org/wiki/Mumbai",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Mumbai_Bandra-Worli_Sea_Link.jpg/1920px-Mumbai_Bandra-Worli_Sea_Link.jpg"
+  },
+  "maharashtra-ajanta-and-ellora-caves": {
+    "place": "Ajanta And Ellora Caves",
+    "state": "Maharashtra",
+    "title": "Ajanta Caves",
+    "articleUrl": "https://en.wikipedia.org/wiki/Ajanta_Caves",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Ajanta_%2863%29.jpg"
+  },
+  "maharashtra-panchgani": {
+    "place": "Panchgani",
+    "state": "Maharashtra",
+    "title": "Panchgani",
+    "articleUrl": "https://en.wikipedia.org/wiki/Panchgani",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Panchghani_Hill.jpg"
+  },
+  "maharashtra-mahabaleshwar": {
+    "place": "Mahabaleshwar",
+    "state": "Maharashtra",
+    "title": "Mahabaleshwar",
+    "articleUrl": "https://en.wikipedia.org/wiki/Mahabaleshwar",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/MAHABALESWAR_LANDSCAPE.jpg/1920px-MAHABALESWAR_LANDSCAPE.jpg"
+  },
+  "maharashtra-lonavala": {
+    "place": "Lonavala",
+    "state": "Maharashtra",
+    "title": "Lonavala",
+    "articleUrl": "https://en.wikipedia.org/wiki/Lonavala",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Mumbai_Pune_Expressway2.jpg"
+  },
+  "maharashtra-alibag": {
+    "place": "Alibag",
+    "state": "Maharashtra",
+    "title": "Alibag",
+    "articleUrl": "https://en.wikipedia.org/wiki/Alibag",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1d/Alibag_Sea_beach_3%2C_Maharashtra.JPG"
+  },
+  "maharashtra-shirdi": {
+    "place": "Shirdi",
+    "state": "Maharashtra",
+    "title": "Shirdi",
+    "articleUrl": "https://en.wikipedia.org/wiki/Shirdi",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Sai_baba_samadhi_mandir_.jpg"
+  },
+  "maharashtra-nashik": {
+    "place": "Nashik",
+    "state": "Maharashtra",
+    "title": "Nashik",
+    "articleUrl": "https://en.wikipedia.org/wiki/Nashik",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6a/NashikViewfromPandavLeni.jpg"
+  },
+  "maharashtra-pune": {
+    "place": "Pune",
+    "state": "Maharashtra",
+    "title": "Pune",
+    "articleUrl": "https://en.wikipedia.org/wiki/Pune",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Pune_West_skyline_-_March_2017.jpg/1920px-Pune_West_skyline_-_March_2017.jpg"
+  },
+  "maharashtra-kashid": {
+    "place": "Kashid",
+    "state": "Maharashtra",
+    "title": "Kashid",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kashid",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Kashid_Beach_1.jpg/1920px-Kashid_Beach_1.jpg"
+  },
+  "maharashtra-aurangabad": {
+    "place": "Aurangabad",
+    "state": "Maharashtra",
+    "title": "Aurangabad",
+    "articleUrl": "https://en.wikipedia.org/wiki/Aurangabad",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Bibi_Ka_Maqbara_-_The_Taj_Of_Deccan.jpg/1920px-Bibi_Ka_Maqbara_-_The_Taj_Of_Deccan.jpg"
+  },
+  "maharashtra-kolhapur": {
+    "place": "Kolhapur",
+    "state": "Maharashtra",
+    "title": "Kolhapur",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kolhapur",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Mahalaxmi_Temple%2C_Kolhapur.jpg/1920px-Mahalaxmi_Temple%2C_Kolhapur.jpg"
+  },
+  "uttarakhand-rishikesh": {
+    "place": "Rishikesh",
+    "state": "Uttarakhand",
+    "title": "Rishikesh",
+    "articleUrl": "https://en.wikipedia.org/wiki/Rishikesh",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Trayambakeshwar_Temple_VK.jpg/1920px-Trayambakeshwar_Temple_VK.jpg"
+  },
+  "uttarakhand-nainital": {
+    "place": "Nainital",
+    "state": "Uttarakhand",
+    "title": "Nainital",
+    "articleUrl": "https://en.wikipedia.org/wiki/Nainital",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Nainital_metro.jpg/1920px-Nainital_metro.jpg"
+  },
+  "uttarakhand-badrinath": {
+    "place": "Badrinath",
+    "state": "Uttarakhand",
+    "title": "Badrinath",
+    "articleUrl": "https://en.wikipedia.org/wiki/Badrinath",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Badrinath_Temple-_Uttarakhand.jpg/1920px-Badrinath_Temple-_Uttarakhand.jpg"
+  },
+  "uttarakhand-haridwar": {
+    "place": "Haridwar",
+    "state": "Uttarakhand",
+    "title": "Haridwar",
+    "articleUrl": "https://en.wikipedia.org/wiki/Haridwar",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Ganga_aarti_haridwar_01.jpg/1920px-Ganga_aarti_haridwar_01.jpg"
+  },
+  "uttarakhand-jim-corbett-national-park": {
+    "place": "Jim Corbett National Park",
+    "state": "Uttarakhand",
+    "title": "Jim Corbett National Park",
+    "articleUrl": "https://en.wikipedia.org/wiki/Jim_Corbett_National_Park",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/78/Bengal-Tiger_Corbett_Uttarakhand_Dec-2013.jpg"
+  },
+  "uttarakhand-kedarnath": {
+    "place": "Kedarnath",
+    "state": "Uttarakhand",
+    "title": "Kedarnath",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kedarnath",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1a/Kedarnath_View1.jpg"
+  },
+  "uttarakhand-dhanaulti": {
+    "place": "Dhanaulti",
+    "state": "Uttarakhand",
+    "title": "Dhanaulti",
+    "articleUrl": "https://en.wikipedia.org/wiki/Dhanaulti",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Dhanaulti_2.jpg/1920px-Dhanaulti_2.jpg"
+  },
+  "uttarakhand-lansdowne": {
+    "place": "Lansdowne",
+    "state": "Uttarakhand",
+    "title": "Lansdowne, India",
+    "articleUrl": "https://en.wikipedia.org/wiki/Lansdowne,_India",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Lansdowne_Landscape.jpg/1920px-Lansdowne_Landscape.jpg"
+  },
+  "uttarakhand-bhimtal": {
+    "place": "Bhimtal",
+    "state": "Uttarakhand",
+    "title": "Bhimtal",
+    "articleUrl": "https://en.wikipedia.org/wiki/Bhimtal",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Bhimtal_lake_view_01.jpg/1920px-Bhimtal_lake_view_01.jpg"
+  },
+  "uttarakhand-joshimath": {
+    "place": "Joshimath",
+    "state": "Uttarakhand",
+    "title": "Joshimath",
+    "articleUrl": "https://en.wikipedia.org/wiki/Joshimath",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Joshimath.jpg/1920px-Joshimath.jpg"
+  },
+  "uttarakhand-mukteshwar": {
+    "place": "Mukteshwar",
+    "state": "Uttarakhand",
+    "title": "Mukteshwar",
+    "articleUrl": "https://en.wikipedia.org/wiki/Mukteshwar",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chauli_Ki_Jali%2C_Mukteshwar.jpg/1920px-Chauli_Ki_Jali%2C_Mukteshwar.jpg"
+  },
+  "uttarakhand-devprayag": {
+    "place": "DevPrayag",
+    "state": "Uttarakhand",
+    "title": "Devprayag",
+    "articleUrl": "https://en.wikipedia.org/wiki/Devprayag",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/AjitHota_BirthPlaceOfGanges.jpg/1920px-AjitHota_BirthPlaceOfGanges.jpg"
+  },
+  "himachal-pradesh-manali": {
+    "place": "Manali",
+    "state": "Himachal Pradesh",
+    "title": "Manali, Himachal Pradesh",
+    "articleUrl": "https://en.wikipedia.org/wiki/Manali,_Himachal_Pradesh",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Manali_City.jpg/1920px-Manali_City.jpg"
+  },
+  "himachal-pradesh-shimla": {
+    "place": "Shimla",
+    "state": "Himachal Pradesh",
+    "title": "Shimla",
+    "articleUrl": "https://en.wikipedia.org/wiki/Shimla",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Landscape_of_Shimla_%2C_Himachal_Pradesh.jpg/1920px-Landscape_of_Shimla_%2C_Himachal_Pradesh.jpg"
+  },
+  "himachal-pradesh-mcleodganj": {
+    "place": "Mcleodganj",
+    "state": "Himachal Pradesh",
+    "title": "McLeod Ganj",
+    "articleUrl": "https://en.wikipedia.org/wiki/McLeod_Ganj",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/McLeod_Ganj_Dharamkot_Dharmsala_Himachal_Pradesh_India_April_2014.jpg/1920px-McLeod_Ganj_Dharamkot_Dharmsala_Himachal_Pradesh_India_April_2014.jpg"
+  },
+  "himachal-pradesh-dalhousie": {
+    "place": "Dalhousie",
+    "state": "Himachal Pradesh",
+    "title": "Dalhousie, India",
+    "articleUrl": "https://en.wikipedia.org/wiki/Dalhousie,_India",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Dalhouise_1.jpg/1920px-Dalhouise_1.jpg"
+  },
+  "himachal-pradesh-spiti-valley": {
+    "place": "Spiti Valley",
+    "state": "Himachal Pradesh",
+    "title": "Spiti",
+    "articleUrl": "https://en.wikipedia.org/wiki/Spiti",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Spiti_River_Kaza_Himachal_Jun18_D72_7232.jpg/1920px-Spiti_River_Kaza_Himachal_Jun18_D72_7232.jpg"
+  },
+  "himachal-pradesh-kasol": {
+    "place": "Kasol",
+    "state": "Himachal Pradesh",
+    "title": "Kasol",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kasol",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Kasol_mountain_view.jpg"
+  },
+  "himachal-pradesh-dharamshala": {
+    "place": "Dharamshala",
+    "state": "Himachal Pradesh",
+    "title": "Dharamshala",
+    "articleUrl": "https://en.wikipedia.org/wiki/Dharamshala",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Dharamshala_03_%28Cropped%29.jpg/1920px-Dharamshala_03_%28Cropped%29.jpg"
+  },
+  "himachal-pradesh-tirthan-valley": {
+    "place": "Tirthan Valley",
+    "state": "Himachal Pradesh",
+    "title": "Himachal Pradesh",
+    "articleUrl": "https://en.wikipedia.org/wiki/Himachal_Pradesh",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Kullu_Valley_near_Manali%2C_Himachal_Pradesh%2C_India.jpg/1920px-Kullu_Valley_near_Manali%2C_Himachal_Pradesh%2C_India.jpg"
+  },
+  "himachal-pradesh-kasauli": {
+    "place": "Kasauli",
+    "state": "Himachal Pradesh",
+    "title": "Kasauli",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kasauli",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Kasauli_hills.jpg/1920px-Kasauli_hills.jpg"
+  },
+  "himachal-pradesh-bir-billing": {
+    "place": "Bir Billing",
+    "state": "Himachal Pradesh",
+    "title": "Bir, Himachal Pradesh",
+    "articleUrl": "https://en.wikipedia.org/wiki/Bir,_Himachal_Pradesh",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/An_aerial_view_of_Bir%2C_Kangra_valley_sights_nature_culture_Himachal_Pradesh_India_2015.jpg/1920px-An_aerial_view_of_Bir%2C_Kangra_valley_sights_nature_culture_Himachal_Pradesh_India_2015.jpg"
+  },
+  "himachal-pradesh-kinnaur": {
+    "place": "Kinnaur",
+    "state": "Himachal Pradesh",
+    "title": "Kinnaur district",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kinnaur_district",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Old_structure_in_the_temple_premises_at_Kamru_fort_%2818425791889%29.jpg/1920px-Old_structure_in_the_temple_premises_at_Kamru_fort_%2818425791889%29.jpg"
+  },
+  "himachal-pradesh-kufri": {
+    "place": "Kufri",
+    "state": "Himachal Pradesh",
+    "title": "Kufri, India",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kufri,_India",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Kufri_hills.jpg/1920px-Kufri_hills.jpg"
+  },
+  "himachal-pradesh-chamba": {
+    "place": "Chamba",
+    "state": "Himachal Pradesh",
+    "title": "Chamba, Himachal Pradesh",
+    "articleUrl": "https://en.wikipedia.org/wiki/Chamba,_Himachal_Pradesh",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Chamba_city_and_river_Ravi%2C_Himachal_Pradesh_India.jpg/1920px-Chamba_city_and_river_Ravi%2C_Himachal_Pradesh_India.jpg"
+  },
+  "himachal-pradesh-chail": {
+    "place": "Chail",
+    "state": "Himachal Pradesh",
+    "title": "Chail, Himachal Pradesh",
+    "articleUrl": "https://en.wikipedia.org/wiki/Chail,_Himachal_Pradesh",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Chailhill.jpg"
+  },
+  "himachal-pradesh-kullu": {
+    "place": "Kullu",
+    "state": "Himachal Pradesh",
+    "title": "Kullu",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kullu",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Beas_Valley_-_Palchan_-_Kullu_2014-05-10_2275.JPG/1920px-Beas_Valley_-_Palchan_-_Kullu_2014-05-10_2275.JPG"
+  },
+  "himachal-pradesh-palampur": {
+    "place": "Palampur",
+    "state": "Himachal Pradesh",
+    "title": "Palampur, Himachal Pradesh",
+    "articleUrl": "https://en.wikipedia.org/wiki/Palampur,_Himachal_Pradesh",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/A_view_of_Palampur_Himachal_Pradesh_India.jpg/1920px-A_view_of_Palampur_Himachal_Pradesh_India.jpg"
+  },
+  "himachal-pradesh-nahan": {
+    "place": "Nahan",
+    "state": "Himachal Pradesh",
+    "title": "Nahan",
+    "articleUrl": "https://en.wikipedia.org/wiki/Nahan",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Banethi_forest_rest_house_%2CSirmaur_%2CNahan_%2CHimachal_Pardesh_01.jpg/1920px-Banethi_forest_rest_house_%2CSirmaur_%2CNahan_%2CHimachal_Pardesh_01.jpg"
+  },
+  "himachal-pradesh-kangra": {
+    "place": "Kangra",
+    "state": "Himachal Pradesh",
+    "title": "Kangra, Himachal Pradesh",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kangra,_Himachal_Pradesh",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Kangra_Fort_Front_Wide_view.jpg/1920px-Kangra_Fort_Front_Wide_view.jpg"
+  },
+  "himachal-pradesh-narkanda": {
+    "place": "Narkanda",
+    "state": "Himachal Pradesh",
+    "title": "Narkanda",
+    "articleUrl": "https://en.wikipedia.org/wiki/Narkanda",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/NARKANDA.jpg/1920px-NARKANDA.jpg"
+  },
+  "himachal-pradesh-manikaran-sahib": {
+    "place": "Manikaran Sahib",
+    "state": "Himachal Pradesh",
+    "title": "Manikaran",
+    "articleUrl": "https://en.wikipedia.org/wiki/Manikaran",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Gurdwara_at_Manikarn.jpg/1920px-Gurdwara_at_Manikarn.jpg"
+  },
+  "himachal-pradesh-solang-valley": {
+    "place": "Solang Valley",
+    "state": "Himachal Pradesh",
+    "title": "Solang Valley",
+    "articleUrl": "https://en.wikipedia.org/wiki/Solang_Valley",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Solang_Valley_%2CManali%2C_Himachal_Pardes%2C_India.JPG/1920px-Solang_Valley_%2CManali%2C_Himachal_Pardes%2C_India.JPG"
+  },
+  "himachal-pradesh-beas-kund-trek": {
+    "place": "Beas Kund Trek",
+    "state": "Himachal Pradesh",
+    "title": "Dhauladhar",
+    "articleUrl": "https://en.wikipedia.org/wiki/Dhauladhar",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Dhauladhar.jpg/1920px-Dhauladhar.jpg"
+  },
+  "himachal-pradesh-kheerganga-trek": {
+    "place": "Kheerganga Trek",
+    "state": "Himachal Pradesh",
+    "title": "Kalga, Himachal Pradesh",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kalga,_Himachal_Pradesh",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Kalga.jpg"
+  },
+  "gujarat-ahmedabad": {
+    "place": "Ahmedabad",
+    "state": "Gujarat",
+    "title": "Ahmedabad",
+    "articleUrl": "https://en.wikipedia.org/wiki/Ahmedabad",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Sabarmati_riverside.jpg/1920px-Sabarmati_riverside.jpg"
+  },
+  "gujarat-kutch": {
+    "place": "Kutch",
+    "state": "Gujarat",
+    "title": "Kutch district",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kutch_district",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Prag_Mahal_Back_side_view%2C_Bhuj%2C_Gujarat%2C_India.jpg/1920px-Prag_Mahal_Back_side_view%2C_Bhuj%2C_Gujarat%2C_India.jpg"
+  },
+  "gujarat-gir-national-park": {
+    "place": "Gir National Park",
+    "state": "Gujarat",
+    "title": "Gir National Park",
+    "articleUrl": "https://en.wikipedia.org/wiki/Gir_National_Park",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/90/Gir_lion-Gir_forest%2Cjunagadh%2Cgujarat%2Cindia.jpeg"
+  },
+  "gujarat-somnath": {
+    "place": "Somnath",
+    "state": "Gujarat",
+    "title": "Somnath Temple",
+    "articleUrl": "https://en.wikipedia.org/wiki/Somnath_Temple",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Somanath_mandir_%28cropped%29.jpg/1920px-Somanath_mandir_%28cropped%29.jpg"
+  },
+  "gujarat-porbandar": {
+    "place": "Porbandar",
+    "state": "Gujarat",
+    "title": "Porbandar",
+    "articleUrl": "https://en.wikipedia.org/wiki/Porbandar",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/The_main_memorial_near_the_house.jpg/1920px-The_main_memorial_near_the_house.jpg"
+  },
+  "gujarat-vadodara": {
+    "place": "Vadodara",
+    "state": "Gujarat",
+    "title": "Vadodara",
+    "articleUrl": "https://en.wikipedia.org/wiki/Vadodara",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/LakshmiVilas_Palace.jpg/1920px-LakshmiVilas_Palace.jpg"
+  },
+  "gujarat-dwarka": {
+    "place": "Dwarka",
+    "state": "Gujarat",
+    "title": "Dwarka",
+    "articleUrl": "https://en.wikipedia.org/wiki/Dwarka",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Dwarakadheesh_Temple%2C_2014.jpg"
+  },
+  "gujarat-junagadh": {
+    "place": "Junagadh",
+    "state": "Gujarat",
+    "title": "Junagadh",
+    "articleUrl": "https://en.wikipedia.org/wiki/Junagadh",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Dattatreya_Temple_of_Girnar.JPG/1920px-Dattatreya_Temple_of_Girnar.JPG"
+  },
+  "gujarat-gandhinagar": {
+    "place": "Gandhinagar",
+    "state": "Gujarat",
+    "title": "Gandhinagar",
+    "articleUrl": "https://en.wikipedia.org/wiki/Gandhinagar",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Mahatma_Mandir-Gandhinagar.jpg/1920px-Mahatma_Mandir-Gandhinagar.jpg"
+  },
+  "gujarat-diu": {
+    "place": "Diu",
+    "state": "Gujarat",
+    "title": "Battle of Diu",
+    "articleUrl": "https://en.wikipedia.org/wiki/Battle_of_Diu",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Insigne_vit%C3%B3ria_alcan%C3%A7ada_pelo_Vice-Rei_D._Francisco_de_Almeida_contra_as_armadas_do_Sult%C3%A3o_do_Egito%2C_e_dos_Reis_de_Cambaia_e_Calecute.jpg/1920px-Insigne_vit%C3%B3ria_alcan%C3%A7ada_pelo_Vice-Rei_D._Francisco_de_Almeida_contra_as_armadas_do_Sult%C3%A3o_do_Egito%2C_e_dos_Reis_de_Cambaia_e_Calecute.jpg"
+  },
+  "gujarat-bhuj": {
+    "place": "Bhuj",
+    "state": "Gujarat",
+    "title": "Bhuj",
+    "articleUrl": "https://en.wikipedia.org/wiki/Bhuj",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Pragmahal_Bhuj_Kutch_Gujarat.jpg/1920px-Pragmahal_Bhuj_Kutch_Gujarat.jpg"
+  },
+  "gujarat-surat": {
+    "place": "Surat",
+    "state": "Gujarat",
+    "title": "Surat",
+    "articleUrl": "https://en.wikipedia.org/wiki/Surat",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Bharthana_Althan_area.jpg/1920px-Bharthana_Althan_area.jpg"
+  },
+  "tamil-nadu-kapaleeshwarar-temple": {
+    "place": "Kapaleeshwarar Temple",
+    "state": "Tamil Nadu",
+    "title": "Kapaleeshwarar Temple",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kapaleeshwarar_Temple",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/99/Kapaleeswarar1.jpg"
+  },
+  "tamil-nadu-kamakshi-amman-temple": {
+    "place": "Kamakshi Amman Temple",
+    "state": "Tamil Nadu",
+    "title": "Kamakshi Amman Temple",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kamakshi_Amman_Temple",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/90/Kanchipuram.in_Kamakshi-Amman_Temple_-_panoramio_-_SINHA_%28cropped%29.jpg"
+  },
+  "tamil-nadu-ekambareswarar-temple": {
+    "place": "Ekambareswarar Temple",
+    "state": "Tamil Nadu",
+    "title": "Ekambareswarar Temple (Kanchipuram)",
+    "articleUrl": "https://en.wikipedia.org/wiki/Ekambareswarar_Temple_(Kanchipuram)",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Ekambareswarar5.jpg/1920px-Ekambareswarar5.jpg"
+  },
+  "tamil-nadu-arunachaleswarar-temple": {
+    "place": "Arunachaleswarar Temple",
+    "state": "Tamil Nadu",
+    "title": "Arunachalesvara Temple",
+    "articleUrl": "https://en.wikipedia.org/wiki/Arunachalesvara_Temple",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Arunachalam_temple_from_a_nearby_hill.jpg/1920px-Arunachalam_temple_from_a_nearby_hill.jpg"
+  },
+  "tamil-nadu-thillai-nataraja-temple": {
+    "place": "Thillai Nataraja Temple",
+    "state": "Tamil Nadu",
+    "title": "Nataraja Temple, Chidambaram",
+    "articleUrl": "https://en.wikipedia.org/wiki/Nataraja_Temple,_Chidambaram",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/44/Le_temple_de_Shiva_Nataraja_%28Chidambaram%2C_Inde%29_%2814037020332%29.jpg"
+  },
+  "tamil-nadu-brihadeeswarar-temple": {
+    "place": "Brihadeeswarar Temple",
+    "state": "Tamil Nadu",
+    "title": "Brihadisvara Temple",
+    "articleUrl": "https://en.wikipedia.org/wiki/Brihadisvara_Temple",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Brihadisvara_Temple_during_Maha_Shivaratri-WUS03611_%28edit%29.jpg/1920px-Brihadisvara_Temple_during_Maha_Shivaratri-WUS03611_%28edit%29.jpg"
+  },
+  "tamil-nadu-sri-ranganathaswamy-temple": {
+    "place": "Sri Ranganathaswamy Temple",
+    "state": "Tamil Nadu",
+    "title": "Ranganathaswamy Temple, Srirangam",
+    "articleUrl": "https://en.wikipedia.org/wiki/Ranganathaswamy_Temple,_Srirangam",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Ranganathaswamy_temple_tiruchirappalli.jpg/1920px-Ranganathaswamy_temple_tiruchirappalli.jpg"
+  },
+  "tamil-nadu-meenakshi-amman-temple": {
+    "place": "Meenakshi Amman Temple",
+    "state": "Tamil Nadu",
+    "title": "Meenakshi Temple",
+    "articleUrl": "https://en.wikipedia.org/wiki/Meenakshi_Temple",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/An_aerial_view_of_Madurai_city_from_atop_of_Meenakshi_Amman_temple.jpg/1920px-An_aerial_view_of_Madurai_city_from_atop_of_Meenakshi_Amman_temple.jpg"
+  },
+  "tamil-nadu-ramanathaswamy-temple": {
+    "place": "Ramanathaswamy Temple",
+    "state": "Tamil Nadu",
+    "title": "Ramanathaswamy Temple",
+    "articleUrl": "https://en.wikipedia.org/wiki/Ramanathaswamy_Temple",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Ramanathaswamy_temple7.JPG/1920px-Ramanathaswamy_temple7.JPG"
+  },
+  "tamil-nadu-bhagavathy-amman-temple": {
+    "place": "Bhagavathy Amman Temple",
+    "state": "Tamil Nadu",
+    "title": "Kanyakumari",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kanyakumari",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Vivekananda_Rock_Memorial%2C_Kanyakumari.jpg/1920px-Vivekananda_Rock_Memorial%2C_Kanyakumari.jpg"
+  },
+  "andhra-pradesh-sri-venkateswara-temple": {
+    "place": "Sri Venkateswara Temple",
+    "state": "Andhra Pradesh",
+    "title": "Venkateswara Temple, Tirumala",
+    "articleUrl": "https://en.wikipedia.org/wiki/Venkateswara_Temple,_Tirumala",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Tirumala_090615.jpg/1920px-Tirumala_090615.jpg"
+  },
+  "andhra-pradesh-rk-beach": {
+    "place": "RK Beach",
+    "state": "Andhra Pradesh",
+    "title": "RK Beach",
+    "articleUrl": "https://en.wikipedia.org/wiki/RK_Beach",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/RK_Beach_Night.jpg/1920px-RK_Beach_Night.jpg"
+  },
+  "andhra-pradesh-araku-valley": {
+    "place": "Araku Valley",
+    "state": "Andhra Pradesh",
+    "title": "Araku Valley",
+    "articleUrl": "https://en.wikipedia.org/wiki/Araku_Valley",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Araku-valley.jpg"
+  },
+  "andhra-pradesh-amaravati-stupa": {
+    "place": "Amaravati Stupa",
+    "state": "Andhra Pradesh",
+    "title": "Amaravati Stupa",
+    "articleUrl": "https://en.wikipedia.org/wiki/Amaravati_Stupa",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/de/British_Museum_Asia_14.jpg"
+  },
+  "arunachal-pradesh-ziro-valley": {
+    "place": "Ziro Valley",
+    "state": "Arunachal Pradesh",
+    "title": "Ziro",
+    "articleUrl": "https://en.wikipedia.org/wiki/Ziro",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/A_cross_section_of_luch_green_valley_of_Ziro.jpg/1920px-A_cross_section_of_luch_green_valley_of_Ziro.jpg"
+  },
+  "arunachal-pradesh-namdapha-national-park": {
+    "place": "Namdapha National Park",
+    "state": "Arunachal Pradesh",
+    "title": "Namdapha National Park",
+    "articleUrl": "https://en.wikipedia.org/wiki/Namdapha_National_Park",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Forest_snow_Namdapha_IMG_3373_04.jpg/1920px-Forest_snow_Namdapha_IMG_3373_04.jpg"
+  },
+  "arunachal-pradesh-sela-pass": {
+    "place": "Sela Pass",
+    "state": "Arunachal Pradesh",
+    "title": "Sela Pass",
+    "articleUrl": "https://en.wikipedia.org/wiki/Sela_Pass",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Tawang_Gate.jpg/1920px-Tawang_Gate.jpg"
+  },
+  "assam-kaziranga-national-park": {
+    "place": "Kaziranga National Park",
+    "state": "Assam",
+    "title": "Kaziranga National Park",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kaziranga_National_Park",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Beauty_of_Kaziranga_National_Park.jpg/1920px-Beauty_of_Kaziranga_National_Park.jpg"
+  },
+  "assam-kamakhya-temple": {
+    "place": "Kamakhya Temple",
+    "state": "Assam",
+    "title": "Kamakhya Temple",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kamakhya_Temple",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Kamakhya_Temple_-_DEV_8829.jpg/1920px-Kamakhya_Temple_-_DEV_8829.jpg"
+  },
+  "assam-majuli-island": {
+    "place": "Majuli Island",
+    "state": "Assam",
+    "title": "Majuli",
+    "articleUrl": "https://en.wikipedia.org/wiki/Majuli",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Doriya_River_of_Majuli.jpg/1920px-Doriya_River_of_Majuli.jpg"
+  },
+  "assam-sivasagar-sivadol": {
+    "place": "Sivasagar Sivadol",
+    "state": "Assam",
+    "title": "Sivasagar Sivadol",
+    "articleUrl": "https://en.wikipedia.org/wiki/Sivasagar_Sivadol",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Siva_Dol.JPG/1920px-Siva_Dol.JPG"
+  },
+  "bihar-mahabodhi-temple": {
+    "place": "Mahabodhi Temple",
+    "state": "Bihar",
+    "title": "Mahabodhi Temple",
+    "articleUrl": "https://en.wikipedia.org/wiki/Mahabodhi_Temple",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Mahabodhitemple.jpg/1920px-Mahabodhitemple.jpg"
+  },
+  "bihar-nalanda-mahavihara": {
+    "place": "Nalanda Mahavihara",
+    "state": "Bihar",
+    "title": "Nalanda mahavihara",
+    "articleUrl": "https://en.wikipedia.org/wiki/Nalanda_mahavihara",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Temple_No.-_3%2C_Nalanda_Archaeological_Site.jpg/1920px-Temple_No.-_3%2C_Nalanda_Archaeological_Site.jpg"
+  },
+  "bihar-vishwa-shanti-stupa": {
+    "place": "Vishwa Shanti Stupa",
+    "state": "Bihar",
+    "title": "Vishwa Shanti Stupa, Rajgir",
+    "articleUrl": "https://en.wikipedia.org/wiki/Vishwa_Shanti_Stupa,_Rajgir",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Rajgir_-_046_Side_View_%289242059259%29.jpg/1920px-Rajgir_-_046_Side_View_%289242059259%29.jpg"
+  },
+  "bihar-takht-sri-patna-sahib": {
+    "place": "Takht Sri Patna Sahib",
+    "state": "Bihar",
+    "title": "Takht Sri Patna Sahib",
+    "articleUrl": "https://en.wikipedia.org/wiki/Takht_Sri_Patna_Sahib",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/TheJoyof350thAnniversary%40IncredibleIndia.jpg/1920px-TheJoyof350thAnniversary%40IncredibleIndia.jpg"
+  },
+  "chhattisgarh-chitrakote-falls": {
+    "place": "Chitrakote Falls",
+    "state": "Chhattisgarh",
+    "title": "Chitrakote Falls",
+    "articleUrl": "https://en.wikipedia.org/wiki/Chitrakote_Falls",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Chitrakot_waterfalls.JPG/1920px-Chitrakot_waterfalls.JPG"
+  },
+  "chhattisgarh-tirathgarh-falls": {
+    "place": "Tirathgarh Falls",
+    "state": "Chhattisgarh",
+    "title": "Tourism in Chhattisgarh",
+    "articleUrl": "https://en.wikipedia.org/wiki/Tourism_in_Chhattisgarh",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Chitrakot_waterfalls.JPG/1920px-Chitrakot_waterfalls.JPG"
+  },
+  "chhattisgarh-sirpur-heritage-site": {
+    "place": "Sirpur Heritage Site",
+    "state": "Chhattisgarh",
+    "title": "Bilaspur, Chhattisgarh",
+    "articleUrl": "https://en.wikipedia.org/wiki/Bilaspur,_Chhattisgarh",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Bilaspur_Junction_Railway_Station_Building_001.jpg/1920px-Bilaspur_Junction_Railway_Station_Building_001.jpg"
+  },
+  "goa-basilica-of-bom-jesus": {
+    "place": "Basilica of Bom Jesus",
+    "state": "Goa",
+    "title": "Basilica of Bom Jesus",
+    "articleUrl": "https://en.wikipedia.org/wiki/Basilica_of_Bom_Jesus",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Front_Elevation_of_Basilica_of_Bom_Jesus.jpg/1920px-Front_Elevation_of_Basilica_of_Bom_Jesus.jpg"
+  },
+  "goa-palolem-beach": {
+    "place": "Palolem Beach",
+    "state": "Goa",
+    "title": "Palolem Beach",
+    "articleUrl": "https://en.wikipedia.org/wiki/Palolem_Beach",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Palolem_Beach%2C_South_Goa.jpg/1920px-Palolem_Beach%2C_South_Goa.jpg"
+  },
+  "goa-dudhsagar-falls": {
+    "place": "Dudhsagar Falls",
+    "state": "Goa",
+    "title": "Dudhsagar Falls",
+    "articleUrl": "https://en.wikipedia.org/wiki/Dudhsagar_Falls",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Doodhsagar_Fall.jpg/1920px-Doodhsagar_Fall.jpg"
+  },
+  "haryana-brahma-sarovar": {
+    "place": "Brahma Sarovar",
+    "state": "Haryana",
+    "title": "Brahma Sarovar",
+    "articleUrl": "https://en.wikipedia.org/wiki/Brahma_Sarovar",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Holy_pic_kkr.jpg/1920px-Holy_pic_kkr.jpg"
+  },
+  "haryana-sultanpur-national-park": {
+    "place": "Sultanpur National Park",
+    "state": "Haryana",
+    "title": "Sultanpur National Park",
+    "articleUrl": "https://en.wikipedia.org/wiki/Sultanpur_National_Park",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Sultanpur_Bird_Sanctuary%2C_Gurgaon.jpg/1920px-Sultanpur_Bird_Sanctuary%2C_Gurgaon.jpg"
+  },
+  "haryana-yadavindra-gardens": {
+    "place": "Yadavindra Gardens",
+    "state": "Haryana",
+    "title": "Yadavindra Gardens",
+    "articleUrl": "https://en.wikipedia.org/wiki/Yadavindra_Gardens",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Pinjore_Garden_Panchkula.jpg/1920px-Pinjore_Garden_Panchkula.jpg"
+  },
+  "haryana-morni-hills": {
+    "place": "Morni Hills",
+    "state": "Haryana",
+    "title": "Morni",
+    "articleUrl": "https://en.wikipedia.org/wiki/Morni",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Mornihills.jpg/1920px-Mornihills.jpg"
+  },
+  "jharkhand-baidyanath-dham": {
+    "place": "Baidyanath Dham",
+    "state": "Jharkhand",
+    "title": "Baidyanath Temple",
+    "articleUrl": "https://en.wikipedia.org/wiki/Baidyanath_Temple",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Baidyanath_temple_and_temple_complex%2C_Deoghar_04.jpg/1920px-Baidyanath_temple_and_temple_complex%2C_Deoghar_04.jpg"
+  },
+  "jharkhand-betla-national-park": {
+    "place": "Betla National Park",
+    "state": "Jharkhand",
+    "title": "Betla National Park",
+    "articleUrl": "https://en.wikipedia.org/wiki/Betla_National_Park",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Entrance_of_Betla_national_park.jpg/1920px-Entrance_of_Betla_national_park.jpg"
+  },
+  "jharkhand-hundru-falls": {
+    "place": "Hundru Falls",
+    "state": "Jharkhand",
+    "title": "Hundru Falls",
+    "articleUrl": "https://en.wikipedia.org/wiki/Hundru_Falls",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Hundru_Falls%2C_Jharkhand%2C_India_4.jpg/1920px-Hundru_Falls%2C_Jharkhand%2C_India_4.jpg"
+  },
+  "jharkhand-dassam-falls": {
+    "place": "Dassam Falls",
+    "state": "Jharkhand",
+    "title": "Dassam Falls",
+    "articleUrl": "https://en.wikipedia.org/wiki/Dassam_Falls",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Dassam_falls.jpg/1920px-Dassam_falls.jpg"
+  },
+  "karnataka-hampi": {
+    "place": "Hampi",
+    "state": "Karnataka",
+    "title": "Hampi",
+    "articleUrl": "https://en.wikipedia.org/wiki/Hampi",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Wide_angle_of_Galigopuram_of_Virupaksha_Temple%2C_Hampi_%2804%29_%28cropped%29.jpg/1920px-Wide_angle_of_Galigopuram_of_Virupaksha_Temple%2C_Hampi_%2804%29_%28cropped%29.jpg"
+  },
+  "karnataka-mysore-palace": {
+    "place": "Mysore Palace",
+    "state": "Karnataka",
+    "title": "Mysore Palace",
+    "articleUrl": "https://en.wikipedia.org/wiki/Mysore_Palace",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Mysore_Palace_Morning.jpg/1920px-Mysore_Palace_Morning.jpg"
+  },
+  "karnataka-abbey-falls": {
+    "place": "Abbey Falls",
+    "state": "Karnataka",
+    "title": "Abbey Falls",
+    "articleUrl": "https://en.wikipedia.org/wiki/Abbey_Falls",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Abbey_Falls_New.jpg/1920px-Abbey_Falls_New.jpg"
+  },
+  "karnataka-badami-cave-temples": {
+    "place": "Badami Cave Temples",
+    "state": "Karnataka",
+    "title": "Badami cave temples",
+    "articleUrl": "https://en.wikipedia.org/wiki/Badami_cave_temples",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Vishnu_image_inside_cave_number_3_in_Badami.jpg/1920px-Vishnu_image_inside_cave_number_3_in_Badami.jpg"
+  },
+  "madhya-pradesh-khajuraho-temples": {
+    "place": "Khajuraho Temples",
+    "state": "Madhya Pradesh",
+    "title": "Khajuraho",
+    "articleUrl": "https://en.wikipedia.org/wiki/Khajuraho",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/1_Khajuraho.jpg/1920px-1_Khajuraho.jpg"
+  },
+  "madhya-pradesh-sanchi-stupa": {
+    "place": "Sanchi Stupa",
+    "state": "Madhya Pradesh",
+    "title": "Sanchi Stupa",
+    "articleUrl": "https://en.wikipedia.org/wiki/Sanchi_Stupa",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/East_Gateway_-_Stupa_1_-_Sanchi_Hill_2013-02-21_4398.JPG/1920px-East_Gateway_-_Stupa_1_-_Sanchi_Hill_2013-02-21_4398.JPG"
+  },
+  "madhya-pradesh-mahakaleshwar-temple": {
+    "place": "Mahakaleshwar Temple",
+    "state": "Madhya Pradesh",
+    "title": "Mahakaleshwar Jyotirlinga",
+    "articleUrl": "https://en.wikipedia.org/wiki/Mahakaleshwar_Jyotirlinga",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Mahakaleshwar_Temple%2C_Ujjain.jpg/1920px-Mahakaleshwar_Temple%2C_Ujjain.jpg"
+  },
+  "madhya-pradesh-kanha-national-park": {
+    "place": "Kanha National Park",
+    "state": "Madhya Pradesh",
+    "title": "Kanha Tiger Reserve",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kanha_Tiger_Reserve",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Tiger_Kanha_National_Park.jpg/1920px-Tiger_Kanha_National_Park.jpg"
+  },
+  "manipur-loktak-lake": {
+    "place": "Loktak Lake",
+    "state": "Manipur",
+    "title": "Loktak Lake",
+    "articleUrl": "https://en.wikipedia.org/wiki/Loktak_Lake",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e9/The_Loktak_Lake.jpg"
+  },
+  "manipur-kangla-fort": {
+    "place": "Kangla Fort",
+    "state": "Manipur",
+    "title": "Kangla fort",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kangla_fort",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/The_sacred_idols_of_God_Pakhangba_and_his_divine_consort_kept_inside_the_Pakhangba_Temple_in_the_Kangla_Fort_in_Imphal.jpg/1920px-The_sacred_idols_of_God_Pakhangba_and_his_divine_consort_kept_inside_the_Pakhangba_Temple_in_the_Kangla_Fort_in_Imphal.jpg"
+  },
+  "manipur-ina-memorial": {
+    "place": "INA Memorial",
+    "state": "Manipur",
+    "title": "Indian National Army",
+    "articleUrl": "https://en.wikipedia.org/wiki/Indian_National_Army",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/INA_Insignia.svg/1920px-INA_Insignia.svg.png"
+  },
+  "manipur-shirui-hills": {
+    "place": "Shirui Hills",
+    "state": "Manipur",
+    "title": "Shirui Hills",
+    "articleUrl": "https://en.wikipedia.org/wiki/Shirui_Hills",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/A_scene_from_Siroy_National_Park%2C_Manipur_%282%29.jpg/1920px-A_scene_from_Siroy_National_Park%2C_Manipur_%282%29.jpg"
+  },
+  "meghalaya-living-root-bridges": {
+    "place": "Living Root Bridges",
+    "state": "Meghalaya",
+    "title": "Living root bridge",
+    "articleUrl": "https://en.wikipedia.org/wiki/Living_root_bridge",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Living_root_bridges%2C_Nongriat_village%2C_Meghalaya2.jpg/1920px-Living_root_bridges%2C_Nongriat_village%2C_Meghalaya2.jpg"
+  },
+  "meghalaya-umiam-lake": {
+    "place": "Umiam Lake",
+    "state": "Meghalaya",
+    "title": "Umiam Lake",
+    "articleUrl": "https://en.wikipedia.org/wiki/Umiam_Lake",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Umiam_Lake_-_by_Vikramjit_Kakati.png"
+  },
+  "meghalaya-umngot-river": {
+    "place": "Umngot River",
+    "state": "Meghalaya",
+    "title": "Umngot River",
+    "articleUrl": "https://en.wikipedia.org/wiki/Umngot_River",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Dawki_River%2C_Meghalaya.jpg/1920px-Dawki_River%2C_Meghalaya.jpg"
+  },
+  "meghalaya-nohkalikai-falls": {
+    "place": "Nohkalikai Falls",
+    "state": "Meghalaya",
+    "title": "Nohkalikai Falls",
+    "articleUrl": "https://en.wikipedia.org/wiki/Nohkalikai_Falls",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/NohKaLikai_Falls_V2_Wiki.jpg/1920px-NohKaLikai_Falls_V2_Wiki.jpg"
+  },
+  "mizoram-reiek-tlang": {
+    "place": "Reiek Tlang",
+    "state": "Mizoram",
+    "title": "Reiek",
+    "articleUrl": "https://en.wikipedia.org/wiki/Reiek",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Reiek.JPG/1920px-Reiek.JPG"
+  },
+  "mizoram-vantawng-falls": {
+    "place": "Vantawng Falls",
+    "state": "Mizoram",
+    "title": "Vantawng Falls",
+    "articleUrl": "https://en.wikipedia.org/wiki/Vantawng_Falls",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Vantawng_Khawhthla.jpg"
+  },
+  "mizoram-solomon-s-temple": {
+    "place": "Solomon's Temple",
+    "state": "Mizoram",
+    "title": "Solomon's Temple",
+    "articleUrl": "https://en.wikipedia.org/wiki/Solomon%27s_Temple",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Francois_Vatable%2C_reconstructie_van_de_tempel_van_Salomo_%28detail%29.jpg/1920px-Francois_Vatable%2C_reconstructie_van_de_tempel_van_Salomo_%28detail%29.jpg"
+  },
+  "mizoram-phawngpui-peak": {
+    "place": "Phawngpui Peak",
+    "state": "Mizoram",
+    "title": "Phawngpui",
+    "articleUrl": "https://en.wikipedia.org/wiki/Phawngpui",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5d/2007-blue-mtn-farpak.jpg"
+  },
+  "nagaland-kisama-heritage-village": {
+    "place": "Kisama Heritage Village",
+    "state": "Nagaland",
+    "title": "Kisama Heritage Village",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kisama_Heritage_Village",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Kisama_main_arena_Hornbill_Festival_2019.jpg/1920px-Kisama_main_arena_Hornbill_Festival_2019.jpg"
+  },
+  "nagaland-dzukou-valley": {
+    "place": "Dzukou Valley",
+    "state": "Nagaland",
+    "title": "Dzukou Valley",
+    "articleUrl": "https://en.wikipedia.org/wiki/Dzukou_Valley",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Breathtaking_beauty_of_Dzukou_Valley_in_Manipur-Nagaland_border_%28edit%29.jpg/1920px-Breathtaking_beauty_of_Dzukou_Valley_in_Manipur-Nagaland_border_%28edit%29.jpg"
+  },
+  "nagaland-kohima-war-cemetery": {
+    "place": "Kohima War Cemetery",
+    "state": "Nagaland",
+    "title": "Kohima War Cemetery",
+    "articleUrl": "https://en.wikipedia.org/wiki/Kohima_War_Cemetery",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Cemetery_with_kohima.jpeg/1920px-Cemetery_with_kohima.jpeg"
+  },
+  "nagaland-longwa-village": {
+    "place": "Longwa Village",
+    "state": "Nagaland",
+    "title": "Mon district",
+    "articleUrl": "https://en.wikipedia.org/wiki/Mon_district",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/da/Mon-Nagaland-Jim-Ankan-Deka-photography.jpg"
+  },
+  "odisha-jagannath-temple": {
+    "place": "Jagannath Temple",
+    "state": "Odisha",
+    "title": "Jagannath Temple, Puri",
+    "articleUrl": "https://en.wikipedia.org/wiki/Jagannath_Temple,_Puri",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Shri_Jagannath_temple.jpg/1920px-Shri_Jagannath_temple.jpg"
+  },
+  "odisha-sun-temple": {
+    "place": "Sun Temple",
+    "state": "Odisha",
+    "title": "Sun temple",
+    "articleUrl": "https://en.wikipedia.org/wiki/Sun_temple",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Suryanar_Koil_in_Tamil_Nadu_JEG6875.jpg/1920px-Suryanar_Koil_in_Tamil_Nadu_JEG6875.jpg"
+  },
+  "odisha-chilika-lake": {
+    "place": "Chilika Lake",
+    "state": "Odisha",
+    "title": "Chilika Lake",
+    "articleUrl": "https://en.wikipedia.org/wiki/Chilika_Lake",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/94/Birds_eyeview_of_Chilika_Lake.jpg"
+  },
+  "odisha-udayagiri-and-khandagiri-caves": {
+    "place": "Udayagiri and Khandagiri Caves",
+    "state": "Odisha",
+    "title": "Udayagiri and Khandagiri caves",
+    "articleUrl": "https://en.wikipedia.org/wiki/Udayagiri_and_Khandagiri_caves",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/72/Khandagari_and_Udaygiri_featured_image.jpg"
+  },
+  "telangana-ramappa-temple": {
+    "place": "Ramappa Temple",
+    "state": "Telangana",
+    "title": "Ramappa Temple",
+    "articleUrl": "https://en.wikipedia.org/wiki/Ramappa_Temple",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Ramappa_Temple_%28Human_Scale%29.jpg/1920px-Ramappa_Temple_%28Human_Scale%29.jpg"
+  },
+  "telangana-nagarjuna-sagar": {
+    "place": "Nagarjuna Sagar",
+    "state": "Telangana",
+    "title": "Nagarjuna Sagar Dam",
+    "articleUrl": "https://en.wikipedia.org/wiki/Nagarjuna_Sagar_Dam",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/NagarjunaSagarDam.JPG/1920px-NagarjunaSagarDam.JPG"
+  },
+  "tripura-ujjayanta-palace": {
+    "place": "Ujjayanta Palace",
+    "state": "Tripura",
+    "title": "Ujjayanta Palace",
+    "articleUrl": "https://en.wikipedia.org/wiki/Ujjayanta_Palace",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Ujjayanta_palace_Tripura_State_Museum_Agartala_India.jpg/1920px-Ujjayanta_palace_Tripura_State_Museum_Agartala_India.jpg"
+  },
+  "tripura-neermahal": {
+    "place": "Neermahal",
+    "state": "Tripura",
+    "title": "Neermahal",
+    "articleUrl": "https://en.wikipedia.org/wiki/Neermahal",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Neer_Mahal%2C_the_water_palace_of_Tripura_02.jpg/1920px-Neer_Mahal%2C_the_water_palace_of_Tripura_02.jpg"
+  },
+  "tripura-tripura-sundari-temple": {
+    "place": "Tripura Sundari Temple",
+    "state": "Tripura",
+    "title": "Tripura Sundari Temple",
+    "articleUrl": "https://en.wikipedia.org/wiki/Tripura_Sundari_Temple",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/be/Tripura_Sundari_Temple%2C_Udaipur.jpg"
+  },
+  "uttar-pradesh-taj-mahal": {
+    "place": "Taj Mahal",
+    "state": "Uttar Pradesh",
+    "title": "Taj Mahal",
+    "articleUrl": "https://en.wikipedia.org/wiki/Taj_Mahal",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Taj_Mahal_%28Edited%29.jpeg/1920px-Taj_Mahal_%28Edited%29.jpeg"
+  },
+  "uttar-pradesh-dashashwamedh-ghat": {
+    "place": "Dashashwamedh Ghat",
+    "state": "Uttar Pradesh",
+    "title": "Dashashwamedh Ghat",
+    "articleUrl": "https://en.wikipedia.org/wiki/Dashashwamedh_Ghat",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Dasaswamedh_ghat-varanasi_india-andres_larin.jpg/1920px-Dasaswamedh_ghat-varanasi_india-andres_larin.jpg"
+  },
+  "uttar-pradesh-ram-mandir": {
+    "place": "Ram Mandir",
+    "state": "Uttar Pradesh",
+    "title": "Ram Mandir",
+    "articleUrl": "https://en.wikipedia.org/wiki/Ram_Mandir",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Shri_Ram_Janambhoomi_Mandir%2C_Ayodhya_Dham.jpg/1920px-Shri_Ram_Janambhoomi_Mandir%2C_Ayodhya_Dham.jpg"
+  },
+  "uttar-pradesh-fatehpur-sikri": {
+    "place": "Fatehpur Sikri",
+    "state": "Uttar Pradesh",
+    "title": "Fatehpur Sikri",
+    "articleUrl": "https://en.wikipedia.org/wiki/Fatehpur_Sikri",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Fatehput_Sikiri_Buland_Darwaza_gate_2010.jpg/1920px-Fatehput_Sikiri_Buland_Darwaza_gate_2010.jpg"
+  },
+  "west-bengal-victoria-memorial": {
+    "place": "Victoria Memorial",
+    "state": "West Bengal",
+    "title": "Victoria Memorial, Kolkata",
+    "articleUrl": "https://en.wikipedia.org/wiki/Victoria_Memorial,_Kolkata",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Victoria_Memorial_situated_in_Kolkata.jpg/1920px-Victoria_Memorial_situated_in_Kolkata.jpg"
+  },
+  "west-bengal-sundarbans-national-park": {
+    "place": "Sundarbans National Park",
+    "state": "West Bengal",
+    "title": "Sundarbans National Park",
+    "articleUrl": "https://en.wikipedia.org/wiki/Sundarbans_National_Park",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Sundarban_Tiger.jpg"
+  },
+  "west-bengal-tiger-hill": {
+    "place": "Tiger Hill",
+    "state": "West Bengal",
+    "title": "Tiger Hill, Darjeeling",
+    "articleUrl": "https://en.wikipedia.org/wiki/Tiger_Hill,_Darjeeling",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Tiger_Hill_Darjeeling_West_Bengal_India_%283%29.JPG/1920px-Tiger_Hill_Darjeeling_West_Bengal_India_%283%29.JPG"
+  },
+  "west-bengal-bishnupur-terracotta-temples": {
+    "place": "Bishnupur Terracotta Temples",
+    "state": "West Bengal",
+    "title": "Temples of Bishnupur",
+    "articleUrl": "https://en.wikipedia.org/wiki/Temples_of_Bishnupur",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Jod_Bangla_Terracotta_Temple%2C_Bishnupur%2C_West_Bengal.jpg/1920px-Jod_Bangla_Terracotta_Temple%2C_Bishnupur%2C_West_Bengal.jpg"
   }
 }
