@@ -2,6 +2,16 @@ import express from "express";
 
 const router = express.Router();
 const endpoint = "https://serpapi.com/search.json";
+const indianAirports = {
+  agartala: "IXA", ahmedabad: "AMD", aizawl: "AJL", amritsar: "ATQ", bengaluru: "BLR", bangalore: "BLR",
+  bhopal: "BHO", bhubaneswar: "BBI", chandigarh: "IXC", chennai: "MAA", coimbatore: "CJB", dehradun: "DED",
+  delhi: "DEL", "new delhi": "DEL", gangtok: "PYG", goa: "GOI", guwahati: "GAU", hyderabad: "HYD",
+  imphal: "IMF", indore: "IDR", itanagar: "HGI", jaipur: "JAI", jammu: "IXJ", kochi: "COK", cochin: "COK",
+  kohima: "DMU", kolkata: "CCU", lucknow: "LKO", madurai: "IXM", mumbai: "BOM", nagpur: "NAG",
+  panaji: "GOI", patna: "PAT", portblair: "IXZ", "port blair": "IXZ", pune: "PNQ", raipur: "RPR",
+  ranchi: "IXR", shillong: "SHL", shimla: "SLV", srinagar: "SXR", surat: "STV", thiruvananthapuram: "TRV",
+  trivandrum: "TRV", udaipur: "UDR", varanasi: "VNS", vijayawada: "VGA", visakhapatnam: "VTZ",
+};
 
 async function serpSearch(parameters) {
   const apiKey = process.env.SERPAPI_KEY;
@@ -11,7 +21,7 @@ async function serpSearch(parameters) {
     throw error;
   }
   const query = new URLSearchParams({ ...parameters, api_key: apiKey });
-  const response = await fetch(`${endpoint}?${query}`);
+  const response = await fetch(`${endpoint}?${query}`, { signal: AbortSignal.timeout(45000) });
   const data = await response.json();
   if (!response.ok || data.error) {
     const error = new Error(data.error || "Could not connect to the flight provider");
@@ -22,6 +32,8 @@ async function serpSearch(parameters) {
 }
 
 async function findFlightLocation(city) {
+  const normalizedCity = city.toLowerCase().replace(/[^a-z ]/g, "").trim();
+  if (indianAirports[normalizedCity]) return indianAirports[normalizedCity];
   const data = await serpSearch({
     engine: "google_flights_autocomplete",
     q: city,
