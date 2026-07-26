@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Check, ChevronRight, Clock3, Crosshair, ExternalLink, MapPin, Plane, Search, WalletCards } from "lucide-react";
+import { BedDouble, Check, ChevronRight, Clock3, Crosshair, ExternalLink, MapPin, Plane, Search, WalletCards } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import travelData from "../data/travelData.js";
 import PlaceShowcase from "../components/PlaceShowcase.jsx";
@@ -46,6 +46,12 @@ export default function DestinationPage({ user, onLogout }) {
   const [flightOffers, setFlightOffers] = useState([]);
   const [flightLoading, setFlightLoading] = useState(false);
   const [flightError, setFlightError] = useState("");
+  const [liveHotels, setLiveHotels] = useState([]);
+  const [hotelsLoading, setHotelsLoading] = useState(false);
+  const [hotelsError, setHotelsError] = useState("");
+  const [hotelCheckIn, setHotelCheckIn] = useState(() => localStorage.getItem("hotelCheckIn") || "");
+  const [hotelCheckOut, setHotelCheckOut] = useState(() => localStorage.getItem("hotelCheckOut") || "");
+  const [hotelAdults, setHotelAdults] = useState(() => localStorage.getItem("hotelAdults") || "2");
   const [planVersion, setPlanVersion] = useState(0);
 
   useEffect(() => {
@@ -126,6 +132,41 @@ export default function DestinationPage({ user, onLogout }) {
     }
   }
 
+  async function searchLiveHotels(checkIn = hotelCheckIn, checkOut = hotelCheckOut, adults = hotelAdults) {
+    if (!checkIn || !checkOut) {
+      setHotelsError("Choose check-in and check-out dates first.");
+      return;
+    }
+    setHotelsLoading(true);
+    setHotelsError("");
+    setLiveHotels([]);
+    try {
+      const params = new URLSearchParams({
+        destination: destination.name,
+        checkIn,
+        checkOut,
+        adults,
+      });
+      const response = await fetch(`/api/hotels?${params}`);
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Could not load hotels");
+      setLiveHotels(data.hotels || []);
+      if (!data.hotels?.length) setHotelsError("No live hotels were found for these dates.");
+    } catch (error) {
+      setHotelsError(error.message);
+    } finally {
+      setHotelsLoading(false);
+    }
+  }
+
+  function handleHotelSearch(event) {
+    event.preventDefault();
+    localStorage.setItem("hotelCheckIn", hotelCheckIn);
+    localStorage.setItem("hotelCheckOut", hotelCheckOut);
+    localStorage.setItem("hotelAdults", hotelAdults);
+    searchLiveHotels();
+  }
+
   function buildSelectedPlan(event) {
     event.preventDefault();
     const normalizedBudget = Math.max(1000, Number(plannerBudget) || 0);
@@ -140,6 +181,12 @@ export default function DestinationPage({ user, onLogout }) {
     localStorage.setItem(`tripPlaces:${id}`, JSON.stringify(selectedPlaceNames));
     setPlanVersion((version) => version + 1);
     searchLiveFlights();
+    const tripCheckOut = new Date(`${departureDate}T12:00:00`);
+    tripCheckOut.setDate(tripCheckOut.getDate() + normalizedDays);
+    const tripCheckOutValue = tripCheckOut.toISOString().slice(0, 10);
+    setHotelCheckIn(departureDate);
+    setHotelCheckOut(tripCheckOutValue);
+    searchLiveHotels(departureDate, tripCheckOutValue, hotelAdults);
   }
 
   function useLiveLocation() {
@@ -395,13 +442,51 @@ export default function DestinationPage({ user, onLogout }) {
           <div className="shell">
             <header className="places-heading">
               <div>
-                <p className="eyebrow">Sample accommodation</p>
-                <h2>Hotels and resorts in {destination.name}.</h2>
+                <p className="eyebrow">Live accommodation</p>
+                <h2>Hotels available in {destination.name}.</h2>
               </div>
-              <p>Sample planning estimates only. Prices and availability are not live booking information.</p>
+              <p>Search Google Hotels using your selected travel dates and compare current nightly prices.</p>
             </header>
 
-            {accommodations.length > 0 ? (
+            <form className="hotel-search-form" onSubmit={handleHotelSearch}>
+              <label><span>Check in</span><input type="date" min={new Date().toISOString().slice(0, 10)} value={hotelCheckIn} onChange={(event) => setHotelCheckIn(event.target.value)} required /></label>
+              <label><span>Check out</span><input type="date" min={hotelCheckIn || new Date().toISOString().slice(0, 10)} value={hotelCheckOut} onChange={(event) => setHotelCheckOut(event.target.value)} required /></label>
+              <label><span>Guests</span><select value={hotelAdults} onChange={(event) => setHotelAdults(event.target.value)}><option value="1">1 adult</option><option value="2">2 adults</option><option value="3">3 adults</option><option value="4">4 adults</option><option value="5">5 adults</option><option value="6">6 adults</option></select></label>
+              <button className="button" type="submit" disabled={hotelsLoading}><Search size={17} /> {hotelsLoading ? "Searching..." : "Search live hotels"}</button>
+            </form>
+
+            {hotelsLoading ? (
+              <div className="hotel-loading" role="status"><span /> Searching live hotel availability...</div>
+            ) : hotelsError ? (
+              <div className="hotel-api-message" role="alert"><BedDouble size={23} /><div><strong>Live hotels unavailable</strong><p>{hotelsError}</p></div><button type="button" onClick={searchLiveHotels}>Try again</button></div>
+            ) : liveHotels.length > 0 && (
+              <div className="live-hotel-grid">
+                {liveHotels.map((hotel) => {
+                  const hotelSearch = `https://www.google.com/travel/hotels?q=${encodeURIComponent(`${hotel.name}, ${destination.name}`)}`;
+                  return (
+                    <article className="live-hotel-card" key={hotel.id}>
+                      <div className="live-hotel-image">
+                        <SafeImage sources={[hotel.image, ...destination.img].filter(Boolean)} alt={hotel.name} fallbackLabel={hotel.name} loading="lazy" width="640" height="420" />
+                        <span>Live price</span>
+                      </div>
+                      <div className="live-hotel-content">
+                        <div className="live-hotel-meta"><span>{hotel.type}</span>{hotel.rating && <span>★ {hotel.rating} ({hotel.reviews})</span>}</div>
+                        <h3>{hotel.name}</h3>
+                        {hotel.description && <p>{hotel.description}</p>}
+                        {hotel.amenities.length > 0 && <div className="hotel-amenities">{hotel.amenities.map((amenity) => <span key={amenity}>{amenity}</span>)}</div>}
+                        <div className="live-hotel-footer">
+                          <div><strong>{hotel.pricePerNight ? currencyFormatter.format(hotel.pricePerNight) : "Check price"}</strong><span>{hotel.pricePerNight ? "per night" : "on Google Hotels"}</span></div>
+                          <a href={hotel.bookingLink || hotelSearch} target="_blank" rel="noopener noreferrer">View hotel <ExternalLink size={15} /></a>
+                        </div>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            )}
+
+            {!hotelsLoading && liveHotels.length === 0 && <p className="sample-hotel-label">Planning estimates</p>}
+            {!hotelsLoading && liveHotels.length === 0 && (accommodations.length > 0 ? (
               <div className="stay-grid">
                 {accommodations.map((stay) => {
                   const isAvailable = stay.roomsAvailable > 0;
@@ -449,7 +534,7 @@ export default function DestinationPage({ user, onLogout }) {
                 <h3>No accommodation estimates available</h3>
                 <p>Hotel options for this destination will be added soon.</p>
               </div>
-            )}
+            ))}
           </div>
         </section>
 
