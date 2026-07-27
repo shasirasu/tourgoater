@@ -219,6 +219,8 @@ Saved-plan, booking, preference, and admin routes require a valid bearer token. 
 | `ADMIN_EMAIL` | No | Email that receives the admin role at signup |
 | `CLIENT_URL` | No | CORS origin; defaults to `http://localhost:5173` |
 | `SERPAPI_KEY` | Live search | Key used by flight and hotel APIs |
+| `GMAIL_USER` | Production email OTP | Gmail address used to send login codes |
+| `GMAIL_APP_PASSWORD` | Production email OTP | Google App Password for the sender account |
 
 ## Verification
 
