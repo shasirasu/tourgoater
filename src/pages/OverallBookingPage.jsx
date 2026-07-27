@@ -5,6 +5,7 @@ import SafeImage from "../components/SafeImage.jsx";
 import SiteFooter from "../components/SiteFooter.jsx";
 import SiteHeader from "../components/SiteHeader.jsx";
 import { getAuthToken } from "../data/authStorage.js";
+import BookingSuccessAnimation from "../components/BookingSuccessAnimation.jsx";
 
 const money = new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 });
 
@@ -15,6 +16,7 @@ export default function OverallBookingPage({ user, onLogout }) {
     try { return JSON.parse(sessionStorage.getItem("pendingOverallBooking") || "null"); } catch { return null; }
   }, [location.state]);
   const [confirmed, setConfirmed] = useState(false);
+  const [successOpen, setSuccessOpen] = useState(false);
   const [bookingDetails, setBookingDetails] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
@@ -47,6 +49,7 @@ export default function OverallBookingPage({ user, onLogout }) {
       setBookingDetails(details);
       setInquiryId(data.inquiry.id);
       setConfirmed(true);
+      setSuccessOpen(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (error) {
       setSubmitError(error.message);
@@ -59,6 +62,7 @@ export default function OverallBookingPage({ user, onLogout }) {
     <>
       <SiteHeader user={user} onLogout={onLogout} />
       <main className="booking-page" id="main-content">
+        {successOpen && <BookingSuccessAnimation destinationName={booking.destinationName} inquiryId={inquiryId} travelerName={bookingDetails?.travelerName} onClose={() => setSuccessOpen(false)} />}
         <section className="booking-hero shell">
           <div><p className="eyebrow">Tourgoater checkout</p><h1>Review your overall booking.</h1><p>Everything stays inside your application while you review the complete plan.</p></div>
           <SafeImage sources={booking.destinationImage} alt={booking.destinationName} fallbackLabel={booking.destinationName} width="720" height="420" />
@@ -68,15 +72,15 @@ export default function OverallBookingPage({ user, onLogout }) {
           <div className="booking-details">
             {confirmed && <div className="booking-confirmed" role="status"><CheckCircle2 size={28} /><div><strong>Booking inquiry #{inquiryId} submitted</strong><p>Your {booking.destinationName} booking request has been saved for {bookingDetails?.travelerName}. We will use {bookingDetails?.phone} and {bookingDetails?.email} for booking updates.</p></div></div>}
             {confirmed && bookingDetails && <section className="booking-panel booking-inquiry-summary"><header><Users size={21} /><div><p>Traveler details</p><h2>Contact and inquiry</h2></div></header><dl><div><dt>Name</dt><dd>{bookingDetails.travelerName}</dd></div><div><dt>Phone</dt><dd>{bookingDetails.phone}</dd></div><div><dt>Email</dt><dd>{bookingDetails.email}</dd></div><div><dt>Address</dt><dd>{bookingDetails.address}, {bookingDetails.city} - {bookingDetails.postalCode}</dd></div><div><dt>Inquiry</dt><dd>{bookingDetails.inquiry || "No special requests"}</dd></div></dl></section>}
-            <section className="booking-panel"><header><Plane size={21} /><div><p>Travel add-on</p><h2>{booking.departureCity} → {booking.destinationName}</h2></div></header><dl><div><dt>Airline</dt><dd>{booking.flight.airline} · {booking.flight.flightNumber}</dd></div><div><dt>Departure</dt><dd>{new Date(booking.flight.departure).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}</dd></div><div><dt>Travelers</dt><dd>{booking.travelers}</dd></div><div><dt>Flight total</dt><dd>{money.format(booking.travelAddon)}</dd></div></dl></section>
-            <section className="booking-panel"><header><BedDouble size={21} /><div><p>Hotel</p><h2>{booking.hotel.name}</h2></div></header><dl><div><dt>Check in</dt><dd>{new Date(`${booking.checkIn}T12:00:00`).toLocaleDateString("en-IN", { dateStyle: "medium" })}</dd></div><div><dt>Check out</dt><dd>{new Date(`${booking.checkOut}T12:00:00`).toLocaleDateString("en-IN", { dateStyle: "medium" })}</dd></div><div><dt>Guests</dt><dd>{booking.travelers}</dd></div><div><dt>Hotel total</dt><dd>{money.format(booking.hotel.totalPrice || booking.hotel.pricePerNight)}</dd></div></dl></section>
+            {booking.flight ? <section className="booking-panel"><header><Plane size={21} /><div><p>Travel add-on</p><h2>{booking.departureCity} → {booking.destinationName}</h2></div></header><dl><div><dt>Airline</dt><dd>{booking.flight.airline} · {booking.flight.flightNumber}</dd></div><div><dt>Departure</dt><dd>{new Date(booking.flight.departure).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}</dd></div><div><dt>Travelers</dt><dd>{booking.travelers}</dd></div><div><dt>Flight total</dt><dd>{money.format(booking.travelAddon)}</dd></div></dl></section> : <section className="booking-panel booking-optional-empty"><header><Plane size={21} /><div><p>Optional travel</p><h2>No flight selected</h2></div></header><p>You are arranging travel separately. This inquiry will not include a flight.</p></section>}
+            {booking.hotel ? <section className="booking-panel"><header><BedDouble size={21} /><div><p>Hotel</p><h2>{booking.hotel.name}</h2></div></header><dl><div><dt>Check in</dt><dd>{new Date(`${booking.checkIn}T12:00:00`).toLocaleDateString("en-IN", { dateStyle: "medium" })}</dd></div><div><dt>Check out</dt><dd>{new Date(`${booking.checkOut}T12:00:00`).toLocaleDateString("en-IN", { dateStyle: "medium" })}</dd></div><div><dt>Guests</dt><dd>{booking.travelers}</dd></div><div><dt>Hotel total</dt><dd>{money.format(booking.hotel.totalPrice || booking.hotel.pricePerNight)}</dd></div></dl></section> : <section className="booking-panel booking-optional-empty"><header><BedDouble size={21} /><div><p>Optional stay</p><h2>No hotel selected</h2></div></header><p>You are arranging accommodation separately. This inquiry will not include a hotel.</p></section>}
             <section className="booking-panel"><header><MapPin size={21} /><div><p>Itinerary</p><h2>Selected places</h2></div></header><div className="booking-places">{booking.places.map((place) => <span key={place.name}>{place.name}</span>)}</div></section>
           </div>
 
           <aside className="booking-checkout">
             <p className="eyebrow">Payment summary</p><h2>{booking.destinationName}</h2>
-            <dl><div><dt>Stay & activities</dt><dd>{money.format(booking.stayActivityCost)}</dd></div><div className="booking-addon"><dt>Travel add-on</dt><dd>+{money.format(booking.travelAddon)}</dd></div><div className="booking-grand-total"><dt>Overall total</dt><dd>{money.format(booking.overallTotal)}</dd></div></dl>
-            <p className="booking-disclaimer"><ShieldCheck size={16} /> Flight travel is an add-on above your stay & activity budget of {money.format(booking.stayActivityBudget)}.</p>
+            <dl><div><dt>Stay & activities</dt><dd>{money.format(booking.stayActivityCost)}</dd></div>{booking.flight && <div className="booking-addon"><dt>Travel add-on</dt><dd>+{money.format(booking.travelAddon)}</dd></div>}<div className="booking-grand-total"><dt>Overall total</dt><dd>{money.format(booking.overallTotal)}</dd></div></dl>
+            <p className="booking-disclaimer"><ShieldCheck size={16} /> {booking.flight ? `Flight travel is an add-on above your stay & activity budget of ${money.format(booking.stayActivityBudget)}.` : "No flight is included. You can arrange travel separately."} {!booking.hotel && "No hotel is included."}</p>
             {!confirmed ? <form onSubmit={confirmBooking}>
               <label><span>Lead traveler name</span><input name="travelerName" defaultValue={user?.name || ""} autoComplete="name" required /></label>
               <label><span>Contact email</span><input name="email" type="email" defaultValue={user?.email || ""} autoComplete="email" required /></label>

@@ -113,6 +113,13 @@ router.post("/login", async (request, response) => {
       [email],
     );
     const user = result.rows[0];
+
+    if (!user) {
+      return response.status(404).json({
+        code: "ACCOUNT_NOT_FOUND",
+        message: "No account exists with this email. Please sign up first.",
+      });
+    }
     const passwordMatches = user && await bcrypt.compare(password, user.password_hash);
 
     if (!passwordMatches) {

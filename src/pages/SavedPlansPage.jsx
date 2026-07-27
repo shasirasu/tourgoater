@@ -9,6 +9,9 @@ import { getAuthToken } from "../data/authStorage.js";
 export default function SavedPlansPage({ user, onLogout }) {
   const [plans, setPlans] = useState([]);
   const [trips, setTrips] = useState([]);
+  const [bookingInquiries, setBookingInquiries] = useState([]);
+  const [inquiryMessages, setInquiryMessages] = useState([]);
+  const [inquiryDrafts, setInquiryDrafts] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [removingId, setRemovingId] = useState(null);
@@ -20,13 +23,19 @@ export default function SavedPlansPage({ user, onLogout }) {
     Promise.all([
       fetch("/api/plans", { headers: { Authorization: `Bearer ${token}` } }),
       fetch("/api/plans/trips", { headers: { Authorization: `Bearer ${token}` } }),
+      fetch("/api/bookings", { headers: { Authorization: `Bearer ${token}` } }),
+      fetch("/api/bookings/messages", { headers: { Authorization: `Bearer ${token}` } }),
     ])
-      .then(async ([placesResponse, tripsResponse]) => {
-        const [placesData, tripsData] = await Promise.all([placesResponse.json(), tripsResponse.json()]);
+      .then(async ([placesResponse, tripsResponse, bookingsResponse, messagesResponse]) => {
+        const [placesData, tripsData, bookingsData, messagesData] = await Promise.all([placesResponse.json(), tripsResponse.json(), bookingsResponse.json(), messagesResponse.json()]);
         if (!placesResponse.ok) throw new Error(placesData.message || "Could not load your saved places");
         if (!tripsResponse.ok) throw new Error(tripsData.message || "Could not load your saved trips");
+        if (!bookingsResponse.ok) throw new Error(bookingsData.message || "Could not load your booking inquiries");
+        if (!messagesResponse.ok) throw new Error(messagesData.message || "Could not load inquiry messages");
         setPlans(placesData.plans);
         setTrips(tripsData.trips);
+        setBookingInquiries(bookingsData.inquiries);
+        setInquiryMessages(messagesData.messages);
       })
       .catch((requestError) => setError(requestError.message))
       .finally(() => setLoading(false));
@@ -96,6 +105,19 @@ export default function SavedPlansPage({ user, onLogout }) {
     tripDeleteTimer.current = null;
   }
 
+  async function sendBookingInquiry(event, bookingId) {
+    event.preventDefault();
+    const message = inquiryDrafts[bookingId]?.trim();
+    if (!message) return;
+    try {
+      const response = await fetch(`/api/bookings/${bookingId}/messages`, { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${getAuthToken()}` }, body: JSON.stringify({ message }) });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Could not send inquiry");
+      setInquiryMessages((current) => [...current, data.message]);
+      setInquiryDrafts((current) => ({ ...current, [bookingId]: "" }));
+    } catch (requestError) { setError(requestError.message); }
+  }
+
   return (
     <>
       <SiteHeader user={user} onLogout={onLogout} />
@@ -111,6 +133,21 @@ export default function SavedPlansPage({ user, onLogout }) {
             <p className="saved-loading" role="status">Loading your saved places...</p>
           ) : (
             <>
+              <section className="saved-booking-status" aria-labelledby="booking-status-title">
+                <div className="saved-trip-heading"><p className="eyebrow">Booking tracking</p><h2 id="booking-status-title">Your ongoing trips.</h2><p>Booking inquiries appear here after submission. Status updates from the Tourgoater admin are reflected here.</p></div>
+                {bookingInquiries.length ? <div className="saved-booking-status-grid">{bookingInquiries.map((inquiry) => {
+                  const booking = typeof inquiry.booking_json === "string" ? JSON.parse(inquiry.booking_json) : inquiry.booking_json;
+                  const statusLabels = { pending: "Pending", contacted: "Ongoing", confirmed: "Completed", cancelled: "Cancelled" };
+                  return <article className="saved-booking-status-card" key={inquiry.id}>
+                    <header><div><span>Booking #{inquiry.id}</span><h3>{inquiry.destination_name}</h3></div><strong className={`booking-status-badge is-${inquiry.status}`}>{statusLabels[inquiry.status] || inquiry.status}</strong></header>
+                    <dl><div><dt>Submitted</dt><dd>{new Date(inquiry.created_at).toLocaleDateString("en-IN", { dateStyle: "medium" })}</dd></div><div><dt>Flight</dt><dd>{booking?.flight ? booking.flight.airline : "Not included"}</dd></div><div><dt>Hotel</dt><dd>{booking?.hotel?.name || "Not included"}</dd></div><div><dt>Overall total</dt><dd>₹{Number(inquiry.overall_total).toLocaleString("en-IN")}</dd></div></dl>
+                    {inquiry.inquiry && <p><strong>Your inquiry:</strong> {inquiry.inquiry}</p>}
+                    <div className="booking-message-thread">{inquiryMessages.filter((message) => String(message.booking_inquiry_id) === String(inquiry.id)).map((message) => <div className={`booking-message is-${message.sender}`} key={message.id}><strong>{message.sender === "admin" ? "Tourgoater admin" : "You"}</strong><p>{message.message}</p><time>{new Date(message.created_at).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}</time></div>)}</div>
+                    <form className="booking-followup-form" onSubmit={(event) => sendBookingInquiry(event, inquiry.id)}><label><span>Ask about this booking</span><textarea value={inquiryDrafts[inquiry.id] || ""} onChange={(event) => setInquiryDrafts((current) => ({ ...current, [inquiry.id]: event.target.value }))} maxLength="1500" rows="3" placeholder="Send a follow-up inquiry to the admin..." required /></label><button type="submit">Send inquiry</button></form>
+                  </article>;
+                })}</div> : <div className="saved-section-empty"><span aria-hidden="true">◎</span><div><h3>No booking inquiries yet</h3><p>Submit an overall booking request and its progress will appear here.</p></div><Link className="button" to="/browse">Plan a trip</Link></div>}
+              </section>
+
               <section className="saved-complete-trips" aria-labelledby="complete-plans-title">
                 <div className="saved-trip-heading"><p className="eyebrow">Overall plans</p><h2 id="complete-plans-title">Full trip plans.</h2><p>Saved plans containing your places, live flight, hotel, travelers and overall total.</p></div>
                 {trips.length > 0 ? <div className="saved-trip-grid">{trips.map((trip) => {
@@ -121,7 +158,7 @@ export default function SavedPlansPage({ user, onLogout }) {
                   return <article className="saved-trip-card" key={trip.id}>
                     <div className="saved-trip-image"><SafeImage sources={tripDestination?.img} alt={`Scenic view of ${trip.destination_name}`} fallbackLabel={trip.destination_name} loading="lazy" width="720" height="420" /><span>Complete plan</span></div>
                     <div><span>{new Date(trip.departure_date).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</span><h3>{trip.destination_name}</h3><p>{trip.departure_city} → {trip.destination_name} · {trip.travelers} {trip.travelers === 1 ? "traveler" : "travelers"}</p></div>
-                    <dl><div><dt>Flight</dt><dd>{flight.airline} · {flight.flightNumber}</dd></div><div><dt>Hotel</dt><dd>{hotel.name}</dd></div><div><dt>Places</dt><dd>{places.map((place) => place.name).join(", ")}</dd></div><div><dt>Stay & activity budget</dt><dd>₹{Number(trip.budget).toLocaleString("en-IN")}</dd></div><div className="saved-travel-addon"><dt>Travel add-on</dt><dd>+₹{(Number(flight.price || 0) * Number(trip.travelers || 1)).toLocaleString("en-IN")}</dd></div><div><dt>Overall total</dt><dd>₹{Number(trip.total_cost).toLocaleString("en-IN")}</dd></div></dl>
+                    <dl><div><dt>Flight</dt><dd>{flight ? `${flight.airline} · ${flight.flightNumber}` : "Not selected"}</dd></div><div><dt>Hotel</dt><dd>{hotel?.name || "Not selected"}</dd></div><div><dt>Places</dt><dd>{places.map((place) => place.name).join(", ")}</dd></div><div><dt>Stay & activity budget</dt><dd>₹{Number(trip.budget).toLocaleString("en-IN")}</dd></div>{flight && <div className="saved-travel-addon"><dt>Travel add-on</dt><dd>+₹{(Number(flight.price || 0) * Number(trip.travelers || 1)).toLocaleString("en-IN")}</dd></div>}<div><dt>Overall total</dt><dd>₹{Number(trip.total_cost).toLocaleString("en-IN")}</dd></div></dl>
                     <p className="saved-budget-disclaimer">Flight travel is an add-on above the stay & activity budget.</p>
                     <div className="saved-trip-actions"><Link to={`/destination/${trip.destination_key}?editTrip=${trip.id}`}>Edit plan →</Link><button type="button" disabled={Boolean(pendingTripDelete)} onClick={() => scheduleTripDelete(trip)}>Delete plan</button></div>
                   </article>;

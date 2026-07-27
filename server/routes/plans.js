@@ -23,8 +23,8 @@ router.get("/trips", async (request, response) => {
 
 router.post("/trips", async (request, response) => {
   const { destinationKey, destinationName, places, flight, hotel, departureCity, departureDate, checkIn, checkOut, travelers, budget, totalCost } = request.body;
-  if (!destinationKey || !destinationName || !Array.isArray(places) || !places.length || !flight || !hotel || !departureCity || !departureDate || !checkIn || !checkOut) {
-    return response.status(400).json({ message: "Select places, a flight, and a hotel before saving the plan" });
+  if (!destinationKey || !destinationName || !Array.isArray(places) || !places.length || !departureCity || !departureDate || !checkIn || !checkOut) {
+    return response.status(400).json({ message: "Select at least one place and complete the trip details before saving" });
   }
   try {
     const result = await pool.query(
@@ -44,8 +44,8 @@ router.put("/trips/:id", async (request, response) => {
   const tripId = Number(request.params.id);
   const { destinationKey, destinationName, places, flight, hotel, departureCity, departureDate, checkIn, checkOut, travelers, budget, totalCost } = request.body;
   if (!Number.isInteger(tripId) || tripId < 1) return response.status(400).json({ message: "Invalid saved trip" });
-  if (!destinationKey || !destinationName || !Array.isArray(places) || !places.length || !flight || !hotel || !departureCity || !departureDate || !checkIn || !checkOut) {
-    return response.status(400).json({ message: "Select places, a flight, and a hotel before updating the plan" });
+  if (!destinationKey || !destinationName || !Array.isArray(places) || !places.length || !departureCity || !departureDate || !checkIn || !checkOut) {
+    return response.status(400).json({ message: "Select at least one place and complete the trip details before updating" });
   }
   try {
     const result = await pool.query(

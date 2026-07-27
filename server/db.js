@@ -96,6 +96,16 @@ const schema = `
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
   );
 
+  CREATE TABLE IF NOT EXISTS booking_inquiry_messages (
+    id BIGSERIAL PRIMARY KEY,
+    booking_inquiry_id BIGINT NOT NULL REFERENCES booking_inquiries(id) ON DELETE CASCADE,
+    user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    sender TEXT NOT NULL CHECK (sender IN ('user', 'admin')),
+    message TEXT NOT NULL,
+    read_at TIMESTAMPTZ,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+  );
+
   CREATE INDEX IF NOT EXISTS saved_plans_user_id_idx ON saved_plans(user_id);
   CREATE INDEX IF NOT EXISTS booking_inquiries_user_id_idx ON booking_inquiries(user_id);
 
@@ -131,6 +141,7 @@ function createSqlitePool() {
     CREATE TABLE IF NOT EXISTS booking_inquiries (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE, destination_key TEXT NOT NULL, destination_name TEXT NOT NULL, booking_json TEXT NOT NULL, traveler_name TEXT NOT NULL, email TEXT NOT NULL, phone TEXT NOT NULL, address TEXT NOT NULL, city TEXT NOT NULL, postal_code TEXT NOT NULL, inquiry TEXT, overall_total INTEGER NOT NULL CHECK (overall_total >= 0), status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'contacted', 'confirmed', 'cancelled')), created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
     CREATE TABLE IF NOT EXISTS email_otp_challenges (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE, email TEXT NOT NULL, code_hash TEXT NOT NULL, expires_at TEXT NOT NULL, attempts INTEGER NOT NULL DEFAULT 0, used_at TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
     CREATE TABLE IF NOT EXISTS password_reset_challenges (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE, email TEXT NOT NULL, code_hash TEXT NOT NULL, expires_at TEXT NOT NULL, attempts INTEGER NOT NULL DEFAULT 0, used_at TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
+    CREATE TABLE IF NOT EXISTS booking_inquiry_messages (id INTEGER PRIMARY KEY AUTOINCREMENT, booking_inquiry_id INTEGER NOT NULL REFERENCES booking_inquiries(id) ON DELETE CASCADE, user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE, sender TEXT NOT NULL CHECK (sender IN ('user', 'admin')), message TEXT NOT NULL, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
     CREATE INDEX IF NOT EXISTS saved_plans_user_id_idx ON saved_plans(user_id);
     CREATE INDEX IF NOT EXISTS booking_inquiries_user_id_idx ON booking_inquiries(user_id);
     CREATE TABLE IF NOT EXISTS catalog_destinations (id TEXT PRIMARY KEY, name TEXT UNIQUE NOT NULL, capital TEXT NOT NULL, best_for TEXT, about TEXT, climate TEXT, history TEXT, best_time TEXT, food TEXT, daily_expenses INTEGER NOT NULL DEFAULT 1800, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
@@ -140,6 +151,8 @@ function createSqlitePool() {
   const userColumns = database.prepare("PRAGMA table_info(users)").all();
   if (!userColumns.some((column) => column.name === "role")) database.exec("ALTER TABLE users ADD COLUMN role TEXT NOT NULL DEFAULT 'user'");
   if (!userColumns.some((column) => column.name === "email_verified")) database.exec("ALTER TABLE users ADD COLUMN email_verified INTEGER NOT NULL DEFAULT 1");
+  const messageColumns = database.prepare("PRAGMA table_info(booking_inquiry_messages)").all();
+  if (!messageColumns.some((column) => column.name === "read_at")) database.exec("ALTER TABLE booking_inquiry_messages ADD COLUMN read_at TEXT");
 
   console.log(`SQLite database ready at ${databasePath}`);
   return {
@@ -162,6 +175,7 @@ async function createPostgresPool() {
   await postgresPool.query(schema);
   await postgresPool.query("ALTER TABLE users ADD COLUMN IF NOT EXISTS role TEXT NOT NULL DEFAULT 'user'");
   await postgresPool.query("ALTER TABLE users ADD COLUMN IF NOT EXISTS email_verified BOOLEAN NOT NULL DEFAULT TRUE");
+  await postgresPool.query("ALTER TABLE booking_inquiry_messages ADD COLUMN IF NOT EXISTS read_at TIMESTAMPTZ");
   console.log("PostgreSQL database connected and ready");
   return postgresPool;
 }

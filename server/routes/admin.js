@@ -27,6 +27,20 @@ router.get("/inquiries", async (_request, response) => {
   response.json({ inquiries: result.rows });
 });
 
+router.get("/inquiry-messages", async (_request, response) => {
+  const result = await pool.query("SELECT id, booking_inquiry_id, sender, message, created_at FROM booking_inquiry_messages ORDER BY created_at");
+  response.json({ messages: result.rows });
+});
+
+router.post("/inquiries/:id/messages", async (request, response) => {
+  const message = request.body.message?.trim();
+  if (!message || message.length > 1500) return response.status(400).json({ message: "Enter a reply up to 1500 characters" });
+  const booking = await pool.query("SELECT id, user_id FROM booking_inquiries WHERE id = $1", [request.params.id]);
+  if (!booking.rows[0]) return response.status(404).json({ message: "Inquiry not found" });
+  const result = await pool.query("INSERT INTO booking_inquiry_messages (booking_inquiry_id, user_id, sender, message) VALUES ($1, $2, 'admin', $3) RETURNING id, booking_inquiry_id, sender, message, created_at", [request.params.id, booking.rows[0].user_id, message]);
+  response.status(201).json({ message: result.rows[0] });
+});
+
 router.patch("/inquiries/:id", async (request, response) => {
   const status = request.body.status;
   if (!["pending", "contacted", "confirmed", "cancelled"].includes(status)) return response.status(400).json({ message: "Invalid inquiry status" });

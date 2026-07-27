@@ -12,6 +12,8 @@ export default function AdminPage({ user, onLogout }) {
   const [users, setUsers] = useState([]);
   const [destinations, setDestinations] = useState([]);
   const [inquiries, setInquiries] = useState([]);
+  const [inquiryMessages, setInquiryMessages] = useState([]);
+  const [inquiryReplies, setInquiryReplies] = useState({});
   const [selected, setSelected] = useState(null);
   const [destinationForm, setDestinationForm] = useState(emptyDestination);
   const [message, setMessage] = useState("");
@@ -28,8 +30,8 @@ export default function AdminPage({ user, onLogout }) {
   async function refresh() {
     setBusy(true);
     try {
-      const [overview, userData, catalog, inquiryData] = await Promise.all([api("/overview"), api("/users"), api("/destinations"), api("/inquiries")]);
-      setStats(overview.stats); setUsers(userData.users); setDestinations(catalog.destinations); setInquiries(inquiryData.inquiries);
+      const [overview, userData, catalog, inquiryData, messageData] = await Promise.all([api("/overview"), api("/users"), api("/destinations"), api("/inquiries"), api("/inquiry-messages")]);
+      setStats(overview.stats); setUsers(userData.users); setDestinations(catalog.destinations); setInquiries(inquiryData.inquiries); setInquiryMessages(messageData.messages);
     } catch (error) { setMessage(error.message); } finally { setBusy(false); }
   }
   useEffect(() => { if (user?.role === "admin") refresh(); }, [user]);
@@ -54,6 +56,17 @@ export default function AdminPage({ user, onLogout }) {
   async function changeRole(account, role) { await api(`/users/${account.id}`, { method: "PATCH", body: JSON.stringify({ role }) }); await refresh(); }
   async function removeUser(account) { if (!window.confirm(`Delete ${account.email}?`)) return; await api(`/users/${account.id}`, { method: "DELETE" }); await refresh(); }
   async function changeInquiryStatus(inquiry, status) { await api(`/inquiries/${inquiry.id}`, { method: "PATCH", body: JSON.stringify({ status }) }); setInquiries((current) => current.map((item) => item.id === inquiry.id ? { ...item, status } : item)); }
+  async function sendInquiryReply(event, inquiryId) {
+    event.preventDefault();
+    const reply = (inquiryReplies[inquiryId] || "").trim();
+    if (!reply) return;
+    try {
+      const data = await api(`/inquiries/${inquiryId}/messages`, { method: "POST", body: JSON.stringify({ message: reply }) });
+      setInquiryMessages((current) => [...current, data.message]);
+      setInquiryReplies((current) => ({ ...current, [inquiryId]: "" }));
+      setMessage("Reply sent to the traveler");
+    } catch (error) { setMessage(error.message); }
+  }
 
   const statCards = [["users", "Users", Users], ["destinations", "Destinations", MapPinned], ["places", "Places", LayoutDashboard], ["hotels", "Hotels", Building2], ["savedPlans", "Saved plans", ShieldCheck], ["inquiries", "Inquiries", MessageSquareText]];
   return <>
@@ -72,7 +85,7 @@ export default function AdminPage({ user, onLogout }) {
           <section className="admin-import"><Database size={30}/><div><h3>Populate the Neon catalog</h3><p>Copy all current states, places and sample hotels into the production database. Existing records are updated safely.</p></div><button className="button" onClick={importCatalog} disabled={busy}>{busy ? "Working…" : "Import current catalog"}</button></section>
         </>}
         {tab === "users" && <div className="admin-table-wrap"><table><thead><tr><th>User</th><th>Joined</th><th>Role</th><th>Actions</th></tr></thead><tbody>{users.map((account) => <tr key={account.id}><td><strong>{account.name}</strong><small>{account.email}</small></td><td>{new Date(account.created_at).toLocaleDateString()}</td><td><select value={account.role} onChange={(e) => changeRole(account,e.target.value)} disabled={String(account.id)===String(user.id)}><option value="user">User</option><option value="admin">Admin</option></select></td><td><button className="admin-delete" onClick={() => removeUser(account)} disabled={String(account.id)===String(user.id)}><Trash2 size={16}/> Delete</button></td></tr>)}</tbody></table></div>}
-        {tab === "inquiries" && <div className="admin-inquiry-list">{inquiries.length ? inquiries.map((inquiry) => <article className="admin-inquiry-card" key={inquiry.id}><header><div><span>Inquiry #{inquiry.id}</span><h3>{inquiry.destination_name}</h3><p>{new Date(inquiry.created_at).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}</p></div><select value={inquiry.status} onChange={(event) => changeInquiryStatus(inquiry, event.target.value)}><option value="pending">Pending</option><option value="contacted">Contacted</option><option value="confirmed">Confirmed</option><option value="cancelled">Cancelled</option></select></header><div className="admin-inquiry-grid"><dl><div><dt>Traveler</dt><dd>{inquiry.traveler_name}</dd></div><div><dt>Account</dt><dd>{inquiry.account_name}<small>{inquiry.account_email}</small></dd></div><div><dt>Phone</dt><dd><a href={`tel:${inquiry.phone}`}>{inquiry.phone}</a></dd></div><div><dt>Email</dt><dd><a href={`mailto:${inquiry.email}`}>{inquiry.email}</a></dd></div></dl><dl><div><dt>Address</dt><dd>{inquiry.address}, {inquiry.city} - {inquiry.postal_code}</dd></div><div><dt>Overall total</dt><dd>₹{Number(inquiry.overall_total).toLocaleString("en-IN")}</dd></div><div><dt>User inquiry</dt><dd>{inquiry.inquiry || "No special requests"}</dd></div></dl></div></article>) : <div className="admin-select-empty"><MessageSquareText size={34}/><h3>No booking inquiries</h3><p>New customer booking requests will appear here.</p></div>}</div>}
+        {tab === "inquiries" && <div className="admin-inquiry-list">{inquiries.length ? inquiries.map((inquiry) => <article className="admin-inquiry-card" key={inquiry.id}><header><div><span>Inquiry #{inquiry.id}</span><h3>{inquiry.destination_name}</h3><p>{new Date(inquiry.created_at).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}</p></div><select value={inquiry.status} onChange={(event) => changeInquiryStatus(inquiry, event.target.value)}><option value="pending">Pending</option><option value="contacted">Ongoing</option><option value="confirmed">Completed</option><option value="cancelled">Cancelled</option></select></header><div className="admin-inquiry-grid"><dl><div><dt>Traveler</dt><dd>{inquiry.traveler_name}</dd></div><div><dt>Account</dt><dd>{inquiry.account_name}<small>{inquiry.account_email}</small></dd></div><div><dt>Phone</dt><dd><a href={`tel:${inquiry.phone}`}>{inquiry.phone}</a></dd></div><div><dt>Email</dt><dd><a href={`mailto:${inquiry.email}`}>{inquiry.email}</a></dd></div></dl><dl><div><dt>Address</dt><dd>{inquiry.address}, {inquiry.city} - {inquiry.postal_code}</dd></div><div><dt>Overall total</dt><dd>₹{Number(inquiry.overall_total).toLocaleString("en-IN")}</dd></div><div><dt>Original inquiry</dt><dd>{inquiry.inquiry || "No special requests"}</dd></div></dl></div><div className="admin-message-thread">{inquiryMessages.filter((item) => String(item.booking_inquiry_id) === String(inquiry.id)).map((item) => <div className={`booking-message is-${item.sender}`} key={item.id}><strong>{item.sender === "admin" ? "Admin" : inquiry.traveler_name}</strong><p>{item.message}</p><time>{new Date(item.created_at).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}</time></div>)}</div><form className="admin-inquiry-reply" onSubmit={(event) => sendInquiryReply(event, inquiry.id)}><textarea rows="3" maxLength="1500" value={inquiryReplies[inquiry.id] || ""} onChange={(event) => setInquiryReplies((current) => ({ ...current, [inquiry.id]: event.target.value }))} placeholder="Reply to this traveler's booking inquiry..." required /><button type="submit">Send reply</button></form></article>) : <div className="admin-select-empty"><MessageSquareText size={34}/><h3>No booking inquiries</h3><p>New customer booking requests will appear here.</p></div>}</div>}
         {tab === "catalog" && <div className="admin-catalog-layout">
           <div>
             <form className="admin-create-form" onSubmit={addDestination}><h3><Plus size={18}/> Add destination</h3><div><input placeholder="ID" value={destinationForm.id} onChange={e=>setDestinationForm({...destinationForm,id:e.target.value})} required/><input placeholder="State name" value={destinationForm.name} onChange={e=>setDestinationForm({...destinationForm,name:e.target.value})} required/><input placeholder="Capital" value={destinationForm.capital} onChange={e=>setDestinationForm({...destinationForm,capital:e.target.value})} required/></div><textarea placeholder="Description" value={destinationForm.about} onChange={e=>setDestinationForm({...destinationForm,about:e.target.value})}/><button className="button" type="submit">Create destination</button></form>

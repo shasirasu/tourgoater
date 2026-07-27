@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BedDouble, BookmarkCheck, Check, ChevronRight, Clock3, Crosshair, ExternalLink, MapPin, Plane, Search, ShoppingCart, WalletCards } from "lucide-react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import travelData from "../data/travelData.js";
@@ -53,6 +53,10 @@ export default function DestinationPage({ user, onLogout }) {
   const [planVersion, setPlanVersion] = useState(0);
   const [savingTrip, setSavingTrip] = useState(false);
   const [tripSaveStatus, setTripSaveStatus] = useState("");
+  const flightsSectionRef = useRef(null);
+  const hotelsSectionRef = useRef(null);
+  const hotelResultsRef = useRef(null);
+  const overallSectionRef = useRef(null);
 
   useEffect(() => {
     if (!user || !destination || !editingTripId) return;
@@ -202,6 +206,7 @@ export default function DestinationPage({ user, onLogout }) {
     localStorage.setItem("hotelCheckOut", hotelCheckOut);
     localStorage.setItem("hotelAdults", hotelAdults);
     searchLiveHotels();
+    setTimeout(() => hotelResultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 150);
   }
 
   function buildSelectedPlan(event) {
@@ -224,6 +229,19 @@ export default function DestinationPage({ user, onLogout }) {
     setHotelCheckIn(departureDate);
     setHotelCheckOut(tripCheckOutValue);
     searchLiveHotels(departureDate, tripCheckOutValue, hotelAdults);
+    setTimeout(() => flightsSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 150);
+  }
+
+  function toggleFlightSelection(flightId) {
+    const isRemoving = selectedFlightId === flightId;
+    setSelectedFlightId(isRemoving ? "" : flightId);
+    if (!isRemoving) setTimeout(() => hotelsSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 150);
+  }
+
+  function toggleHotelSelection(hotelId) {
+    const isRemoving = selectedHotelId === hotelId;
+    setSelectedHotelId(isRemoving ? "" : hotelId);
+    if (!isRemoving) setTimeout(() => overallSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 150);
   }
 
   function useLiveLocation() {
@@ -283,9 +301,8 @@ export default function DestinationPage({ user, onLogout }) {
     : Math.max(1, savedDays - 1);
   const selectedFlightCost = selectedFlight ? selectedFlight.price * travelerCount : 0;
   const selectedHotelCost = selectedHotel ? (selectedHotel.totalPrice || selectedHotel.pricePerNight * liveHotelNights) : 0;
-  const planningHotelCost = tripEstimate?.hotelCost || 0;
   const activityCost = (tripEstimate?.dailyExpenses || 0) * savedDays;
-  const tripBudgetCost = activityCost + (selectedHotel ? selectedHotelCost : planningHotelCost);
+  const tripBudgetCost = activityCost + selectedHotelCost;
   const budgetPlanTotal = tripBudgetCost + selectedFlightCost;
   const flightDurationMinutes = 110 + (Number(destination.id) % 5) * 25;
   const departureDateTime = departureDate && departureTime ? new Date(`${departureDate}T${departureTime}:00`) : null;
@@ -306,8 +323,8 @@ export default function DestinationPage({ user, onLogout }) {
       setTripSaveStatus("Log in to save your complete plan.");
       return;
     }
-    if (!selectedPlaces.length || !selectedFlight || !selectedHotel) {
-      setTripSaveStatus("Select at least one place, one flight, and one hotel first.");
+    if (!selectedPlaces.length) {
+      setTripSaveStatus("Select at least one place first.");
       return;
     }
     setSavingTrip(true);
@@ -342,10 +359,6 @@ export default function DestinationPage({ user, onLogout }) {
   }
 
   function openOverallBooking() {
-    if (!selectedFlight || !selectedHotel) {
-      setTripSaveStatus("Select a flight and hotel before booking.");
-      return;
-    }
     const booking = {
       destinationId: destination.id,
       destinationName: destination.name,
@@ -485,9 +498,9 @@ export default function DestinationPage({ user, onLogout }) {
                     <p className="flight-disclaimer">Planning estimate only. Actual departure, duration, connections and arrival depend on the flight you book.</p>
                   </article>
                 )}
-                <section className="live-flight-results" aria-labelledby="live-flights-title">
+                <section className="live-flight-results planner-scroll-target" aria-labelledby="live-flights-title" ref={flightsSectionRef}>
                   <header>
-                    <div><p className="eyebrow">Available flights</p><h3 id="live-flights-title">Live flight offers</h3></div>
+                    <div><p className="eyebrow">Available flights <span className="optional-step-label">Optional</span></p><h3 id="live-flights-title">Live flight offers</h3></div>
                     {!flightLoading && departureDate && <button type="button" onClick={searchLiveFlights}><Search size={16} /> Search again</button>}
                   </header>
                   {flightLoading ? (
@@ -496,7 +509,7 @@ export default function DestinationPage({ user, onLogout }) {
                     <div className="flight-api-message" role="alert"><Plane size={22} /><div><strong>Flights are not available yet</strong><p>{flightError}</p></div></div>
                   ) : flightOffers.length ? (
                     <div className="flight-offer-list">
-                      {flightOffers.map((flight) => (
+                      {flightOffers.filter((flight) => !selectedFlightId || flight.id === selectedFlightId).map((flight) => (
                         <article className={`flight-offer ${selectedFlightId === flight.id ? "is-selected" : ""}`} key={flight.id}>
                           <div className="flight-airline"><span><Plane size={18} /></span><div><strong>{flight.airline}</strong><small>{flight.flightNumber}</small></div></div>
                           <div className="flight-schedule">
@@ -504,7 +517,7 @@ export default function DestinationPage({ user, onLogout }) {
                             <div className="flight-duration"><small>{flight.duration.startsWith("PT") ? flight.duration.replace("PT", "").toLowerCase() : flight.duration}</small><i /><span>{flight.stops ? `${flight.stops} stop${flight.stops > 1 ? "s" : ""}` : "Non-stop"}</span></div>
                             <div><strong>{new Date(flight.arrival).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" })}</strong><span>{flight.destination}{flight.arrivalTerminal ? ` · T${flight.arrivalTerminal}` : ""}</span></div>
                           </div>
-                          <div className="flight-offer-price"><strong>{currencyFormatter.format(flight.price)}</strong><span>per adult</span>{flight.seats && <small>{flight.seats} seats left</small>}<button type="button" onClick={() => setSelectedFlightId((current) => current === flight.id ? "" : flight.id)}>{selectedFlightId === flight.id ? <><Check size={15} /> Selected</> : "Select flight"}</button></div>
+                          <div className="flight-offer-price"><strong>{currencyFormatter.format(flight.price)}</strong><span>per adult</span>{flight.seats && <small>{flight.seats} seats left</small>}<button type="button" onClick={() => toggleFlightSelection(flight.id)}>{selectedFlightId === flight.id ? <><Check size={15} /> Unselect flight</> : "Select flight"}</button></div>
                         </article>
                       ))}
                     </div>
@@ -512,6 +525,7 @@ export default function DestinationPage({ user, onLogout }) {
                     <p className="flight-search-hint">Complete Step 2 to search flights for your selected date.</p>
                   )}
                 </section>
+                {!selectedFlight && <button className="planner-skip-action" type="button" onClick={() => hotelsSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}>Continue without a flight →</button>}
               </>
             ) : (
               <div className="budget-empty">
@@ -523,11 +537,11 @@ export default function DestinationPage({ user, onLogout }) {
           </div>
         </section>
 
-        <section className="stays-section">
+        <section className="stays-section planner-scroll-target" ref={hotelsSectionRef}>
           <div className="shell">
             <header className="places-heading">
               <div>
-                <p className="eyebrow">Live accommodation</p>
+                <p className="eyebrow">Live accommodation <span className="optional-step-label">Optional</span></p>
                 <h2>Hotels available in {destination.name}.</h2>
               </div>
               <p>Search Google Hotels using your selected travel dates and compare current nightly prices.</p>
@@ -537,8 +551,9 @@ export default function DestinationPage({ user, onLogout }) {
               <label><span>Check in</span><input type="date" min={new Date().toISOString().slice(0, 10)} value={hotelCheckIn} onChange={(event) => setHotelCheckIn(event.target.value)} required /></label>
               <label><span>Check out</span><input type="date" min={hotelCheckIn || new Date().toISOString().slice(0, 10)} value={hotelCheckOut} onChange={(event) => setHotelCheckOut(event.target.value)} required /></label>
               <label><span>Guests</span><select value={hotelAdults} onChange={(event) => setHotelAdults(event.target.value)}><option value="1">1 adult</option><option value="2">2 adults</option><option value="3">3 adults</option><option value="4">4 adults</option><option value="5">5 adults</option><option value="6">6 adults</option></select></label>
-              <button className="button" type="submit" disabled={hotelsLoading}><Search size={17} /> {hotelsLoading ? "Searching..." : "Search live hotels"}</button>
+              <button className="button" type="submit" disabled={hotelsLoading}><Search size={17} /> {hotelsLoading ? "Searching..." : "Search hotels"}</button>
             </form>
+            <div className="hotel-results-anchor" ref={hotelResultsRef} aria-hidden="true" />
 
             {hotelsLoading ? (
               <div className="hotel-loading" role="status"><span /> Searching live hotel availability...</div>
@@ -546,7 +561,7 @@ export default function DestinationPage({ user, onLogout }) {
               <div className="hotel-api-message" role="alert"><BedDouble size={23} /><div><strong>Live hotels unavailable</strong><p>{hotelsError}</p></div><button type="button" onClick={searchLiveHotels}>Try again</button></div>
             ) : liveHotels.length > 0 && (
               <div className="live-hotel-grid">
-                {liveHotels.map((hotel) => {
+                {liveHotels.filter((hotel) => !selectedHotelId || hotel.id === selectedHotelId).map((hotel) => {
                   const hotelSearch = `https://www.google.com/travel/hotels?q=${encodeURIComponent(`${hotel.name}, ${destination.name}`)}`;
                   return (
                     <article className={`live-hotel-card ${selectedHotelId === hotel.id ? "is-selected" : ""}`} key={hotel.id}>
@@ -561,7 +576,7 @@ export default function DestinationPage({ user, onLogout }) {
                         {hotel.amenities.length > 0 && <div className="hotel-amenities">{hotel.amenities.map((amenity) => <span key={amenity}>{amenity}</span>)}</div>}
                         <div className="live-hotel-footer">
                           <div><strong>{hotel.pricePerNight ? currencyFormatter.format(hotel.pricePerNight) : "Check price"}</strong><span>{hotel.pricePerNight ? "per night" : "on Google Hotels"}</span></div>
-                          <div className="live-hotel-actions"><button type="button" disabled={!hotel.pricePerNight && !hotel.totalPrice} onClick={() => setSelectedHotelId((current) => current === hotel.id ? "" : hotel.id)}>{selectedHotelId === hotel.id ? <><Check size={15} /> Selected</> : "Select hotel"}</button><a href={hotel.bookingLink || hotelSearch} target="_blank" rel="noopener noreferrer">View <ExternalLink size={15} /></a></div>
+                          <div className="live-hotel-actions"><button type="button" disabled={!hotel.pricePerNight && !hotel.totalPrice} onClick={() => toggleHotelSelection(hotel.id)}>{selectedHotelId === hotel.id ? <><Check size={15} /> Unselect hotel</> : "Select hotel"}</button><a href={hotel.bookingLink || hotelSearch} target="_blank" rel="noopener noreferrer">View <ExternalLink size={15} /></a></div>
                         </div>
                       </div>
                     </article>
@@ -577,11 +592,12 @@ export default function DestinationPage({ user, onLogout }) {
                 <p>Choose check-in and check-out dates above. Only live API results will appear here.</p>
               </div>
             )}
+            {!selectedHotel && <button className="planner-skip-action" type="button" onClick={() => overallSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}>Continue without a hotel →</button>}
           </div>
         </section>
 
-        {savedBudget && tripEstimate && selectedFlight && selectedHotel && (
-          <section className="overall-total-section" aria-labelledby="overall-total-title">
+        {savedBudget && tripEstimate && (
+          <section className="overall-total-section planner-scroll-target" aria-labelledby="overall-total-title" ref={overallSectionRef}>
             <div className="shell">
               <header className="places-heading">
                 <div>
@@ -597,16 +613,15 @@ export default function DestinationPage({ user, onLogout }) {
                   <p className={`plan-budget-note ${tripBudgetCost > savedBudget ? "is-over" : ""}`}>{tripBudgetCost > savedBudget ? `${currencyFormatter.format(tripBudgetCost - savedBudget)} over` : "within"} your {currencyFormatter.format(savedBudget)} stay & activity budget</p>
                   <dl className="plan-costs">
                     <div><dt>Stay & activity budget</dt><dd>{currencyFormatter.format(savedBudget)}</dd></div>
-                    <div><dt>{selectedHotel.name}</dt><dd>{currencyFormatter.format(selectedHotelCost)}</dd></div>
-                    <div><dt>{liveHotelNights} {liveHotelNights === 1 ? "night" : "nights"}</dt><dd>{currencyFormatter.format(selectedHotel.pricePerNight)}/night</dd></div>
+                    {selectedHotel ? <><div><dt>{selectedHotel.name}</dt><dd>{currencyFormatter.format(selectedHotelCost)}</dd></div><div><dt>{liveHotelNights} {liveHotelNights === 1 ? "night" : "nights"}</dt><dd>{currencyFormatter.format(selectedHotel.pricePerNight)}/night</dd></div></> : <div><dt>Hotel</dt><dd>Not selected</dd></div>}
                     <div><dt>Food, activities & local travel</dt><dd>{currencyFormatter.format(activityCost)}</dd></div>
                     <div className={`plan-money-left ${tripBudgetCost > savedBudget ? "is-over" : ""}`}><dt>{tripBudgetCost > savedBudget ? "Trip budget exceeded" : "Trip budget left"}</dt><dd>{currencyFormatter.format(Math.abs(savedBudget - tripBudgetCost))}</dd></div>
-                    <div className="plan-travel-addon"><dt>Travel add-on · {selectedFlight.airline} · {travelerCount} {travelerCount === 1 ? "traveler" : "travelers"}</dt><dd>+{currencyFormatter.format(selectedFlightCost)}</dd></div>
+                    {selectedFlight ? <div className="plan-travel-addon"><dt>Travel add-on · {selectedFlight.airline} · {travelerCount} {travelerCount === 1 ? "traveler" : "travelers"}</dt><dd>+{currencyFormatter.format(selectedFlightCost)}</dd></div> : <div><dt>Flight travel</dt><dd>Not selected</dd></div>}
                   </dl>
                   <p className="travel-budget-disclaimer"><strong>Travel add-on:</strong> Flight cost is separate from your stay & activity budget and is added to calculate the overall total. Live prices may change.</p>
                   <div className="complete-plan-actions">
-                    <button type="button" onClick={saveCompletePlan} disabled={savingTrip || !selectedPlaces.length || !selectedFlight || !selectedHotel}><BookmarkCheck size={17} /> {savingTrip ? "Saving..." : editingTripId ? "Update plan" : "Save plan"}</button>
-                    <button type="button" onClick={openOverallBooking} disabled={!selectedFlight || !selectedHotel}><ShoppingCart size={17} /> Overall booking</button>
+                    <button type="button" onClick={saveCompletePlan} disabled={savingTrip || !selectedPlaces.length}><BookmarkCheck size={17} /> {savingTrip ? "Saving..." : editingTripId ? "Update plan" : "Save plan"}</button>
+                    <button type="button" onClick={openOverallBooking}><ShoppingCart size={17} /> Overall booking</button>
                   </div>
                   {tripSaveStatus && <p className="complete-plan-status" role="status">{tripSaveStatus} {tripSaveStatus.startsWith("Plan saved") && <Link to="/saved">View saved plan →</Link>}</p>}
                 </aside>
@@ -616,7 +631,7 @@ export default function DestinationPage({ user, onLogout }) {
                       <div className="day-number"><span>Day</span><strong>{String(day).padStart(2, "0")}</strong></div>
                       <div>
                         <h3>{places.length ? places.map((place) => place.name).join(" & ") : "Explore the local area"}</h3>
-                        <p>{day === 1 ? `Check in at ${selectedHotel?.name || tripEstimate.hotel.name}, then start exploring.` : "Continue from your hotel and discover more of the area."}</p>
+                        <p>{day === 1 ? selectedHotel ? `Check in at ${selectedHotel.name}, then start exploring.` : "Arrive and start exploring your selected places." : selectedHotel ? "Continue from your hotel and discover more of the area." : "Continue exploring more of the area."}</p>
                         <div className="day-stops">
                           {places.map((place) => place.location ? <a key={place.name} href={place.location} target="_blank" rel="noreferrer">{place.name} <span aria-hidden="true">↗</span></a> : <span key={place.name}>{place.name}</span>)}
                         </div>

@@ -1,7 +1,33 @@
+import { useEffect, useState } from "react";
+import { Bell } from "lucide-react";
 import { Link } from "react-router-dom";
 import Brand from "./Brand.jsx";
+import { getAuthToken } from "../data/authStorage.js";
 
 export default function SiteHeader({ user, onLogout }) {
+  const [notifications, setNotifications] = useState([]);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+
+  useEffect(() => {
+    if (!user || user.role === "admin") { setNotifications([]); return undefined; }
+    const loadNotifications = async () => {
+      try {
+        const response = await fetch("/api/bookings/notifications", { headers: { Authorization: `Bearer ${getAuthToken()}` } });
+        const data = await response.json().catch(() => ({}));
+        if (response.ok) setNotifications(data.notifications || []);
+      } catch { /* A temporary notification failure should not interrupt navigation. */ }
+    };
+    loadNotifications();
+    const timer = window.setInterval(loadNotifications, 30000);
+    return () => window.clearInterval(timer);
+  }, [user]);
+
+  async function readNotifications() {
+    if (!notifications.length) return;
+    await fetch("/api/bookings/notifications/read", { method: "PATCH", headers: { Authorization: `Bearer ${getAuthToken()}` } }).catch(() => null);
+    setNotifications([]);
+  }
+
   return (
     <>
       <a className="skip-link" href="#main-content">Skip to main content</a>
@@ -13,6 +39,7 @@ export default function SiteHeader({ user, onLogout }) {
             {user ? (
               <>
                 <Link to="/saved">Saved plan</Link>
+                {user.role !== "admin" && <div className="nav-notifications"><button className="nav-notification-button" type="button" onClick={() => setNotificationsOpen((open) => !open)} aria-label={`${notifications.length} unread booking notifications`}><Bell size={19} />{notifications.length > 0 && <span>{notifications.length > 9 ? "9+" : notifications.length}</span>}</button>{notificationsOpen && <div className="notification-popover"><strong>Booking notifications</strong>{notifications.length ? <>{notifications.map((notification) => <Link key={notification.id} to="/saved" onClick={() => { readNotifications(); setNotificationsOpen(false); }}><b>Admin replied about {notification.destination_name}</b><span>{notification.message}</span><small>{new Date(notification.created_at).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}</small></Link>)}<button type="button" onClick={readNotifications}>Mark all as read</button></> : <p>No new replies</p>}</div>}</div>}
                 {user.role === "admin" && <Link to="/admin">Admin</Link>}
                 <button className="nav-text-button" onClick={onLogout}>Log out</button>
               </>

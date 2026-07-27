@@ -176,7 +176,7 @@ export default function AuthForm({ mode, onAuth, theme, onThemeChange }) {
               </div>
             )}
             {isSignup && <p className="auth-password-hint">Use at least 8 characters.</p>}
-            {error && <p className="animated-auth-error" role="alert">{error}</p>}
+            {error && <div className="auth-login-error"><p className="animated-auth-error" role="alert">{error}</p>{!isSignup && error.includes("Please sign up first") && <Link className="auth-signup-prompt" to="/signup">Sign up now</Link>}</div>}
             <button className="animated-auth-submit" disabled={submitting} type="submit">
               {submitting && <span className="button-spinner" aria-hidden="true" />}
               {submitting ? "Please wait..." : otpChallenge ? "Verify OTP" : isSignup ? "Create account" : "Sign in"}
