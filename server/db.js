@@ -55,7 +55,26 @@ const schema = `
     updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
   );
 
+  CREATE TABLE IF NOT EXISTS booking_inquiries (
+    id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    destination_key TEXT NOT NULL,
+    destination_name TEXT NOT NULL,
+    booking_json TEXT NOT NULL,
+    traveler_name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    address TEXT NOT NULL,
+    city TEXT NOT NULL,
+    postal_code TEXT NOT NULL,
+    inquiry TEXT,
+    overall_total INTEGER NOT NULL CHECK (overall_total >= 0),
+    status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'contacted', 'confirmed', 'cancelled')),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+  );
+
   CREATE INDEX IF NOT EXISTS saved_plans_user_id_idx ON saved_plans(user_id);
+  CREATE INDEX IF NOT EXISTS booking_inquiries_user_id_idx ON booking_inquiries(user_id);
 
   CREATE TABLE IF NOT EXISTS catalog_destinations (
     id TEXT PRIMARY KEY, name TEXT UNIQUE NOT NULL, capital TEXT NOT NULL,
@@ -86,7 +105,9 @@ function createSqlitePool() {
     CREATE TABLE IF NOT EXISTS saved_plans (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE, destination_key TEXT NOT NULL, destination_name TEXT NOT NULL, place_name TEXT NOT NULL, place_location TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, UNIQUE (user_id, destination_key, place_name));
     CREATE TABLE IF NOT EXISTS saved_trip_plans (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE, destination_key TEXT NOT NULL, destination_name TEXT NOT NULL, places_json TEXT NOT NULL, flight_json TEXT NOT NULL, hotel_json TEXT NOT NULL, departure_city TEXT NOT NULL, departure_date TEXT NOT NULL, check_in TEXT NOT NULL, check_out TEXT NOT NULL, travelers INTEGER NOT NULL DEFAULT 1, budget INTEGER NOT NULL, total_cost INTEGER NOT NULL, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
     CREATE TABLE IF NOT EXISTS user_preferences (user_id INTEGER PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE, trip_budget INTEGER NOT NULL DEFAULT 0 CHECK (trip_budget >= 0), trip_days INTEGER NOT NULL DEFAULT 3 CHECK (trip_days BETWEEN 1 AND 30), updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
+    CREATE TABLE IF NOT EXISTS booking_inquiries (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE, destination_key TEXT NOT NULL, destination_name TEXT NOT NULL, booking_json TEXT NOT NULL, traveler_name TEXT NOT NULL, email TEXT NOT NULL, phone TEXT NOT NULL, address TEXT NOT NULL, city TEXT NOT NULL, postal_code TEXT NOT NULL, inquiry TEXT, overall_total INTEGER NOT NULL CHECK (overall_total >= 0), status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'contacted', 'confirmed', 'cancelled')), created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
     CREATE INDEX IF NOT EXISTS saved_plans_user_id_idx ON saved_plans(user_id);
+    CREATE INDEX IF NOT EXISTS booking_inquiries_user_id_idx ON booking_inquiries(user_id);
     CREATE TABLE IF NOT EXISTS catalog_destinations (id TEXT PRIMARY KEY, name TEXT UNIQUE NOT NULL, capital TEXT NOT NULL, best_for TEXT, about TEXT, climate TEXT, history TEXT, best_time TEXT, food TEXT, daily_expenses INTEGER NOT NULL DEFAULT 1800, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
     CREATE TABLE IF NOT EXISTS catalog_places (id INTEGER PRIMARY KEY AUTOINCREMENT, destination_id TEXT NOT NULL REFERENCES catalog_destinations(id) ON DELETE CASCADE, name TEXT NOT NULL, city TEXT, info TEXT, map_url TEXT, UNIQUE(destination_id, name));
     CREATE TABLE IF NOT EXISTS catalog_hotels (id INTEGER PRIMARY KEY AUTOINCREMENT, destination_id TEXT NOT NULL REFERENCES catalog_destinations(id) ON DELETE CASCADE, name TEXT NOT NULL, type TEXT NOT NULL DEFAULT 'Hotel', area TEXT, price_per_night INTEGER NOT NULL, rooms_available INTEGER NOT NULL DEFAULT 0, rating NUMERIC, UNIQUE(destination_id, name));

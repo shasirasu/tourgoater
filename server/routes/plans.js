@@ -64,6 +64,19 @@ router.put("/trips/:id", async (request, response) => {
   }
 });
 
+router.delete("/trips/:id", async (request, response) => {
+  const tripId = Number(request.params.id);
+  if (!Number.isInteger(tripId) || tripId < 1) return response.status(400).json({ message: "Invalid saved trip" });
+  try {
+    const result = await pool.query("DELETE FROM saved_trip_plans WHERE id = $1 AND user_id = $2", [tripId, request.user.id]);
+    if (!result.rowCount) return response.status(404).json({ message: "Saved trip not found" });
+    response.json({ message: "Overall plan deleted" });
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({ message: "Could not delete the overall plan" });
+  }
+});
+
 router.get("/", async (request, response) => {
   const destinationKey = request.query.destinationKey?.trim();
 

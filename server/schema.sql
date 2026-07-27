@@ -85,3 +85,23 @@ CREATE TABLE IF NOT EXISTS saved_trip_plans (
   total_cost INTEGER NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS booking_inquiries (
+  id BIGSERIAL PRIMARY KEY,
+  user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  destination_key TEXT NOT NULL,
+  destination_name TEXT NOT NULL,
+  booking_json TEXT NOT NULL,
+  traveler_name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  phone TEXT NOT NULL,
+  address TEXT NOT NULL,
+  city TEXT NOT NULL,
+  postal_code TEXT NOT NULL,
+  inquiry TEXT,
+  overall_total INTEGER NOT NULL CHECK (overall_total >= 0),
+  status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'contacted', 'confirmed', 'cancelled')),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS booking_inquiries_user_id_idx ON booking_inquiries(user_id);
