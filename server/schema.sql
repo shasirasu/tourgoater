@@ -67,3 +67,21 @@ CREATE INDEX IF NOT EXISTS trips_destination_id_idx
 
 CREATE INDEX IF NOT EXISTS saved_plans_user_id_idx
   ON saved_plans(user_id);
+
+CREATE TABLE IF NOT EXISTS saved_trip_plans (
+  id BIGSERIAL PRIMARY KEY,
+  user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  destination_key TEXT NOT NULL,
+  destination_name TEXT NOT NULL,
+  places_json TEXT NOT NULL,
+  flight_json TEXT NOT NULL,
+  hotel_json TEXT NOT NULL,
+  departure_city TEXT NOT NULL,
+  departure_date TEXT NOT NULL,
+  check_in TEXT NOT NULL,
+  check_out TEXT NOT NULL,
+  travelers INTEGER NOT NULL DEFAULT 1,
+  budget INTEGER NOT NULL,
+  total_cost INTEGER NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

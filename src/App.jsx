@@ -13,6 +13,7 @@ import DestinationPage from "./pages/DestinationPage.jsx";
 import SavedPlansPage from "./pages/SavedPlansPage.jsx";
 import CinematicMoments from "./components/CinematicMoments.jsx";
 import AdminPage from "./pages/AdminPage.jsx";
+import OverallBookingPage from "./pages/OverallBookingPage.jsx";
 import { clearAuthToken, getAuthToken, saveAuthToken } from "./data/authStorage.js";
 
 function HomePage({ user, onLogout }) {
@@ -170,6 +171,7 @@ export default function App() {
         <Route path="/" element={<HomePage user={user} onLogout={handleLogout} />} />
         <Route path="/browse" element={<BrowsePage user={user} onLogout={handleLogout} />} />
         <Route path="/destination/:id" element={<DestinationPage user={user} onLogout={handleLogout} />} />
+        <Route path="/booking" element={<OverallBookingPage user={user} onLogout={handleLogout} />} />
         <Route path="/saved" element={user ? <SavedPlansPage user={user} onLogout={handleLogout} /> : <Navigate to="/login" />} />
         <Route path="/admin" element={user?.role === "admin" ? <AdminPage user={user} onLogout={handleLogout} /> : <Navigate to="/" />} />
         <Route

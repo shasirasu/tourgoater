@@ -6,6 +6,64 @@ const router = Router();
 
 router.use(requireAuth);
 
+router.get("/trips", async (request, response) => {
+  try {
+    const result = await pool.query(
+      `SELECT id, destination_key, destination_name, places_json, flight_json, hotel_json,
+              departure_city, departure_date, check_in, check_out, travelers, budget, total_cost, created_at
+       FROM saved_trip_plans WHERE user_id = $1 ORDER BY created_at DESC`,
+      [request.user.id],
+    );
+    response.json({ trips: result.rows });
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({ message: "Could not load your saved trips" });
+  }
+});
+
+router.post("/trips", async (request, response) => {
+  const { destinationKey, destinationName, places, flight, hotel, departureCity, departureDate, checkIn, checkOut, travelers, budget, totalCost } = request.body;
+  if (!destinationKey || !destinationName || !Array.isArray(places) || !places.length || !flight || !hotel || !departureCity || !departureDate || !checkIn || !checkOut) {
+    return response.status(400).json({ message: "Select places, a flight, and a hotel before saving the plan" });
+  }
+  try {
+    const result = await pool.query(
+      `INSERT INTO saved_trip_plans (user_id, destination_key, destination_name, places_json, flight_json, hotel_json, departure_city, departure_date, check_in, check_out, travelers, budget, total_cost)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+       RETURNING id, destination_key, destination_name, created_at`,
+      [request.user.id, destinationKey, destinationName, JSON.stringify(places), JSON.stringify(flight), JSON.stringify(hotel), departureCity, departureDate, checkIn, checkOut, Math.max(1, Number(travelers) || 1), Math.max(0, Number(budget) || 0), Math.max(0, Number(totalCost) || 0)],
+    );
+    response.status(201).json({ trip: result.rows[0] });
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({ message: "Could not save this trip" });
+  }
+});
+
+router.put("/trips/:id", async (request, response) => {
+  const tripId = Number(request.params.id);
+  const { destinationKey, destinationName, places, flight, hotel, departureCity, departureDate, checkIn, checkOut, travelers, budget, totalCost } = request.body;
+  if (!Number.isInteger(tripId) || tripId < 1) return response.status(400).json({ message: "Invalid saved trip" });
+  if (!destinationKey || !destinationName || !Array.isArray(places) || !places.length || !flight || !hotel || !departureCity || !departureDate || !checkIn || !checkOut) {
+    return response.status(400).json({ message: "Select places, a flight, and a hotel before updating the plan" });
+  }
+  try {
+    const result = await pool.query(
+      `UPDATE saved_trip_plans SET destination_key = $1, destination_name = $2, places_json = $3, flight_json = $4,
+              hotel_json = $5, departure_city = $6, departure_date = $7, check_in = $8, check_out = $9,
+              travelers = $10, budget = $11, total_cost = $12
+       WHERE id = $13 AND user_id = $14
+       RETURNING id, destination_key, destination_name, created_at`,
+      [destinationKey, destinationName, JSON.stringify(places), JSON.stringify(flight), JSON.stringify(hotel), departureCity, departureDate, checkIn, checkOut, Math.max(1, Number(travelers) || 1), Math.max(0, Number(budget) || 0), Math.max(0, Number(totalCost) || 0), tripId, request.user.id],
+    );
+    if (!result.rows[0]) return response.status(404).json({ message: "Saved trip not found" });
+    response.json({ trip: result.rows[0] });
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({ message: "Could not update this trip" });
+  }
+});
+
 router.get("/", async (request, response) => {
   const destinationKey = request.query.destinationKey?.trim();
 

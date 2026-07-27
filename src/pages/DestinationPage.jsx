@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { BedDouble, Check, ChevronRight, Clock3, Crosshair, ExternalLink, MapPin, Plane, Search, WalletCards } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
+import { BedDouble, BookmarkCheck, Check, ChevronRight, Clock3, Crosshair, ExternalLink, MapPin, Plane, Search, ShoppingCart, WalletCards } from "lucide-react";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import travelData from "../data/travelData.js";
 import PlaceShowcase from "../components/PlaceShowcase.jsx";
 import SafeImage from "../components/SafeImage.jsx";
@@ -17,6 +17,9 @@ const currencyFormatter = new Intl.NumberFormat("en-IN", {
 
 export default function DestinationPage({ user, onLogout }) {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const editingTripId = searchParams.get("editTrip");
   const destination = travelData.state.find((state) => state.id === id);
 
   const [savedPlaceNames, setSavedPlaceNames] = useState(new Set());
@@ -37,15 +40,54 @@ export default function DestinationPage({ user, onLogout }) {
   const [departureTime, setDepartureTime] = useState(() => localStorage.getItem("tripDepartureTime") || "09:00");
   const [locationStatus, setLocationStatus] = useState("");
   const [flightOffers, setFlightOffers] = useState([]);
+  const [selectedFlightId, setSelectedFlightId] = useState("");
   const [flightLoading, setFlightLoading] = useState(false);
   const [flightError, setFlightError] = useState("");
   const [liveHotels, setLiveHotels] = useState([]);
+  const [selectedHotelId, setSelectedHotelId] = useState("");
   const [hotelsLoading, setHotelsLoading] = useState(false);
   const [hotelsError, setHotelsError] = useState("");
   const [hotelCheckIn, setHotelCheckIn] = useState(() => localStorage.getItem("hotelCheckIn") || "");
   const [hotelCheckOut, setHotelCheckOut] = useState(() => localStorage.getItem("hotelCheckOut") || "");
   const [hotelAdults, setHotelAdults] = useState(() => localStorage.getItem("hotelAdults") || "2");
   const [planVersion, setPlanVersion] = useState(0);
+  const [savingTrip, setSavingTrip] = useState(false);
+  const [tripSaveStatus, setTripSaveStatus] = useState("");
+
+  useEffect(() => {
+    if (!user || !destination || !editingTripId) return;
+    fetch("/api/plans/trips", { headers: { Authorization: `Bearer ${getAuthToken()}` } })
+      .then(async (response) => {
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || "Could not load this saved plan");
+        const trip = data.trips.find((item) => String(item.id) === editingTripId && item.destination_key === destination.id);
+        if (!trip) throw new Error("Saved plan not found");
+        const parseSavedJson = (value) => typeof value === "string" ? JSON.parse(value) : value;
+        const places = parseSavedJson(trip.places_json) || [];
+        const flight = parseSavedJson(trip.flight_json);
+        const hotel = parseSavedJson(trip.hotel_json);
+        const days = Math.max(1, Math.round((new Date(`${trip.check_out}T12:00:00`) - new Date(`${trip.check_in}T12:00:00`)) / 86400000));
+        setSelectedPlaceNames(places.map((place) => place.name));
+        setPlannerBudget(String(trip.budget));
+        setPlannerDays(String(days));
+        setDepartureCity(trip.departure_city);
+        setDepartureDate(String(trip.departure_date).slice(0, 10));
+        if (flight?.departure) setDepartureTime(new Date(flight.departure).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false }));
+        setHotelCheckIn(String(trip.check_in).slice(0, 10));
+        setHotelCheckOut(String(trip.check_out).slice(0, 10));
+        setHotelAdults(String(trip.travelers));
+        setFlightOffers(flight ? [flight] : []);
+        setSelectedFlightId(flight?.id || "");
+        setLiveHotels(hotel ? [hotel] : []);
+        setSelectedHotelId(hotel?.id || "");
+        setPlannerStep(2);
+        setTripSaveStatus("Editing your saved plan. Your changes will update this plan.");
+        localStorage.setItem("tripBudget", String(trip.budget));
+        localStorage.setItem("tripDays", String(days));
+        localStorage.setItem(`tripPlaces:${destination.id}`, JSON.stringify(places.map((place) => place.name)));
+      })
+      .catch((requestError) => setTripSaveStatus(requestError.message));
+  }, [destination, editingTripId, user]);
 
   useEffect(() => {
     if (!user || !destination) {
@@ -111,6 +153,7 @@ export default function DestinationPage({ user, onLogout }) {
     setFlightLoading(true);
     setFlightError("");
     setFlightOffers([]);
+    setSelectedFlightId("");
     try {
       const params = new URLSearchParams({ origin: departureCity.trim(), destination: destination.capital, date: departureDate });
       const response = await fetch(`/api/flights?${params}`);
@@ -133,6 +176,7 @@ export default function DestinationPage({ user, onLogout }) {
     setHotelsLoading(true);
     setHotelsError("");
     setLiveHotels([]);
+    setSelectedHotelId("");
     try {
       const params = new URLSearchParams({
         destination: destination.name,
@@ -231,6 +275,18 @@ export default function DestinationPage({ user, onLogout }) {
   const selectedPlaces = touristPlaces.filter((place) => selectedPlaceNames.includes(place.name));
   const itineraryPlaces = selectedPlaces.length ? selectedPlaces : touristPlaces;
   const tripEstimate = savedBudget ? buildTripEstimate(destination, savedDays, savedBudget) : null;
+  const selectedFlight = flightOffers.find((flight) => flight.id === selectedFlightId) || null;
+  const selectedHotel = liveHotels.find((hotel) => hotel.id === selectedHotelId) || null;
+  const travelerCount = Math.max(1, Number(hotelAdults) || 1);
+  const liveHotelNights = hotelCheckIn && hotelCheckOut
+    ? Math.max(1, Math.round((new Date(`${hotelCheckOut}T12:00:00`) - new Date(`${hotelCheckIn}T12:00:00`)) / 86400000))
+    : Math.max(1, savedDays - 1);
+  const selectedFlightCost = selectedFlight ? selectedFlight.price * travelerCount : 0;
+  const selectedHotelCost = selectedHotel ? (selectedHotel.totalPrice || selectedHotel.pricePerNight * liveHotelNights) : 0;
+  const planningHotelCost = tripEstimate?.hotelCost || 0;
+  const activityCost = (tripEstimate?.dailyExpenses || 0) * savedDays;
+  const tripBudgetCost = activityCost + (selectedHotel ? selectedHotelCost : planningHotelCost);
+  const budgetPlanTotal = tripBudgetCost + selectedFlightCost;
   const flightDurationMinutes = 110 + (Number(destination.id) % 5) * 25;
   const departureDateTime = departureDate && departureTime ? new Date(`${departureDate}T${departureTime}:00`) : null;
   const airportArrival = departureDateTime ? new Date(departureDateTime.getTime() - 2 * 60 * 60 * 1000) : null;
@@ -244,6 +300,72 @@ export default function DestinationPage({ user, onLogout }) {
       itineraryPlaces[(dayIndex * 2 + 1) % itineraryPlaces.length],
     ].filter((place, index, places) => place && places.findIndex((item) => item.name === place.name) === index),
   }));
+
+  async function saveCompletePlan() {
+    if (!user) {
+      setTripSaveStatus("Log in to save your complete plan.");
+      return;
+    }
+    if (!selectedPlaces.length || !selectedFlight || !selectedHotel) {
+      setTripSaveStatus("Select at least one place, one flight, and one hotel first.");
+      return;
+    }
+    setSavingTrip(true);
+    setTripSaveStatus("");
+    try {
+      const response = await fetch(editingTripId ? `/api/plans/trips/${editingTripId}` : "/api/plans/trips", {
+        method: editingTripId ? "PUT" : "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${getAuthToken()}` },
+        body: JSON.stringify({
+          destinationKey: destination.id,
+          destinationName: destination.name,
+          places: selectedPlaces.map(({ name, location }) => ({ name, location: location || null })),
+          flight: selectedFlight,
+          hotel: selectedHotel,
+          departureCity: departureCity.trim(),
+          departureDate,
+          checkIn: hotelCheckIn,
+          checkOut: hotelCheckOut,
+          travelers: travelerCount,
+          budget: savedBudget,
+          totalCost: budgetPlanTotal,
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Could not save this plan");
+      setTripSaveStatus(editingTripId ? "Plan updated. Your saved plan now has these changes." : "Plan saved. You can find it in Saved plan.");
+    } catch (error) {
+      setTripSaveStatus(error.message);
+    } finally {
+      setSavingTrip(false);
+    }
+  }
+
+  function openOverallBooking() {
+    if (!selectedFlight || !selectedHotel) {
+      setTripSaveStatus("Select a flight and hotel before booking.");
+      return;
+    }
+    const booking = {
+      destinationId: destination.id,
+      destinationName: destination.name,
+      destinationImage: destination.img,
+      places: selectedPlaces.map(({ name, location }) => ({ name, location })),
+      flight: selectedFlight,
+      hotel: selectedHotel,
+      departureCity: departureCity.trim(),
+      departureDate,
+      checkIn: hotelCheckIn,
+      checkOut: hotelCheckOut,
+      travelers: travelerCount,
+      stayActivityBudget: savedBudget,
+      stayActivityCost: tripBudgetCost,
+      travelAddon: selectedFlightCost,
+      overallTotal: budgetPlanTotal,
+    };
+    sessionStorage.setItem("pendingOverallBooking", JSON.stringify(booking));
+    navigate("/booking", { state: { booking } });
+  }
 
   return (
     <>
@@ -283,11 +405,13 @@ export default function DestinationPage({ user, onLogout }) {
               <header className="plan-builder-header">
                 <div>
                   <p className="eyebrow">Build your route</p>
-                  <h2>Choose stops, then set your budget.</h2>
+                  <h2>Build your trip in four clear steps.</h2>
                 </div>
                 <ol className="plan-steps" aria-label="Trip planning steps">
                   <li className={plannerStep === 1 ? "is-active" : "is-complete"}><span>{plannerStep > 1 ? <Check size={15} /> : "1"}</span> Select places</li>
-                  <li className={plannerStep === 2 ? "is-active" : ""}><span>2</span> Set budget</li>
+                  <li className={plannerStep === 2 && !flightOffers.length ? "is-active" : flightOffers.length ? "is-complete" : ""}><span>{flightOffers.length ? <Check size={15} /> : "2"}</span> Budget</li>
+                  <li className={flightOffers.length && !selectedFlight ? "is-active" : selectedFlight ? "is-complete" : ""}><span>{selectedFlight ? <Check size={15} /> : "3"}</span> Live flights</li>
+                  <li className={selectedFlight && !selectedHotel ? "is-active" : selectedHotel ? "is-complete" : ""}><span>{selectedHotel ? <Check size={15} /> : "4"}</span> Hotels</li>
                 </ol>
               </header>
 
@@ -318,7 +442,7 @@ export default function DestinationPage({ user, onLogout }) {
                     <MapPin size={21} />
                     <div><strong>{selectedPlaceNames.length} selected stops</strong><span>{selectedPlaceNames.join(" · ")}</span></div>
                   </div>
-                  <label><span>Total trip budget</span><div><b>₹</b><input type="number" min="1000" step="500" value={plannerBudget} onChange={(event) => setPlannerBudget(event.target.value)} placeholder="25000" required /></div></label>
+                  <label><span>Stay & activity budget</span><div><b>₹</b><input type="number" min="1000" step="500" value={plannerBudget} onChange={(event) => setPlannerBudget(event.target.value)} placeholder="25000" required /></div><small>Live flight travel is calculated separately as an add-on.</small></label>
                   <label><span>Number of days</span><div><input type="number" min="1" max="30" value={plannerDays} onChange={(event) => setPlannerDays(event.target.value)} required /><b>days</b></div></label>
                   <label className="departure-location-field"><span>Flying from</span><div><Plane size={17} /><input type="text" value={departureCity} onChange={(event) => setDepartureCity(event.target.value)} placeholder="Chennai" required /><button type="button" onClick={useLiveLocation} title="Use my live location" aria-label="Use my live location"><Crosshair size={17} /></button></div>{locationStatus && <small role="status">{locationStatus}</small>}</label>
                   <label><span>Travel date</span><div><input type="date" min={new Date().toISOString().slice(0, 10)} value={departureDate} onChange={(event) => setDepartureDate(event.target.value)} required /></div></label>
@@ -373,14 +497,14 @@ export default function DestinationPage({ user, onLogout }) {
                   ) : flightOffers.length ? (
                     <div className="flight-offer-list">
                       {flightOffers.map((flight) => (
-                        <article className="flight-offer" key={flight.id}>
+                        <article className={`flight-offer ${selectedFlightId === flight.id ? "is-selected" : ""}`} key={flight.id}>
                           <div className="flight-airline"><span><Plane size={18} /></span><div><strong>{flight.airline}</strong><small>{flight.flightNumber}</small></div></div>
                           <div className="flight-schedule">
                             <div><strong>{new Date(flight.departure).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" })}</strong><span>{flight.origin}{flight.departureTerminal ? ` · T${flight.departureTerminal}` : ""}</span></div>
                             <div className="flight-duration"><small>{flight.duration.startsWith("PT") ? flight.duration.replace("PT", "").toLowerCase() : flight.duration}</small><i /><span>{flight.stops ? `${flight.stops} stop${flight.stops > 1 ? "s" : ""}` : "Non-stop"}</span></div>
                             <div><strong>{new Date(flight.arrival).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" })}</strong><span>{flight.destination}{flight.arrivalTerminal ? ` · T${flight.arrivalTerminal}` : ""}</span></div>
                           </div>
-                          <div className="flight-offer-price"><strong>{currencyFormatter.format(flight.price)}</strong><span>per adult</span>{flight.seats && <small>{flight.seats} seats left</small>}</div>
+                          <div className="flight-offer-price"><strong>{currencyFormatter.format(flight.price)}</strong><span>per adult</span>{flight.seats && <small>{flight.seats} seats left</small>}<button type="button" onClick={() => setSelectedFlightId((current) => current === flight.id ? "" : flight.id)}>{selectedFlightId === flight.id ? <><Check size={15} /> Selected</> : "Select flight"}</button></div>
                         </article>
                       ))}
                     </div>
@@ -388,37 +512,6 @@ export default function DestinationPage({ user, onLogout }) {
                     <p className="flight-search-hint">Complete Step 2 to search flights for your selected date.</p>
                   )}
                 </section>
-                <div className="trip-plan-layout">
-                <aside className="plan-summary">
-                  <p className="plan-summary-label">Estimated total</p>
-                  <strong className="plan-total">{currencyFormatter.format(tripEstimate.estimatedTripCost)}</strong>
-                  <p className="plan-budget-note">within your {currencyFormatter.format(savedBudget)} budget</p>
-                  <dl className="plan-costs">
-                    <div><dt>{tripEstimate.hotel.name}</dt><dd>{currencyFormatter.format(tripEstimate.hotelCost)}</dd></div>
-                    <div><dt>{tripEstimate.nights} {tripEstimate.nights === 1 ? "night" : "nights"}</dt><dd>{currencyFormatter.format(tripEstimate.hotel.pricePerNight)}/night</dd></div>
-                    <div><dt>Food, activities & local travel</dt><dd>{currencyFormatter.format(tripEstimate.dailyExpenses * savedDays)}</dd></div>
-                    <div className="plan-money-left"><dt>Money left</dt><dd>{currencyFormatter.format(savedBudget - tripEstimate.estimatedTripCost)}</dd></div>
-                  </dl>
-                  <small>Planning estimate only; live prices may vary.</small>
-                </aside>
-
-                <div className="day-plan-list">
-                  {itinerary.map(({ day, places }) => (
-                    <article className="day-plan" key={day}>
-                      <div className="day-number"><span>Day</span><strong>{String(day).padStart(2, "0")}</strong></div>
-                      <div>
-                        <h3>{places.length ? places.map((place) => place.name).join(" & ") : "Explore the local area"}</h3>
-                        <p>{day === 1 ? `Check in at ${tripEstimate.hotel.name}, then start exploring.` : "Continue from your hotel and discover more of the area."}</p>
-                        <div className="day-stops">
-                          {places.map((place) => place.location ? (
-                            <a key={place.name} href={place.location} target="_blank" rel="noreferrer">{place.name} <span aria-hidden="true">↗</span></a>
-                          ) : <span key={place.name}>{place.name}</span>)}
-                        </div>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-                </div>
               </>
             ) : (
               <div className="budget-empty">
@@ -456,7 +549,7 @@ export default function DestinationPage({ user, onLogout }) {
                 {liveHotels.map((hotel) => {
                   const hotelSearch = `https://www.google.com/travel/hotels?q=${encodeURIComponent(`${hotel.name}, ${destination.name}`)}`;
                   return (
-                    <article className="live-hotel-card" key={hotel.id}>
+                    <article className={`live-hotel-card ${selectedHotelId === hotel.id ? "is-selected" : ""}`} key={hotel.id}>
                       <div className="live-hotel-image">
                         <SafeImage sources={[hotel.image, ...destination.img].filter(Boolean)} alt={hotel.name} fallbackLabel={hotel.name} loading="lazy" width="640" height="420" />
                         <span>Live price</span>
@@ -468,7 +561,7 @@ export default function DestinationPage({ user, onLogout }) {
                         {hotel.amenities.length > 0 && <div className="hotel-amenities">{hotel.amenities.map((amenity) => <span key={amenity}>{amenity}</span>)}</div>}
                         <div className="live-hotel-footer">
                           <div><strong>{hotel.pricePerNight ? currencyFormatter.format(hotel.pricePerNight) : "Check price"}</strong><span>{hotel.pricePerNight ? "per night" : "on Google Hotels"}</span></div>
-                          <a href={hotel.bookingLink || hotelSearch} target="_blank" rel="noopener noreferrer">View hotel <ExternalLink size={15} /></a>
+                          <div className="live-hotel-actions"><button type="button" disabled={!hotel.pricePerNight && !hotel.totalPrice} onClick={() => setSelectedHotelId((current) => current === hotel.id ? "" : hotel.id)}>{selectedHotelId === hotel.id ? <><Check size={15} /> Selected</> : "Select hotel"}</button><a href={hotel.bookingLink || hotelSearch} target="_blank" rel="noopener noreferrer">View <ExternalLink size={15} /></a></div>
                         </div>
                       </div>
                     </article>
@@ -486,6 +579,55 @@ export default function DestinationPage({ user, onLogout }) {
             )}
           </div>
         </section>
+
+        {savedBudget && tripEstimate && selectedFlight && selectedHotel && (
+          <section className="overall-total-section" aria-labelledby="overall-total-title">
+            <div className="shell">
+              <header className="places-heading">
+                <div>
+                  <p className="eyebrow">Your complete trip</p>
+                  <h2 id="overall-total-title">Overall total and itinerary.</h2>
+                </div>
+                <p>Your final total updates when you select a live flight and hotel.</p>
+              </header>
+              <div className="trip-plan-layout">
+                <aside className="plan-summary">
+                  <p className="plan-summary-label">Overall total</p>
+                  <strong className="plan-total">{currencyFormatter.format(budgetPlanTotal)}</strong>
+                  <p className={`plan-budget-note ${tripBudgetCost > savedBudget ? "is-over" : ""}`}>{tripBudgetCost > savedBudget ? `${currencyFormatter.format(tripBudgetCost - savedBudget)} over` : "within"} your {currencyFormatter.format(savedBudget)} stay & activity budget</p>
+                  <dl className="plan-costs">
+                    <div><dt>Stay & activity budget</dt><dd>{currencyFormatter.format(savedBudget)}</dd></div>
+                    <div><dt>{selectedHotel.name}</dt><dd>{currencyFormatter.format(selectedHotelCost)}</dd></div>
+                    <div><dt>{liveHotelNights} {liveHotelNights === 1 ? "night" : "nights"}</dt><dd>{currencyFormatter.format(selectedHotel.pricePerNight)}/night</dd></div>
+                    <div><dt>Food, activities & local travel</dt><dd>{currencyFormatter.format(activityCost)}</dd></div>
+                    <div className={`plan-money-left ${tripBudgetCost > savedBudget ? "is-over" : ""}`}><dt>{tripBudgetCost > savedBudget ? "Trip budget exceeded" : "Trip budget left"}</dt><dd>{currencyFormatter.format(Math.abs(savedBudget - tripBudgetCost))}</dd></div>
+                    <div className="plan-travel-addon"><dt>Travel add-on · {selectedFlight.airline} · {travelerCount} {travelerCount === 1 ? "traveler" : "travelers"}</dt><dd>+{currencyFormatter.format(selectedFlightCost)}</dd></div>
+                  </dl>
+                  <p className="travel-budget-disclaimer"><strong>Travel add-on:</strong> Flight cost is separate from your stay & activity budget and is added to calculate the overall total. Live prices may change.</p>
+                  <div className="complete-plan-actions">
+                    <button type="button" onClick={saveCompletePlan} disabled={savingTrip || !selectedPlaces.length || !selectedFlight || !selectedHotel}><BookmarkCheck size={17} /> {savingTrip ? "Saving..." : editingTripId ? "Update plan" : "Save plan"}</button>
+                    <button type="button" onClick={openOverallBooking} disabled={!selectedFlight || !selectedHotel}><ShoppingCart size={17} /> Overall booking</button>
+                  </div>
+                  {tripSaveStatus && <p className="complete-plan-status" role="status">{tripSaveStatus} {tripSaveStatus.startsWith("Plan saved") && <Link to="/saved">View saved plan →</Link>}</p>}
+                </aside>
+                <div className="day-plan-list">
+                  {itinerary.map(({ day, places }) => (
+                    <article className="day-plan" key={day}>
+                      <div className="day-number"><span>Day</span><strong>{String(day).padStart(2, "0")}</strong></div>
+                      <div>
+                        <h3>{places.length ? places.map((place) => place.name).join(" & ") : "Explore the local area"}</h3>
+                        <p>{day === 1 ? `Check in at ${selectedHotel?.name || tripEstimate.hotel.name}, then start exploring.` : "Continue from your hotel and discover more of the area."}</p>
+                        <div className="day-stops">
+                          {places.map((place) => place.location ? <a key={place.name} href={place.location} target="_blank" rel="noreferrer">{place.name} <span aria-hidden="true">↗</span></a> : <span key={place.name}>{place.name}</span>)}
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         <section className="places-section">
           <div className="shell">
