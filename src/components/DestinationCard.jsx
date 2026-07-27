@@ -13,7 +13,7 @@ export default function DestinationCard({ destination, estimate, budget }) {
         <span className="destination-card-arrow"><ArrowUpRight size={20} /></span>
       </div>
       <div className="destination-content">
-        <div className="destination-meta"><span>Explore India</span><span>State guide</span></div>
+        <div className="destination-meta"><span>Explore India</span><span>{destination.regionType === "Union Territory" ? "Union Territory" : "State guide"}</span></div>
         <h2>{destination.name}</h2>
         <p className="destination-capital"><MapPin size={15} /> Capital · {destination.capital}</p>
         <p className="destination-description">{destination.about}</p>

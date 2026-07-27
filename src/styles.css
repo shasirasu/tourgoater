@@ -22,9 +22,27 @@
   font-synthesis: none;
 }
 
+:root[data-theme="dark"] {
+  --color-primary: #fb923c;
+  --color-primary-dark: #fdba74;
+  --color-secondary: #5eead4;
+  --color-accent: #fbbf24;
+  --color-background: #020617;
+  --color-surface: #0f172a;
+  --color-foreground: #f8fafc;
+  --color-body: #cbd5e1;
+  --color-muted: #172033;
+  --color-border: #334155;
+  --color-destructive: #fb7185;
+  --color-ring: #fb923c;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, .3);
+  --shadow-md: 0 12px 32px rgba(0, 0, 0, .32);
+  --shadow-lg: 0 24px 60px rgba(0, 0, 0, .45);
+}
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; min-width: 320px; min-height: 100vh; background: var(--color-background); }
+body { margin: 0; min-width: 320px; min-height: 100vh; background: var(--color-background); color: var(--color-foreground); transition: background-color .25s ease, color .25s ease; }
 h1, h2, h3, .brand { font-family: "Lexend", system-ui, sans-serif; }
 a { color: inherit; }
 button, input { font: inherit; }
@@ -1012,3 +1030,59 @@ body:has(.cinematic-hero) .brand, body:has(.cinematic-hero) .nav-links > a:not(.
   .ink-reveal-canvas { display: none; }
   .mood-hint { display: none; }
 }
+
+/* Global theme selected from the authentication screen. */
+:root[data-theme="dark"] .site-header { border-color: #334155; background: rgba(2, 6, 23, .9); }
+:root[data-theme="dark"] .nav-links > a:not(.button),
+:root[data-theme="dark"] .nav-text-button { color: #e2e8f0; }
+:root[data-theme="dark"] .destination-page,
+:root[data-theme="dark"] .browse-page,
+:root[data-theme="dark"] .saved-page,
+:root[data-theme="dark"] .booking-page,
+:root[data-theme="dark"] .places-section,
+:root[data-theme="dark"] .stays-section,
+:root[data-theme="dark"] .featured-section,
+:root[data-theme="dark"] .trip-plan-section,
+:root[data-theme="dark"] .overall-total-section,
+:root[data-theme="dark"] .admin-content { background: var(--color-background); color: var(--color-foreground); }
+:root[data-theme="dark"] .destination-card,
+:root[data-theme="dark"] .plan-builder,
+:root[data-theme="dark"] .live-flight-results,
+:root[data-theme="dark"] .flight-offer,
+:root[data-theme="dark"] .live-hotel-card,
+:root[data-theme="dark"] .day-plan,
+:root[data-theme="dark"] .saved-destination,
+:root[data-theme="dark"] .saved-trip-card,
+:root[data-theme="dark"] .saved-section-empty,
+:root[data-theme="dark"] .booking-panel,
+:root[data-theme="dark"] .admin-inquiry-card,
+:root[data-theme="dark"] .admin-table-wrap,
+:root[data-theme="dark"] .admin-create-form,
+:root[data-theme="dark"] .admin-detail-panel { border-color: var(--color-border); background: var(--color-surface); color: var(--color-foreground); }
+:root[data-theme="dark"] .saved-complete-trips,
+:root[data-theme="dark"] .hotel-search-form,
+:root[data-theme="dark"] .budget-form,
+:root[data-theme="dark"] .flight-timeline { border-color: #7c2d12; background: #111827; color: var(--color-foreground); }
+:root[data-theme="dark"] input,
+:root[data-theme="dark"] select,
+:root[data-theme="dark"] textarea { border-color: #475569; background-color: #0f172a; color: #f8fafc; }
+:root[data-theme="dark"] .place-picker-grid button,
+:root[data-theme="dark"] .planner-budget-step label > div,
+:root[data-theme="dark"] .hotel-search-form input,
+:root[data-theme="dark"] .hotel-search-form select { border-color: #475569; background: #0f172a; color: #f8fafc; }
+:root[data-theme="dark"] .place-picker-grid button.is-selected,
+:root[data-theme="dark"] .flight-offer.is-selected,
+:root[data-theme="dark"] .live-hotel-card.is-selected { background: #0f2f2d; }
+:root[data-theme="dark"] .selected-stop-summary,
+:root[data-theme="dark"] .flight-loading,
+:root[data-theme="dark"] .hotel-loading,
+:root[data-theme="dark"] .flight-search-hint,
+:root[data-theme="dark"] .empty-state { background: #111827; color: var(--color-body); }
+:root[data-theme="dark"] .saved-trip-card dl div,
+:root[data-theme="dark"] .booking-panel dl div,
+:root[data-theme="dark"] .admin-inquiry-grid dl div { border-color: #334155; }
+:root[data-theme="dark"] .admin-sidebar { background: #020617; }
+:root[data-theme="dark"] .admin-sidebar button { color: #cbd5e1; }
+:root[data-theme="dark"] .admin-sidebar button.active { background: #172033; color: #fdba74; }
+:root[data-theme="dark"] .secondary-button { border-color: #7c2d12; background: #172033; color: #fdba74; }
+:root[data-theme="dark"] .saved-budget-disclaimer { background: #0f2f2d; }

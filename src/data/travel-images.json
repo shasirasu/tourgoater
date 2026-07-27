@@ -1906,6 +1906,18 @@
           ]
         }
       ]
+    },
+    {
+      "img": [
+        "/images/travel/tamil-nadu-08.jpg",
+        "/images/listings/verified/goa-palolem-beach.jpg"
+      ],
+      "tourist": [
+        { "images": ["/images/listings/verified/andhra-pradesh-rk-beach.jpg", "/images/travel/tamil-nadu-08.jpg"] },
+        { "images": ["/images/travel/tamil-nadu-03.jpg", "/images/travel/tamil-nadu-04.jpg"] },
+        { "images": ["/images/travel/tamil-nadu-06.jpg", "/images/travel/tamil-nadu-07.jpg"] },
+        { "images": ["/images/listings/verified/goa-palolem-beach.jpg", "/images/travel/tamil-nadu-10.jpg"] }
+      ]
     }
   ]
 }

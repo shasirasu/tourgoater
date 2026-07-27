@@ -1849,6 +1849,44 @@
           "location": "https://www.google.com/maps/search/?api=1&query=Bishnupur%20Terracotta%20Temples%2C%20Bankura%2C%20West%20Bengal%2C%20India"
         }
       ]
+    },
+    {
+      "id": "30",
+      "name": "Puducherry",
+      "capital": "Puducherry",
+      "regionType": "Union Territory",
+      "bestFor": "Beaches and French heritage",
+      "about": "Puducherry, widely known as Pondicherry, blends a French-influenced old quarter, peaceful seaside promenades, spiritual communities and relaxed beaches into an easy coastal escape.",
+      "climate": "Puducherry has a warm tropical coastal climate. November to February is generally the most comfortable period for walking, beaches and outdoor sightseeing.",
+      "history": "Puducherry's streets and architecture reflect Tamil heritage, European trading history and a long French colonial presence before its integration with India.",
+      "time": "Visit from November to February for milder weather. Begin promenade walks early in the morning and confirm local timings for ashrams and Auroville visits.",
+      "food": "Explore Tamil coastal cooking, French-style cafés, bakeries, seafood and locally run restaurants throughout White Town and the surrounding neighbourhoods.",
+      "tourist": [
+        {
+          "name": "Promenade Beach",
+          "city": "Puducherry",
+          "info": "Promenade Beach is the city's signature seafront walk, lined with colonial landmarks, cafés and views across the Bay of Bengal.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Promenade%20Beach%2C%20Puducherry%2C%20India"
+        },
+        {
+          "name": "Auroville",
+          "city": "Auroville",
+          "info": "Auroville is an international township known for the Matrimandir, sustainable living projects and peaceful landscaped surroundings.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Auroville%2C%20Puducherry%2C%20India"
+        },
+        {
+          "name": "Sri Aurobindo Ashram",
+          "city": "Puducherry",
+          "info": "Sri Aurobindo Ashram is a quiet spiritual centre in the French Quarter associated with Sri Aurobindo and The Mother.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Sri%20Aurobindo%20Ashram%2C%20Puducherry%2C%20India"
+        },
+        {
+          "name": "Paradise Beach",
+          "city": "Chunnambar",
+          "info": "Paradise Beach is a sandy coastal retreat reached from Chunnambar, popular for boat rides, open shoreline and relaxed day trips.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Paradise%20Beach%2C%20Puducherry%2C%20India"
+        }
+      ]
     }
   ]
 }

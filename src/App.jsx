@@ -131,6 +131,13 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [theme, setTheme] = useState(() => localStorage.getItem("tourgoaterTheme") || "light");
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    localStorage.setItem("tourgoaterTheme", theme);
+  }, [theme]);
 
   useEffect(() => {
     const token = getAuthToken();
@@ -176,11 +183,11 @@ export default function App() {
         <Route path="/admin" element={user?.role === "admin" ? <AdminPage user={user} onLogout={handleLogout} /> : <Navigate to="/" />} />
         <Route
           path="/signup"
-          element={user ? <Navigate to="/" /> : <AuthForm mode="signup" onAuth={handleAuth} />}
+          element={user ? <Navigate to="/" /> : <AuthForm mode="signup" onAuth={handleAuth} theme={theme} onThemeChange={setTheme} />}
         />
         <Route
           path="/login"
-          element={user ? <Navigate to="/" /> : <AuthForm mode="login" onAuth={handleAuth} />}
+          element={user ? <Navigate to="/" /> : <AuthForm mode="login" onAuth={handleAuth} theme={theme} onThemeChange={setTheme} />}
         />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

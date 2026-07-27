@@ -3,7 +3,7 @@ import { ArrowLeft, Eye, EyeOff, Moon, Sun } from "lucide-react";
 import { Link } from "react-router-dom";
 import Brand from "./Brand.jsx";
 
-export default function AuthForm({ mode, onAuth }) {
+export default function AuthForm({ mode, onAuth, theme, onThemeChange }) {
   const isSignup = mode === "signup";
   const canvasRef = useRef(null);
   const [form, setForm] = useState({ name: "", email: "", password: "" });
@@ -11,7 +11,7 @@ export default function AuthForm({ mode, onAuth }) {
   const [submitting, setSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
-  const [isDarkMode, setIsDarkMode] = useState(() => window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false);
+  const isDarkMode = theme === "dark";
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -88,7 +88,7 @@ export default function AuthForm({ mode, onAuth }) {
     <main className={`animated-auth ${isDarkMode ? "is-dark" : "is-light"}`}>
       <canvas ref={canvasRef} className="auth-particles" aria-hidden="true" />
       <Link className="animated-auth-back" to="/"><ArrowLeft size={17} /> Back home</Link>
-      <button className="auth-theme-toggle" type="button" onClick={() => setIsDarkMode((current) => !current)} aria-label={`Use ${isDarkMode ? "light" : "dark"} mode`}>
+      <button className="auth-theme-toggle" type="button" onClick={() => onThemeChange(isDarkMode ? "light" : "dark")} aria-label={`Use ${isDarkMode ? "light" : "dark"} mode`} aria-pressed={isDarkMode}>
         {isDarkMode ? <Sun size={19} /> : <Moon size={19} />}
       </button>
 
@@ -139,7 +139,7 @@ export default function AuthForm({ mode, onAuth }) {
             {isSignup ? "Already have an account?" : "New to Tourgoater?"}{" "}
             <Link to={isSignup ? "/login" : "/signup"}>{isSignup ? "Sign in" : "Create an account"}</Link>
           </p>
-          <div className="animated-auth-proof"><span>28 states</span><i /> <span>190 places</span><i /> <span>One clear budget</span></div>
+          <div className="animated-auth-proof"><span>30 destinations</span><i /> <span>190+ places</span><i /> <span>One clear budget</span></div>
         </div>
       </section>
     </main>
