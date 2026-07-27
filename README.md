@@ -1,261 +1,551 @@
 # Tourgoater
 
-Tourgoater is a full-stack India travel-planning application. A user can explore destinations, select places, define a stay-and-activity budget, compare live flights and hotels, calculate an overall total, save and edit complete plans, and submit an in-app booking inquiry.
+Tourgoater is a full-stack travel-planning and booking-inquiry application focused on destinations across India. Travelers can discover destinations, build a trip step by step, optionally add live flights and hotels, save complete plans, submit booking inquiries, track trip status, and communicate with an administrator inside the application.
 
-## Main features
+This repository contains the React frontend, Express API, authentication system, local SQLite storage, production PostgreSQL support, Gmail OTP delivery, live travel search integrations, and admin dashboard.
 
-- Account registration, login, persistent authentication, and logout
-- Browse and search Indian destinations
-- Four-step planner on every destination page:
-  1. Select places
-  2. Set the stay-and-activity budget, dates, travelers, and departure city
-  3. Search and select a live flight
-  4. Search and select a live hotel
-- Separate flight travel add-on and stay-and-activity budget
-- Overall total and generated daily itinerary
-- Individually bookmarked places
-- Complete saved trip plans
-- Edit an existing plan without creating a duplicate
-- Delete a complete plan with a five-second Undo window
-- In-app overall-booking review page
-- Persistent traveler details and booking inquiries
-- Admin destination, place, and hotel management
-- SQLite for local development and PostgreSQL for deployment
+## Contents
 
-## Technology
+- [Features](#features)
+- [Application flow](#application-flow)
+- [Technology](#technology)
+- [Project structure](#project-structure)
+- [Requirements](#requirements)
+- [Local installation](#local-installation)
+- [Environment variables](#environment-variables)
+- [Gmail OTP setup](#gmail-otp-setup)
+- [Admin access](#admin-access)
+- [Database](#database)
+- [API reference](#api-reference)
+- [Frontend routes](#frontend-routes)
+- [Production deployment](#production-deployment)
+- [Testing and code quality](#testing-and-code-quality)
+- [Troubleshooting](#troubleshooting)
+- [Current limitations](#current-limitations)
 
-- React 19 and React Router
-- Vite
-- Express 5
-- SQLite (`node:sqlite`) for local development
-- PostgreSQL (`pg`) when `DATABASE_URL` is configured
-- JWT authentication and bcrypt password hashing
-- SerpAPI for live flight and hotel results
+## Features
 
-## Requirements
+### Accounts and security
 
-- Node.js 22 or later (required by `node:sqlite`)
-- npm
-- A SerpAPI key for live flight and hotel searches
-- Optional PostgreSQL database for production
+- User signup with six-digit email OTP verification
+- Standard login without requesting an OTP every time
+- Clear signup prompt when a login email is not registered
+- Forgot-password flow with email OTP verification
+- Password hashing with bcrypt
+- JWT-based authenticated API requests
+- Remember-me support
+- User and administrator roles
+- Gmail usernames such as `exampleuser` are normalized to `exampleuser@gmail.com`
 
-## Local setup
+### Theme and interface
 
-1. Install dependencies:
+- Light mode is the default
+- Users can select light or dark mode from the login/signup interface
+- Theme choice applies throughout the application
+- Responsive layouts for desktop and mobile
+- Animated page transitions, saved-list animations, and booking-completion animation
 
-   ```powershell
-   npm install
-   ```
+### Destination planning
 
-2. Copy `.env.example` to `.env`.
+Every `/destination/:id` page follows the same four-step structure:
 
-3. Set at least these values:
+1. Select tourist places
+2. Set the stay-and-activity budget and travel details
+3. Search and optionally select a live flight
+4. Search and optionally select a live hotel
 
-   ```env
-   PORT=3000
-   SQLITE_DATABASE_PATH=server/data/tourgoater.db
-   JWT_SECRET=replace_this_with_a_long_random_value
-   CLIENT_URL=http://localhost:5173
-   SERPAPI_KEY=your_serpapi_key
-   ```
+After making a selection, the interface scrolls to the next step. Selecting a flight or hotel focuses the chosen result; removing it restores the complete result list.
 
-   Leave `DATABASE_URL` empty or remove it to use local SQLite. Set `ADMIN_EMAIL` to the email address that should receive the admin role.
+Flights and hotels are optional. A traveler can create a trip:
 
-4. Start the API in the first terminal:
+- With both a flight and hotel
+- With a flight but no hotel
+- With a hotel but no flight
+- Without either add-on
 
-   ```powershell
-   npm run server
-   ```
+The stay-and-activity budget is displayed separately from flight travel. Flight cost is clearly identified as an add-on and is not silently included in the base travel budget.
 
-5. Start the React application in a second terminal:
+### Saved plans
 
-   ```powershell
-   npm run dev
-   ```
-
-6. Open [http://localhost:5173](http://localhost:5173).
-
-The Vite development server proxies `/api` requests to `http://localhost:3000`. Database tables are created automatically when the API starts.
-
-## Complete user flow
-
-### 1. Create an account
-
-Open `/signup`, enter the account details, and submit. The API hashes the password and returns a JWT. The token is stored according to the selected session preference.
-
-### 2. Explore destinations
-
-Open `/browse`, search for a state or capital, and select a destination. Every destination uses `/destination/:id` and the same shared planning flow.
-
-### 3. Select places
-
-Choose one or more tourist places. The selection is stored locally for that destination and is used to generate the itinerary.
-
-### 4. Set the trip budget
-
-Enter:
-
-- Stay-and-activity budget
-- Number of days
-- Departure city or live location
-- Travel date and preferred departure time
-
-The entered budget covers the hotel, food, activities, and local travel. Live flight travel is calculated separately as an add-on.
-
-### 5. Select a live flight
-
-The application requests `/api/flights` with the departure city, destination, and date. Select one returned flight. Its price is multiplied by the traveler count and displayed as the travel add-on.
-
-### 6. Select a live hotel
-
-The application requests `/api/hotels` with the destination, dates, and guest count. Select one hotel to include its live total in the plan.
-
-### 7. Review the overall total
-
-After both a flight and hotel are selected, the page displays:
-
-- Stay-and-activity budget
-- Hotel price and number of nights
-- Food, activities, and local travel
-- Remaining or exceeded trip budget
-- Separate flight travel add-on
-- Combined overall total
-- Daily itinerary
-
-The disclaimer explains that flight travel is added above the stay-and-activity budget.
-
-### 8. Save a complete plan
-
-Select **Save plan**. The plan is stored in `saved_trip_plans`, including places, flight, hotel, dates, travelers, budget, and total.
-
-Open `/saved` to see two independent sections:
-
-- **Full trip plans**: complete overall plans
-- **Individual places**: bookmarked places grouped by destination
-
-### 9. Edit or delete a plan
-
-Select **Edit plan** on a full-plan card. The destination planner loads the exact stored places, flight, hotel, dates, travelers, and budget. Selecting **Update plan** updates the same database row.
-
-Select **Delete plan** to remove a full plan. The card disappears immediately and an Undo notification remains for five seconds. Selecting **Undo** restores it. If the countdown finishes, `DELETE /api/plans/trips/:id` permanently deletes the record.
-
-### 10. Use the in-app booking page
-
-Select **Overall booking** after choosing a flight and hotel. Tourgoater opens `/booking` rather than redirecting to Google.
-
-The booking page displays the complete plan and collects:
-
-- Lead traveler name
-- Email
-- Phone number
-- Full address
-- City
-- Six-digit postal code
-- Optional inquiry or special requests
-
-Selecting **Submit booking inquiry** stores the request in `booking_inquiries`. Confirmation is shown only after the API returns successfully, and the user receives the database inquiry reference number.
-
-This is an inquiry workflow. It does not process card payments or issue airline or hotel tickets.
-
-## Database tables
-
-| Table | Purpose |
-| --- | --- |
-| `users` | Accounts, password hashes, and user/admin roles |
-| `saved_plans` | Individually bookmarked tourist places |
-| `saved_trip_plans` | Full plans containing places, flight, hotel, dates, travelers, budget, and total |
-| `booking_inquiries` | Traveler contact information, address, inquiry, booking snapshot, total, and status |
-| `user_preferences` | Stored trip budget and number-of-days preferences |
-| `catalog_destinations` | Admin-managed destination records |
-| `catalog_places` | Admin-managed tourist places |
-| `catalog_hotels` | Admin-managed hotel inventory |
-
-The complete PostgreSQL schema is in `server/schema.sql`. Runtime table creation for PostgreSQL and SQLite is implemented in `server/db.js`.
-
-## Important API routes
-
-### Authentication
-
-- `POST /api/auth/signup`
-- `POST /api/auth/login`
-- `GET /api/auth/me`
-
-### Saved places and plans
-
-- `GET /api/plans`
-- `POST /api/plans`
-- `DELETE /api/plans/:id`
-- `GET /api/plans/trips`
-- `POST /api/plans/trips`
-- `PUT /api/plans/trips/:id`
-- `DELETE /api/plans/trips/:id`
+- Save individual tourist places
+- Save a complete overall trip plan
+- Keep saved places and full plans in separate sections
+- Edit an existing plan without selecting everything again
+- Delete a complete plan
+- Undo an accidental deletion for five seconds
+- View booking requests under ongoing trips
+- View status updates made by an administrator
 
 ### Booking inquiries
 
-- `POST /api/bookings`
-- `GET /api/bookings`
+- Review the complete plan inside `/booking`
+- Collect traveler name, email, phone, address, city, and postal code
+- Collect an initial inquiry or special request
+- Submit without redirecting to Google
+- Display a completion animation and thank-you message
+- Store a snapshot of the selected plan
+- Allow separate follow-up messages for every booking
+- Allow admins to reply to each booking conversation
+- Display unread admin replies in the notification bell
+- Poll for new notifications every 30 seconds
+- Mark notifications as read
 
-### Live travel data
+The booking workflow submits an inquiry only. It does not charge a card, reserve inventory, issue a ticket, or guarantee a hotel room.
 
-- `GET /api/flights?origin=Chennai&destination=Delhi&date=2026-08-15`
-- `GET /api/hotels?destination=Goa&checkIn=2026-08-15&checkOut=2026-08-18&adults=2`
+### Admin dashboard
 
-### Other routes
+- Dashboard totals for users, destinations, places, hotels, saved plans, and inquiries
+- View and manage users
+- Assign user or admin roles
+- View all booking inquiries
+- Change booking status to Pending, Ongoing, Completed, or Cancelled
+- Read traveler follow-up messages
+- Reply directly to a traveler’s booking inquiry
+- Manage destinations, tourist places, and hotel catalog records
+- Import the bundled destination catalog into PostgreSQL/Neon
 
-- `GET /api/health`
-- `/api/preferences`
-- `/api/admin`
+## Application flow
 
-Saved-plan, booking, preference, and admin routes require a valid bearer token. Admin routes also require the admin role.
+### Traveler flow
+
+1. Open `/signup` and create an account.
+2. Enter the OTP sent to the signup email.
+3. Sign in at `/login` after verification.
+4. Browse destinations at `/browse`.
+5. Open a destination and select places.
+6. Enter budget, trip duration, origin, date, and travelers.
+7. Search flights and hotels, or skip either optional section.
+8. Generate the trip and review the itinerary and totals.
+9. Save the complete plan or save individual places.
+10. Open `/booking`, enter contact information, and submit the inquiry.
+11. Open `/saved` to track the booking and send follow-up questions.
+12. Use the notification bell when the administrator replies.
+
+### Administrator flow
+
+1. Sign up using the email configured in `ADMIN_EMAIL`.
+2. Verify the signup OTP and sign in.
+3. Open `/admin`.
+4. Select **Inquiries** to view bookings.
+5. Change the status or send a reply.
+6. The reply appears in the traveler’s Saved Plans conversation and creates an unread notification.
+
+## Technology
+
+### Frontend
+
+- React 19
+- React Router 7
+- Vite 7
+- GSAP and Framer Motion
+- Lucide React icons
+- Plain CSS with light/dark theme variables
+
+### Backend
+
+- Node.js and Express 5
+- JWT authentication
+- bcrypt password hashing
+- Nodemailer with Gmail SMTP
+- SerpAPI-powered flight and hotel searches
+
+### Storage
+
+- Built-in Node SQLite for local development
+- PostgreSQL through `pg` when `DATABASE_URL` is present
+- Neon PostgreSQL is supported for hosted deployments
+
+## Project structure
+
+```text
+tourgoater/
+├── public/                  Static images and public assets
+├── server/
+│   ├── data/                Local SQLite database location
+│   ├── middleware/          Authentication and authorization
+│   ├── routes/              Auth, plans, booking, admin, flight and hotel APIs
+│   ├── app.js               Express configuration and route mounting
+│   ├── config.js            JWT configuration
+│   ├── db.js                SQLite/PostgreSQL connection and runtime migrations
+│   ├── index.js             Local API entry point
+│   └── schema.sql           PostgreSQL schema reference
+├── src/
+│   ├── components/          Shared UI, header, auth and animations
+│   ├── data/                Catalog and local/auth storage helpers
+│   ├── pages/               Application screens
+│   ├── App.jsx              Client routing and authentication state
+│   ├── main.jsx             React entry point
+│   └── styles.css           Global responsive and theme styling
+├── .env.example             Environment variable template
+├── db.json                  Bundled India destination catalog
+├── package.json             Dependencies and scripts
+├── vercel.json              Vercel configuration
+└── vite.config.js           Vite and local API proxy configuration
+```
+
+## Requirements
+
+- Node.js 22 or newer because local storage uses `node:sqlite`
+- npm
+- A modern browser
+- Gmail account with two-step verification for real OTP email
+- SerpAPI key for live flight and hotel results
+- Neon or another PostgreSQL provider for persistent production storage
+
+## Local installation
+
+Clone the repository and enter its directory:
+
+```powershell
+git clone <repository-url>
+cd tourgoater
+```
+
+Install dependencies:
+
+```powershell
+npm install
+```
+
+Create the local environment file:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+For local SQLite, remove or comment out `DATABASE_URL` in `.env`. If a placeholder PostgreSQL URL remains, the server will try and fail to connect to it.
+
+Start the API in the first terminal:
+
+```powershell
+npm run server
+```
+
+Start Vite in a second terminal:
+
+```powershell
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173). The API runs at [http://localhost:3000](http://localhost:3000), and Vite proxies `/api` requests to it.
+
+The application creates missing database tables and columns when the API starts.
 
 ## Environment variables
 
-| Variable | Required | Description |
+| Variable | Required | Purpose |
 | --- | --- | --- |
-| `PORT` | No | API port; defaults to `3000` |
-| `SQLITE_DATABASE_PATH` | No | Local SQLite file path |
-| `DATABASE_URL` | Production | PostgreSQL connection string; switches storage from SQLite to PostgreSQL |
-| `JWT_SECRET` | Production | Secret used to sign authentication tokens |
-| `ADMIN_EMAIL` | No | Email that receives the admin role at signup |
-| `CLIENT_URL` | No | CORS origin; defaults to `http://localhost:5173` |
-| `SERPAPI_KEY` | Live search | Key used by flight and hotel APIs |
-| `GMAIL_USER` | Production email OTP | Gmail address used to send login codes |
-| `GMAIL_APP_PASSWORD` | Production email OTP | Google App Password for the sender account |
+| `PORT` | No | Express port; defaults to `3000` |
+| `SQLITE_DATABASE_PATH` | Local only | SQLite database file; defaults under `server/data` |
+| `DATABASE_URL` | Production | PostgreSQL/Neon connection string; enables PostgreSQL instead of SQLite |
+| `JWT_SECRET` | Yes in production | Long random secret used to sign authentication tokens |
+| `ADMIN_EMAIL` | Recommended | Exact email that should receive admin access |
+| `CLIENT_URL` | Production | Allowed frontend origin for CORS |
+| `SERPAPI_KEY` | For live search | API key for flight and hotel search |
+| `GMAIL_USER` | For OTP | Full Gmail sender address, for example `sender@gmail.com` |
+| `GMAIL_APP_PASSWORD` | For OTP | The 16-character Google App Password, not the Gmail login password |
+| `NODE_ENV` | Deployment | Set to `production` on production infrastructure |
 
-## Verification
+Example local `.env`:
 
-Run the production build:
+```env
+PORT=3000
+SQLITE_DATABASE_PATH=server/data/tourgoater.db
+JWT_SECRET=replace-with-a-long-random-secret
+ADMIN_EMAIL=adminsd@gmail.com
+CLIENT_URL=http://localhost:5173
+SERPAPI_KEY=your-serpapi-key
+GMAIL_USER=your-sender@gmail.com
+GMAIL_APP_PASSWORD=abcdefghijklmnop
+```
+
+Never commit `.env`, database credentials, JWT secrets, or Gmail App Passwords.
+
+## Gmail OTP setup
+
+1. Sign in to the Gmail account that will send OTP emails.
+2. Enable Google two-step verification.
+3. Open Google Account → Security → App passwords.
+4. Create an App Password for the Tourgoater mailer.
+5. Set the Vercel/local variable name to `GMAIL_USER` and its value to the full Gmail address.
+6. Add a second variable named `GMAIL_APP_PASSWORD` and use the generated App Password as its value.
+
+In Vercel, do not enter `GMAIL_USER=address@gmail.com` in the **Name** field. Enter only:
+
+```text
+Name:  GMAIL_USER
+Value: address@gmail.com
+```
+
+Then add:
+
+```text
+Name:  GMAIL_APP_PASSWORD
+Value: your-app-password
+```
+
+Select Production and Preview as required, save the variables, and redeploy. Environment changes do not modify an already-built deployment.
+
+In local development, if SMTP is unavailable, the server can return a development OTP for testing. Production intentionally fails OTP delivery when Gmail is not configured.
+
+## Admin access
+
+Set the admin email before creating the account:
+
+```env
+ADMIN_EMAIL=adminsd@gmail.com
+```
+
+Restart the API, sign up with that exact email, verify the OTP, and log in. The navigation will display **Admin**, which opens `/admin`.
+
+An existing account matching `ADMIN_EMAIL` is promoted during a successful login. For security, do not share the admin credentials or use the same password in other systems.
+
+## Database
+
+### Tables
+
+| Table | Stored information |
+| --- | --- |
+| `users` | Name, unique email, password hash, role, verification state and creation date |
+| `email_otp_challenges` | Hashed signup OTP, expiry, attempts and used timestamp |
+| `password_reset_challenges` | Hashed password-reset OTP, expiry, attempts and used timestamp |
+| `saved_plans` | Individually bookmarked tourist places |
+| `saved_trip_plans` | Full trip snapshot including places, optional flight/hotel, dates, travelers and totals |
+| `user_preferences` | Stored travel budget and trip duration |
+| `booking_inquiries` | Traveler details, plan snapshot, inquiry, total and workflow status |
+| `booking_inquiry_messages` | Per-booking user/admin messages, timestamps and notification read state |
+| `catalog_destinations` | Admin-managed destination metadata |
+| `catalog_places` | Places belonging to catalog destinations |
+| `catalog_hotels` | Hotel samples/inventory belonging to destinations |
+
+The authoritative reference schema is in `server/schema.sql`. Runtime initialization and compatibility migrations are in `server/db.js`.
+
+### Local SQLite
+
+When `DATABASE_URL` is absent, the API stores data in `server/data/tourgoater.db` unless `SQLITE_DATABASE_PATH` overrides it. Keep this file private because it contains user and inquiry records.
+
+### Neon PostgreSQL
+
+Create a Neon project, copy its pooled connection string, and set it as `DATABASE_URL`. Restart or redeploy the API. Startup creates missing tables and migration columns automatically.
+
+To inspect inquiries in the Neon SQL Editor:
+
+```sql
+SELECT id, user_id, destination_name, traveler_name, email, phone,
+       inquiry, overall_total, status, created_at
+FROM booking_inquiries
+ORDER BY created_at DESC;
+```
+
+To inspect the conversation:
+
+```sql
+SELECT m.id, m.booking_inquiry_id, m.sender, m.message,
+       m.read_at, m.created_at
+FROM booking_inquiry_messages AS m
+ORDER BY m.created_at DESC;
+```
+
+## API reference
+
+Protected endpoints require:
+
+```http
+Authorization: Bearer <jwt-token>
+```
+
+### Authentication
+
+| Method | Endpoint | Purpose |
+| --- | --- | --- |
+| POST | `/api/auth/signup` | Create an account and send signup OTP |
+| POST | `/api/auth/verify-otp` | Verify signup OTP and finish authentication |
+| POST | `/api/auth/login` | Log in with email and password |
+| POST | `/api/auth/forgot-password` | Send password-reset OTP |
+| POST | `/api/auth/reset-password` | Verify reset OTP and set a new password |
+| GET | `/api/auth/me` | Return the authenticated account |
+
+### Saved places and full plans
+
+| Method | Endpoint | Purpose |
+| --- | --- | --- |
+| GET | `/api/plans` | Load saved individual places |
+| POST | `/api/plans` | Save an individual place |
+| DELETE | `/api/plans/:id` | Delete an individual place |
+| GET | `/api/plans/trips` | Load full saved trip plans |
+| POST | `/api/plans/trips` | Save a full plan |
+| PUT | `/api/plans/trips/:id` | Update an existing full plan |
+| DELETE | `/api/plans/trips/:id` | Permanently delete a full plan |
+
+### Booking inquiries and messages
+
+| Method | Endpoint | Purpose |
+| --- | --- | --- |
+| GET | `/api/bookings` | Load the current user’s booking inquiries |
+| POST | `/api/bookings` | Submit a booking inquiry |
+| GET | `/api/bookings/messages` | Load the user’s per-booking conversations |
+| POST | `/api/bookings/:id/messages` | Send a follow-up message to admin |
+| GET | `/api/bookings/notifications` | Load unread admin replies |
+| PATCH | `/api/bookings/notifications/read` | Mark admin-reply notifications as read |
+
+### Travel data
+
+| Method | Endpoint | Purpose |
+| --- | --- | --- |
+| GET | `/api/flights` | Search live flight offers through SerpAPI |
+| GET | `/api/hotels` | Search live hotel offers through SerpAPI |
+
+Example requests:
+
+```text
+/api/flights?origin=Chennai&destination=Delhi&date=2026-08-15
+/api/hotels?destination=Goa&checkIn=2026-08-15&checkOut=2026-08-18&adults=2
+```
+
+### Admin
+
+Admin routes use `/api/admin` and require the admin role. They provide dashboard totals, user management, destination/place/hotel CRUD, catalog import, booking inquiry status management, conversation loading, and inquiry replies.
+
+### Health check
+
+```http
+GET /api/health
+```
+
+Expected response:
+
+```json
+{ "message": "Tourgoater API is running" }
+```
+
+## Frontend routes
+
+| Route | Screen |
+| --- | --- |
+| `/` | Landing page |
+| `/browse` | Destination listing and search |
+| `/destination/:id` | Shared four-step destination planner |
+| `/booking` | In-app overall booking inquiry form |
+| `/saved` | Saved plans, places, ongoing trips and inquiry conversations |
+| `/signup` | Account creation and signup OTP |
+| `/login` | Login and forgot-password flow |
+| `/admin` | Protected administrator dashboard |
+
+## Production deployment
+
+### Vercel checklist
+
+1. Import the Git repository into Vercel.
+2. Create a Neon PostgreSQL database.
+3. Add `DATABASE_URL` to Vercel Environment Variables.
+4. Add a strong `JWT_SECRET`.
+5. Set `ADMIN_EMAIL`.
+6. Set `GMAIL_USER` and `GMAIL_APP_PASSWORD`.
+7. Set `SERPAPI_KEY`.
+8. Set `CLIENT_URL` to the deployed frontend origin.
+9. Apply variables to Production and Preview as needed.
+10. Redeploy the project.
+11. Open `/api/health`.
+12. Test signup OTP, login, destination planning, booking submission, admin reply, and the user notification bell.
+
+When logs say `Gmail OTP delivery is not configured`, one or both Gmail variables are absent from the active deployment. Correct the variable names, verify their selected environments, and redeploy.
+
+## Testing and code quality
+
+Run ESLint:
+
+```powershell
+npm run lint
+```
+
+Lint statically checks source code for likely errors, invalid patterns, and React hook mistakes. It does not run the application.
+
+Build the production bundle:
 
 ```powershell
 npm run build
 ```
 
-Check changed files for whitespace errors:
+Check backend JavaScript syntax:
+
+```powershell
+node --check server/db.js
+node --check server/routes/auth.js
+node --check server/routes/bookings.js
+node --check server/routes/admin.js
+```
+
+Check Git whitespace errors:
 
 ```powershell
 git diff --check
 ```
 
-Check server route syntax when modifying API files:
+Vite may report that the main bundle exceeds 500 kB. That is a performance warning and does not mean the build failed.
 
-```powershell
-node --check server/routes/plans.js
-node --check server/routes/bookings.js
-```
+## Troubleshooting
 
-The build may report a chunk-size warning because the main client bundle is larger than 500 kB. This warning does not fail the build.
+### Login says the account does not exist
 
-## Production deployment
+The entered email is not registered. Select **Sign up now**, create the account, and verify the email OTP.
 
-1. Create a PostgreSQL database such as Neon.
-2. Set `DATABASE_URL`, `JWT_SECRET`, `CLIENT_URL`, `SERPAPI_KEY`, and optionally `ADMIN_EMAIL` in the deployment environment.
-3. Deploy the repository.
-4. Open `/api/health` and confirm it returns:
+### Login asks to complete signup verification
 
-   ```json
-   { "message": "Tourgoater API is running" }
-   ```
+The account exists but its signup OTP was never verified. Complete the OTP challenge before logging in.
 
-5. Create a test account and verify the full destination → save plan → booking inquiry workflow.
+### OTP is not sent
 
-When `DATABASE_URL` is present, the API connects to PostgreSQL and creates missing runtime tables automatically. Without it, local development uses SQLite.
+- Confirm `GMAIL_USER` contains the full Gmail address.
+- Confirm `GMAIL_APP_PASSWORD` is a Google App Password, not the normal password.
+- Remove accidental spaces from the password.
+- Confirm two-step verification is enabled on the Gmail account.
+- In Vercel, confirm both variables apply to the current environment.
+- Redeploy after changing environment variables.
+- Read Vercel function logs for the `/api/auth/signup` or `/api/auth/forgot-password` request.
+
+### Gmail variable name contains invalid characters
+
+The environment-variable **Name** must be only `GMAIL_USER`. Put the Gmail address in the separate **Value** field.
+
+### Live flights or hotels do not load
+
+Check `SERPAPI_KEY`, API quota, request dates, and server logs. The trip can still be created because flight and hotel selections are optional.
+
+### SQLite parameter binding error
+
+Restart with the current server code and ensure request payload values are strings/numbers rather than unsupported JavaScript objects. Full plan objects are serialized to JSON before database insertion.
+
+### New table or column is missing
+
+Restart the API locally or redeploy production. Runtime migrations execute during server startup.
+
+### Admin link is missing
+
+Confirm the logged-in email exactly matches `ADMIN_EMAIL`, restart/redeploy after changing it, log out, and log in again.
+
+### Notification does not immediately appear
+
+The header checks for admin replies every 30 seconds. Refreshing the page also fetches notifications immediately.
+
+## Current limitations
+
+- Booking submission creates an inquiry, not a confirmed reservation.
+- No payment gateway is connected.
+- Airline and hotel tickets are not issued by Tourgoater.
+- Live search depends on SerpAPI availability and quota.
+- Gmail SMTP is subject to Google sending limits and security policies.
+- Notification delivery is in-app polling, not browser push notification.
+- Production data should be backed up through the PostgreSQL provider.
+
+## Privacy and security notes
+
+- Never commit `.env` or credentials.
+- Use a unique, strong `JWT_SECRET` in production.
+- Rotate any credential accidentally shown in screenshots or committed to Git.
+- Treat traveler phone numbers, addresses, emails, and inquiries as private data.
+- Limit administrator access to trusted accounts.
+- Use HTTPS in production.
+
+## License
+
+The package currently declares the ISC license. Add a root `LICENSE` file before public distribution if formal license text is required.
