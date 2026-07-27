@@ -9,12 +9,30 @@ const router = Router();
 router.use(requireAuth, requireAdmin);
 
 router.get("/overview", async (_request, response) => {
-  const [users, destinations, places, hotels, plans] = await Promise.all([
+  const [users, destinations, places, hotels, plans, inquiries] = await Promise.all([
     pool.query("SELECT COUNT(*) AS count FROM users"), pool.query("SELECT COUNT(*) AS count FROM catalog_destinations"),
     pool.query("SELECT COUNT(*) AS count FROM catalog_places"), pool.query("SELECT COUNT(*) AS count FROM catalog_hotels"),
     pool.query("SELECT COUNT(*) AS count FROM saved_plans"),
+    pool.query("SELECT COUNT(*) AS count FROM booking_inquiries"),
   ]);
-  response.json({ stats: { users: Number(users.rows[0].count), destinations: Number(destinations.rows[0].count), places: Number(places.rows[0].count), hotels: Number(hotels.rows[0].count), savedPlans: Number(plans.rows[0].count) } });
+  response.json({ stats: { users: Number(users.rows[0].count), destinations: Number(destinations.rows[0].count), places: Number(places.rows[0].count), hotels: Number(hotels.rows[0].count), savedPlans: Number(plans.rows[0].count), inquiries: Number(inquiries.rows[0].count) } });
+});
+
+router.get("/inquiries", async (_request, response) => {
+  const result = await pool.query(
+    `SELECT b.id, b.destination_name, b.traveler_name, b.email, b.phone, b.address, b.city, b.postal_code,
+            b.inquiry, b.overall_total, b.status, b.created_at, u.name AS account_name, u.email AS account_email
+     FROM booking_inquiries b JOIN users u ON u.id = b.user_id ORDER BY b.created_at DESC`,
+  );
+  response.json({ inquiries: result.rows });
+});
+
+router.patch("/inquiries/:id", async (request, response) => {
+  const status = request.body.status;
+  if (!["pending", "contacted", "confirmed", "cancelled"].includes(status)) return response.status(400).json({ message: "Invalid inquiry status" });
+  const result = await pool.query("UPDATE booking_inquiries SET status = $1 WHERE id = $2 RETURNING id, status", [status, request.params.id]);
+  if (!result.rows[0]) return response.status(404).json({ message: "Inquiry not found" });
+  response.json({ inquiry: result.rows[0] });
 });
 
 router.get("/users", async (_request, response) => {
