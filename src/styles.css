@@ -748,12 +748,16 @@ body:has(.cinematic-hero) .brand, body:has(.cinematic-hero) .nav-links > a:not(.
 .booking-disclaimer { display: flex; align-items: flex-start; gap: 8px; margin: 18px 0; padding: 12px; border-radius: 10px; background: rgba(15,118,110,.25); color: #ccfbf1; font-size: .75rem; line-height: 1.45; }
 .booking-checkout form { display: grid; gap: 12px; margin-top: 20px; }
 .booking-checkout label { display: grid; gap: 6px; color: #cbd5e1; font-size: .75rem; font-weight: 800; }
-.booking-checkout input { min-height: 44px; padding: 10px 12px; border: 1px solid #475569; border-radius: 9px; background: #1e293b; color: white; font: inherit; }
+.booking-checkout input, .booking-checkout textarea { min-height: 44px; padding: 10px 12px; border: 1px solid #475569; border-radius: 9px; background: #1e293b; color: white; font: inherit; resize: vertical; }
+.booking-checkout input:focus, .booking-checkout textarea:focus { outline: 2px solid #fb923c; outline-offset: 1px; }
+.booking-checkout label em { float: right; color: #94a3b8; font-style: normal; font-weight: 600; }
+.booking-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .booking-checkout .button { width: 100%; justify-content: center; margin-top: 5px; }
 .booking-checkout > small { display: block; margin-top: 15px; color: #94a3b8; line-height: 1.5; }
 .booking-confirmed { display: flex; gap: 13px; padding: 20px; border: 1px solid #99f6e4; border-radius: 16px; background: #f0fdfa; color: #0f766e; }
 .booking-confirmed strong { font-size: 1.05rem; }
 .booking-confirmed p { margin: 3px 0 0; }
+.booking-inquiry-summary dd { max-width: 65%; overflow-wrap: anywhere; }
 .booking-empty { min-height: 60vh; display: grid; place-items: center; align-content: center; text-align: center; }
 .booking-empty p { color: var(--color-body); }
 .complete-plan-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 20px; }
@@ -837,6 +841,7 @@ body:has(.cinematic-hero) .brand, body:has(.cinematic-hero) .nav-links > a:not(.
 }
 
 @media (max-width: 680px) {
+  .booking-form-row { grid-template-columns: 1fr; }
   .saved-trip-grid { grid-template-columns: 1fr; }
   .saved-section-empty { grid-template-columns: auto 1fr; }
   .saved-section-empty .button { grid-column: 1 / -1; justify-content: center; }
