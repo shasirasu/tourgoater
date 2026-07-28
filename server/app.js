@@ -8,6 +8,7 @@ import adminRoutes from "./routes/admin.js";
 import flightRoutes from "./routes/flights.js";
 import hotelRoutes from "./routes/hotels.js";
 import bookingRoutes from "./routes/bookings.js";
+import routeMapRoutes from "./routes/routeMap.js";
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/flights", flightRoutes);
 app.use("/api/hotels", hotelRoutes);
 app.use("/api/bookings", bookingRoutes);
+app.use("/api/route-map", routeMapRoutes);
 
 app.use((error, _request, response, _next) => {
   console.error(error);
