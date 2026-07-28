@@ -1865,26 +1865,62 @@
         {
           "name": "Promenade Beach",
           "city": "Puducherry",
-          "info": "Promenade Beach is the city's signature seafront walk, lined with colonial landmarks, cafés and views across the Bay of Bengal.",
+          "info": "Puducherry's landmark seafront boulevard is best explored on an early-morning or evening walk past the Gandhi statue, French War Memorial, old lighthouse and Bay of Bengal views.",
           "location": "https://www.google.com/maps/search/?api=1&query=Promenade%20Beach%2C%20Puducherry%2C%20India"
         },
         {
           "name": "Auroville",
           "city": "Auroville",
-          "info": "Auroville is an international township known for the Matrimandir, sustainable living projects and peaceful landscaped surroundings.",
+          "info": "The international City of Dawn is centred on human unity. Begin at the Visitors Centre and follow the official process for the Matrimandir viewing point or Inner Chamber visit.",
           "location": "https://www.google.com/maps/search/?api=1&query=Auroville%2C%20Puducherry%2C%20India"
         },
         {
           "name": "Sri Aurobindo Ashram",
           "city": "Puducherry",
-          "info": "Sri Aurobindo Ashram is a quiet spiritual centre in the French Quarter associated with Sri Aurobindo and The Mother.",
+          "info": "Founded in 1926, this quiet spiritual community in the old town is associated with Sri Aurobindo and The Mother. Visitors should observe silence and confirm current entry rules.",
           "location": "https://www.google.com/maps/search/?api=1&query=Sri%20Aurobindo%20Ashram%2C%20Puducherry%2C%20India"
         },
         {
           "name": "Paradise Beach",
           "city": "Chunnambar",
-          "info": "Paradise Beach is a sandy coastal retreat reached from Chunnambar, popular for boat rides, open shoreline and relaxed day trips.",
+          "info": "A sandy beach where the Chunnambar backwaters meet the Bay of Bengal, commonly reached by a paid boat ride from the Chunnambar Boat House; service depends on weather and local conditions.",
           "location": "https://www.google.com/maps/search/?api=1&query=Paradise%20Beach%2C%20Puducherry%2C%20India"
+        },
+        {
+          "name": "White Town Heritage Quarter",
+          "city": "White Town",
+          "info": "Walk a grid of pastel colonial-era streets, Tamil-French architecture, shaded courtyards, boutiques and cafés between the canal and the seafront. Rue Romain Rolland and Dumas Street are useful starting points.",
+          "location": "https://www.google.com/maps/search/?api=1&query=White%20Town%2C%20Puducherry%2C%20India"
+        },
+        {
+          "name": "Pondy Marina Food Street",
+          "city": "Dubrayapet",
+          "info": "Pondy Marina is a food-themed waterfront near the new lighthouse, around 1.5 km from White Town. Its food courts combine local and international choices with seaside seating and family recreation.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Pondy%20Marina%20Beach%20Food%20Court%2C%20Puducherry%2C%20India"
+        },
+        {
+          "name": "Bharathi Park",
+          "city": "White Town",
+          "info": "This leafy central park surrounds the Aayi Mandapam and offers a shaded pause between White Town landmarks such as Raj Nivas, the Legislative Assembly and nearby museums.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Bharathi%20Park%2C%20Puducherry%2C%20India"
+        },
+        {
+          "name": "Serenity Beach",
+          "city": "Kottakuppam",
+          "info": "A broad sunrise-facing beach north of central Puducherry, known for fishing boats, a sandy shoreline and surf activity. Sea conditions can be rough, so follow local safety guidance.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Serenity%20Beach%2C%20Kottakuppam%2C%20India"
+        },
+        {
+          "name": "Sacred Heart Basilica",
+          "city": "Puducherry",
+          "info": "Completed in the early twentieth century, this red-and-white Gothic Revival Catholic basilica is known for its pointed arches, stained glass and prominent twin-tower façade.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Sacred%20Heart%20Basilica%2C%20Puducherry%2C%20India"
+        },
+        {
+          "name": "Arikamedu Archaeological Site",
+          "city": "Ariyankuppam",
+          "info": "An early historic settlement on the Ariyankuppam River associated with bead making and Indo-Roman maritime trade. The surviving ruins reward visitors interested in archaeology rather than polished attractions.",
+          "location": "https://www.google.com/maps/search/?api=1&query=Arikamedu%20Archaeological%20Site%2C%20Puducherry%2C%20India"
         }
       ]
     }

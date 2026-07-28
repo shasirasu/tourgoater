@@ -1,6 +1,8 @@
 import express from "express";
+import { requireAuth } from "../middleware/requireAuth.js";
 
 const router = express.Router();
+router.use(requireAuth);
 const endpoint = "https://serpapi.com/search.json";
 const indianAirports = {
   agartala: "IXA", ahmedabad: "AMD", aizawl: "AJL", amritsar: "ATQ", bengaluru: "BLR", bangalore: "BLR",

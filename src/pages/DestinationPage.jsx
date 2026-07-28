@@ -160,7 +160,8 @@ export default function DestinationPage({ user, onLogout }) {
     setSelectedFlightId("");
     try {
       const params = new URLSearchParams({ origin: departureCity.trim(), destination: destination.capital, date: departureDate });
-      const response = await fetch(`/api/flights?${params}`);
+      const response = await fetch(`/api/flights?${params}`, { headers: { Authorization: `Bearer ${getAuthToken()}` } });
+      if (response.status === 401) { navigate("/login"); return; }
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || "Could not load flights");
       setFlightOffers(data.offers || []);
@@ -188,7 +189,8 @@ export default function DestinationPage({ user, onLogout }) {
         checkOut,
         adults,
       });
-      const response = await fetch(`/api/hotels?${params}`);
+      const response = await fetch(`/api/hotels?${params}`, { headers: { Authorization: `Bearer ${getAuthToken()}` } });
+      if (response.status === 401) { navigate("/login"); return; }
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || "Could not load hotels");
       setLiveHotels(data.hotels || []);

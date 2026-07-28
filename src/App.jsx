@@ -177,8 +177,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage user={user} onLogout={handleLogout} />} />
         <Route path="/browse" element={user ? <BrowsePage user={user} onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
-        <Route path="/destination/:id" element={<DestinationPage user={user} onLogout={handleLogout} />} />
-        <Route path="/booking" element={<OverallBookingPage user={user} onLogout={handleLogout} />} />
+        <Route path="/destination/:id" element={user ? <DestinationPage user={user} onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
+        <Route path="/booking" element={user ? <OverallBookingPage user={user} onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
         <Route path="/saved" element={user ? <SavedPlansPage user={user} onLogout={handleLogout} /> : <Navigate to="/login" />} />
         <Route path="/admin" element={user?.role === "admin" ? <AdminPage user={user} onLogout={handleLogout} /> : <Navigate to="/" />} />
         <Route

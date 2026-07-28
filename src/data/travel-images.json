@@ -1909,14 +1909,20 @@
     },
     {
       "img": [
-        "/images/travel/tamil-nadu-08.jpg",
-        "/images/listings/verified/goa-palolem-beach.jpg"
+        "/images/listings/puducherry/white-town.webp",
+        "/images/listings/puducherry/promenade-beach.webp"
       ],
       "tourist": [
-        { "images": ["/images/listings/verified/andhra-pradesh-rk-beach.jpg", "/images/travel/tamil-nadu-08.jpg"] },
-        { "images": ["/images/travel/tamil-nadu-03.jpg", "/images/travel/tamil-nadu-04.jpg"] },
-        { "images": ["/images/travel/tamil-nadu-06.jpg", "/images/travel/tamil-nadu-07.jpg"] },
-        { "images": ["/images/listings/verified/goa-palolem-beach.jpg", "/images/travel/tamil-nadu-10.jpg"] }
+        { "images": ["/images/listings/puducherry/promenade-beach.webp"] },
+        { "images": ["/images/listings/puducherry/auroville-matrimandir.webp"] },
+        { "images": ["/images/listings/puducherry/sri-aurobindo-ashram.webp"] },
+        { "images": ["/images/listings/puducherry/paradise-beach.webp"] },
+        { "images": ["/images/listings/puducherry/white-town.webp"] },
+        { "images": ["/images/listings/puducherry/pondy-food-street.webp"] },
+        { "images": ["/images/listings/puducherry/bharathi-park.webp"] },
+        { "images": ["/images/listings/puducherry/serenity-beach.webp"] },
+        { "images": ["/images/listings/puducherry/sacred-heart-basilica.webp"] },
+        { "images": ["/images/listings/puducherry/arikamedu.webp"] }
       ]
     }
   ]
