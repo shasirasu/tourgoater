@@ -752,6 +752,12 @@ body:has(.cinematic-hero) .brand, body:has(.cinematic-hero) .nav-links > a:not(.
 .place-capacity-control input { width: 86px; min-height: 44px; padding: 8px 10px; border: 1px solid #fdba74; border-radius: 9px; background: white; color: var(--color-foreground); font: inherit; font-weight: 800; }
 .place-capacity-control > p { min-width: 112px; margin: 0; color: #c2410c; font-size: .78rem; text-align: right; }
 .place-capacity-message { margin: -6px 0 16px !important; padding: 10px 12px; border-left: 3px solid #f97316; border-radius: 6px; background: #fff7ed; color: #9a3412 !important; font-size: .82rem; font-weight: 700; }
+.route-feasibility-warning, .route-feasibility-success { display: flex; align-items: flex-start; gap: 11px; margin-top: 15px; padding: 14px 16px; border-radius: 12px; }
+.route-feasibility-warning { border: 1px solid #fca5a5; background: #fff1f2; color: #9f1239; }
+.route-feasibility-warning svg, .route-feasibility-success svg { flex: 0 0 auto; margin-top: 1px; }
+.route-feasibility-warning strong { font-size: .88rem; }
+.route-feasibility-warning p { margin: 3px 0 0; color: #9f1239; font-size: .8rem; line-height: 1.55; }
+.route-feasibility-success { align-items: center; border: 1px solid #99f6e4; background: #f0fdfa; color: #0f766e; font-size: .8rem; font-weight: 800; }
 .place-picker-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .place-picker-grid button { position: relative; min-width: 0; display: grid; grid-template-columns: 60px 1fr; align-items: center; gap: 12px; padding: 8px 42px 8px 8px; border: 1px solid #e2e8f0; border-radius: 14px; background: white; color: var(--color-foreground); font: inherit; text-align: left; cursor: pointer; transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
 .place-picker-grid button:hover { border-color: #fb923c; transform: translateY(-1px); }
@@ -1217,6 +1223,9 @@ body:has(.cinematic-hero) .brand, body:has(.cinematic-hero) .nav-links > a:not(.
 :root[data-theme="dark"] .place-capacity-control,
 :root[data-theme="dark"] .place-capacity-message { border-color: #9a3412; background: #29160f; color: #fed7aa !important; }
 :root[data-theme="dark"] .place-capacity-control > p { color: #fdba74; }
+:root[data-theme="dark"] .route-feasibility-warning { border-color: #881337; background: #2a1018; color: #fda4af; }
+:root[data-theme="dark"] .route-feasibility-warning p { color: #fecdd3; }
+:root[data-theme="dark"] .route-feasibility-success { border-color: #115e59; background: #082f2c; color: #99f6e4; }
 :root[data-theme="dark"] .selected-route-map { border-color: #475569; background: #111827; color: #f8fafc; }
 :root[data-theme="dark"] .selected-route-map > header,
 :root[data-theme="dark"] .selected-route-map > footer,

@@ -62,7 +62,7 @@ function currentTheme() {
   return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
 }
 
-export default function SelectedRouteMap({ places, destinationName }) {
+export default function SelectedRouteMap({ places, destinationName, onRouteAnalysis }) {
   const mapElementRef = useRef(null);
   const [theme, setTheme] = useState(currentTheme);
   const [mapError, setMapError] = useState("");
@@ -139,6 +139,20 @@ export default function SelectedRouteMap({ places, destinationName }) {
       .finally(() => { if (!controller.signal.aborted) setRouteLoading(false); });
     return () => controller.abort();
   }, [coordinateKey]);
+
+  useEffect(() => {
+    if (!onRouteAnalysis) return;
+    if (routePlaces.length < 2) {
+      onRouteAnalysis({ distanceKm: 0, durationMinutes: 0, loading: locatingPlaces });
+      return;
+    }
+    onRouteAnalysis({
+      distanceKm: roadRoute?.distanceKm ?? estimatedRouteSummary.distance,
+      durationMinutes: roadRoute?.durationMinutes ?? Math.round(estimatedRouteSummary.distance / 40 * 60),
+      loading: locatingPlaces || routeLoading,
+      live: Boolean(roadRoute),
+    });
+  }, [estimatedRouteSummary.distance, locatingPlaces, onRouteAnalysis, roadRoute, routeLoading, routePlaces.length]);
 
   useEffect(() => {
     if (!mapElementRef.current || !routePlaces.length || mapError) return undefined;

@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
-import { BedDouble, BookmarkCheck, Check, ChevronRight, Clock3, Crosshair, ExternalLink, MapPin, Plane, Search, ShoppingCart, WalletCards } from "lucide-react";
+import { AlertTriangle, BedDouble, BookmarkCheck, Check, ChevronRight, Clock3, Crosshair, ExternalLink, MapPin, Plane, Search, ShoppingCart, WalletCards } from "lucide-react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import travelData from "../data/travelData.js";
 import PlaceShowcase from "../components/PlaceShowcase.jsx";
@@ -38,6 +38,7 @@ export default function DestinationPage({ user, onLogout }) {
   const [plannerBudget, setPlannerBudget] = useState(() => localStorage.getItem("tripBudget") || "");
   const [plannerDays, setPlannerDays] = useState(() => localStorage.getItem("tripDays") || "3");
   const [placeSelectionMessage, setPlaceSelectionMessage] = useState("");
+  const [routeAnalysis, setRouteAnalysis] = useState(null);
   const [departureCity, setDepartureCity] = useState(() => localStorage.getItem("tripDepartureCity") || "");
   const [departureDate, setDepartureDate] = useState(() => localStorage.getItem("tripDepartureDate") || "");
   const [departureTime, setDepartureTime] = useState(() => localStorage.getItem("tripDepartureTime") || "09:00");
@@ -60,7 +61,8 @@ export default function DestinationPage({ user, onLogout }) {
   const hotelsSectionRef = useRef(null);
   const hotelResultsRef = useRef(null);
   const overallSectionRef = useRef(null);
-  const placeSelectionLimit = Math.min(30, Math.max(1, Number(plannerDays) || 1));
+  const planningDayCount = Math.min(30, Math.max(1, Number(plannerDays) || 1));
+  const placeSelectionLimit = Math.min(30, planningDayCount * 3);
 
   useEffect(() => {
     if (!user || !destination || !editingTripId) return;
@@ -146,17 +148,18 @@ export default function DestinationPage({ user, onLogout }) {
   }
 
   function togglePlannerPlace(placeName) {
+    setRouteAnalysis(null);
     setSelectedPlaceNames((current) => {
       if (current.includes(placeName)) {
         setPlaceSelectionMessage("");
         return current.filter((name) => name !== placeName);
       }
       if (current.length >= placeSelectionLimit) {
-        setPlaceSelectionMessage(`A ${placeSelectionLimit}-day trip supports up to ${placeSelectionLimit} main ${placeSelectionLimit === 1 ? "place" : "places"}. Remove one or increase the trip length.`);
+        setPlaceSelectionMessage(`A ${planningDayCount}-day trip supports up to ${placeSelectionLimit} stops before distance checking. Remove one or increase the trip length.`);
         return current;
       }
       setPlaceSelectionMessage(current.length + 1 === placeSelectionLimit
-        ? `Selection limit reached for ${placeSelectionLimit} ${placeSelectionLimit === 1 ? "day" : "days"}. Remove a place or increase the trip length to choose another.`
+        ? `Selection limit reached: up to 3 stops per day. Distance checking may reduce what is realistically possible.`
         : "");
       return [...current, placeName];
     });
@@ -165,10 +168,11 @@ export default function DestinationPage({ user, onLogout }) {
   function handlePlannerDaysChange(event) {
     const value = event.target.value;
     setPlannerDays(value);
-    const nextLimit = Math.min(30, Math.max(1, Number(value) || 1));
+    const nextDays = Math.min(30, Math.max(1, Number(value) || 1));
+    const nextLimit = Math.min(30, nextDays * 3);
     setSelectedPlaceNames((current) => {
       if (current.length <= nextLimit) return current;
-      setPlaceSelectionMessage(`Trip shortened to ${nextLimit} ${nextLimit === 1 ? "day" : "days"}. We kept your first ${nextLimit} selected ${nextLimit === 1 ? "place" : "places"}.`);
+      setPlaceSelectionMessage(`Trip shortened to ${nextDays} ${nextDays === 1 ? "day" : "days"}. We kept the first ${nextLimit} stops and will check whether their distance is realistic.`);
       return current.slice(0, nextLimit);
     });
   }
@@ -319,6 +323,11 @@ export default function DestinationPage({ user, onLogout }) {
   const savedBudget = Number(localStorage.getItem("tripBudget")) || 0;
   const savedDays = Math.max(1, Number(localStorage.getItem("tripDays")) || 3);
   const selectedPlaces = selectedPlaceNames.map((name) => touristPlaces.find((place) => place.name === name)).filter(Boolean);
+  const routeCheckPending = selectedPlaces.length > 1 && (!routeAnalysis || routeAnalysis.loading);
+  const dailyRouteDistance = routeAnalysis ? routeAnalysis.distanceKm / planningDayCount : 0;
+  const dailyDrivingMinutes = routeAnalysis ? routeAnalysis.durationMinutes / planningDayCount : 0;
+  const routeIsImpossible = selectedPlaces.length > 1 && routeAnalysis && !routeAnalysis.loading && (dailyRouteDistance > 250 || dailyDrivingMinutes > 300);
+  const recommendedRouteDays = routeAnalysis ? Math.max(1, Math.ceil(Math.max(routeAnalysis.distanceKm / 250, routeAnalysis.durationMinutes / 300))) : planningDayCount;
   const tripEstimate = savedBudget ? buildTripEstimate(destination, savedDays, savedBudget) : null;
   const selectedFlight = flightOffers.find((flight) => flight.id === selectedFlightId) || null;
   const selectedHotel = liveHotels.find((hotel) => hotel.id === selectedHotelId) || null;
@@ -339,7 +348,7 @@ export default function DestinationPage({ user, onLogout }) {
   const flightSearchUrl = `https://www.google.com/travel/flights?q=${encodeURIComponent(`Flights from ${departureCity || "my city"} to ${destination.capital} on ${departureDate || "my travel date"}`)}`;
   const itinerary = Array.from({ length: savedDays }, (_, dayIndex) => ({
     day: dayIndex + 1,
-    places: selectedPlaces[dayIndex] ? [selectedPlaces[dayIndex]] : [],
+    places: selectedPlaces.slice(dayIndex * 3, dayIndex * 3 + 3),
   }));
 
   async function saveCompletePlan() {
@@ -455,11 +464,11 @@ export default function DestinationPage({ user, onLogout }) {
               {plannerStep === 1 ? (
                 <div className="place-picker-step">
                   <div className="place-capacity-control">
-                    <div><strong>How many days is your trip?</strong><span>Plan one main area per day so travel time stays realistic.</span></div>
+                    <div><strong>How many days is your trip?</strong><span>Select up to 3 stops per day. We check their real distance before you continue.</span></div>
                     <label><span>Trip days</span><input type="number" min="1" max="30" value={plannerDays} onChange={handlePlannerDaysChange} aria-describedby="place-capacity-help" /></label>
                     <p id="place-capacity-help"><strong>{selectedPlaceNames.length} of {placeSelectionLimit}</strong> places selected</p>
                   </div>
-                  <p>Select up to {placeSelectionLimit} main {placeSelectionLimit === 1 ? "place" : "places"} for your {placeSelectionLimit}-day {destination.name} trip.</p>
+                  <p>Select up to {placeSelectionLimit} stops for your {planningDayCount}-day {destination.name} trip. Nearby stops may fit; distant stops will need more days.</p>
                   {placeSelectionMessage && <p className="place-capacity-message" role="status">{placeSelectionMessage}</p>}
                   <div className="place-picker-grid">
                     {touristPlaces.map((place) => {
@@ -474,10 +483,12 @@ export default function DestinationPage({ user, onLogout }) {
                       );
                     })}
                   </div>
-                  {selectedPlaces.length > 0 && <Suspense fallback={<div className="route-map-loading" role="status">Loading your route map...</div>}><SelectedRouteMap places={selectedPlaces} destinationName={destination.name} /></Suspense>}
+                  {selectedPlaces.length > 0 && <Suspense fallback={<div className="route-map-loading" role="status">Loading your route map...</div>}><SelectedRouteMap places={selectedPlaces} destinationName={destination.name} onRouteAnalysis={setRouteAnalysis} /></Suspense>}
+                  {routeIsImpossible && <div className="route-feasibility-warning" role="alert"><AlertTriangle size={23} /><div><strong>This route is not realistic in {planningDayCount} {planningDayCount === 1 ? "day" : "days"}.</strong><p>Your selected places cover about {Math.round(routeAnalysis.distanceKm)} km and need around {Math.ceil(routeAnalysis.durationMinutes / 60)} hours of driving. Plan at least {recommendedRouteDays} days, or remove a distant place.</p></div></div>}
+                  {!routeIsImpossible && routeAnalysis && !routeAnalysis.loading && selectedPlaces.length > 1 && <div className="route-feasibility-success" role="status"><Check size={18} /><span>Feasible route: about {Math.round(dailyRouteDistance)} km and {Math.round(dailyDrivingMinutes / 60 * 10) / 10} driving hours per day.</span></div>}
                   <div className="planner-action-row">
                     <span>{selectedPlaceNames.length} of {placeSelectionLimit} {placeSelectionLimit === 1 ? "place" : "places"} selected</span>
-                    <button className="button" type="button" disabled={!selectedPlaceNames.length} onClick={continueToBudget}>Next: set budget <ChevronRight size={17} /></button>
+                    <button className="button" type="button" disabled={!selectedPlaceNames.length || routeCheckPending || routeIsImpossible} onClick={continueToBudget}>{routeCheckPending ? "Checking distance..." : routeIsImpossible ? "Change route to continue" : "Next: set budget"} {!routeCheckPending && !routeIsImpossible && <ChevronRight size={17} />}</button>
                   </div>
                 </div>
               ) : (
@@ -488,7 +499,7 @@ export default function DestinationPage({ user, onLogout }) {
                     <div><strong>{selectedPlaceNames.length} selected stops</strong><span>{selectedPlaceNames.join(" · ")}</span></div>
                   </div>
                   <label><span>Stay & activity budget</span><div><b>₹</b><input type="number" min="1000" step="500" value={plannerBudget} onChange={(event) => setPlannerBudget(event.target.value)} placeholder="25000" required /></div><small>Live flight travel is calculated separately as an add-on.</small></label>
-                  <label><span>Number of days</span><div><input type="number" min="1" max="30" value={plannerDays} onChange={handlePlannerDaysChange} required /><b>days</b></div><small>Up to one selected main place per day.</small></label>
+                  <label><span>Number of days</span><div><input type="number" min="1" max="30" value={plannerDays} onChange={handlePlannerDaysChange} required /><b>days</b></div><small>Distance is checked against a maximum of roughly 250 km or 5 driving hours per day.</small></label>
                   <label className="departure-location-field"><span>Flying from</span><div><Plane size={17} /><input type="text" value={departureCity} onChange={(event) => setDepartureCity(event.target.value)} placeholder="Chennai" required /><button type="button" onClick={useLiveLocation} title="Use my live location" aria-label="Use my live location"><Crosshair size={17} /></button></div>{locationStatus && <small role="status">{locationStatus}</small>}</label>
                   <label><span>Travel date</span><div><input type="date" min={new Date().toISOString().slice(0, 10)} value={departureDate} onChange={(event) => setDepartureDate(event.target.value)} required /></div></label>
                   <label><span>Flight departure time</span><div><Clock3 size={17} /><input type="time" value={departureTime} onChange={(event) => setDepartureTime(event.target.value)} required /></div></label>
