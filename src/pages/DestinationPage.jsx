@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
-import { AlertTriangle, BedDouble, BookmarkCheck, Check, ChevronRight, Clock3, Crosshair, ExternalLink, MapPin, Plane, Search, ShoppingCart, WalletCards } from "lucide-react";
+import { AlertTriangle, BedDouble, BookmarkCheck, Check, ChevronRight, Clock3, Crosshair, ExternalLink, MapPin, Plane, Search, ShoppingCart, Users, WalletCards } from "lucide-react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import travelData from "../data/travelData.js";
 import PlaceShowcase from "../components/PlaceShowcase.jsx";
@@ -28,6 +28,7 @@ export default function DestinationPage({ user, onLogout }) {
   const [savingPlaceName, setSavingPlaceName] = useState("");
   const [saveError, setSaveError] = useState(null);
   const [plannerStep, setPlannerStep] = useState(1);
+  const [budgetPlanComplete, setBudgetPlanComplete] = useState(false);
   const [selectedPlaceNames, setSelectedPlaceNames] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem(`tripPlaces:${id}`) || "[]");
@@ -35,7 +36,7 @@ export default function DestinationPage({ user, onLogout }) {
       return [];
     }
   });
-  const [plannerBudget, setPlannerBudget] = useState(() => localStorage.getItem("tripBudget") || "");
+  const [plannerBudget, setPlannerBudget] = useState(() => localStorage.getItem("tripBudgetPerPerson") || localStorage.getItem("tripBudget") || "");
   const [plannerDays, setPlannerDays] = useState(() => localStorage.getItem("tripDays") || "3");
   const [placeSelectionMessage, setPlaceSelectionMessage] = useState("");
   const [routeAnalysis, setRouteAnalysis] = useState(null);
@@ -53,14 +54,14 @@ export default function DestinationPage({ user, onLogout }) {
   const [hotelsError, setHotelsError] = useState("");
   const [hotelCheckIn, setHotelCheckIn] = useState(() => localStorage.getItem("hotelCheckIn") || "");
   const [hotelCheckOut, setHotelCheckOut] = useState(() => localStorage.getItem("hotelCheckOut") || "");
-  const [hotelAdults, setHotelAdults] = useState(() => localStorage.getItem("hotelAdults") || "2");
-  const [planVersion, setPlanVersion] = useState(0);
+  const [hotelAdults, setHotelAdults] = useState(() => localStorage.getItem("tripTravelers") || localStorage.getItem("hotelAdults") || "1");
   const [savingTrip, setSavingTrip] = useState(false);
   const [tripSaveStatus, setTripSaveStatus] = useState("");
   const flightsSectionRef = useRef(null);
   const hotelsSectionRef = useRef(null);
   const hotelResultsRef = useRef(null);
   const overallSectionRef = useRef(null);
+  const planBuilderRef = useRef(null);
   const planningDayCount = Math.min(30, Math.max(1, Number(plannerDays) || 1));
   const placeSelectionLimit = Math.min(30, planningDayCount * 3);
 
@@ -78,7 +79,7 @@ export default function DestinationPage({ user, onLogout }) {
         const hotel = parseSavedJson(trip.hotel_json);
         const days = Math.max(1, Math.round((new Date(`${trip.check_out}T12:00:00`) - new Date(`${trip.check_in}T12:00:00`)) / 86400000));
         setSelectedPlaceNames(places.map((place) => place.name));
-        setPlannerBudget(String(trip.budget));
+        setPlannerBudget(String(Math.round(Number(trip.budget) / Math.max(1, Number(trip.travelers) || 1))));
         setPlannerDays(String(days));
         setDepartureCity(trip.departure_city);
         setDepartureDate(String(trip.departure_date).slice(0, 10));
@@ -93,7 +94,10 @@ export default function DestinationPage({ user, onLogout }) {
         setPlannerStep(2);
         setTripSaveStatus("Editing your saved plan. Your changes will update this plan.");
         localStorage.setItem("tripBudget", String(trip.budget));
+        localStorage.setItem("tripBudgetPerPerson", String(Math.round(Number(trip.budget) / Math.max(1, Number(trip.travelers) || 1))));
         localStorage.setItem("tripDays", String(days));
+        localStorage.setItem("tripTravelers", String(trip.travelers));
+        localStorage.setItem("hotelAdults", String(trip.travelers));
         localStorage.setItem(`tripPlaces:${destination.id}`, JSON.stringify(places.map((place) => place.name)));
       })
       .catch((requestError) => setTripSaveStatus(requestError.message));
@@ -169,6 +173,15 @@ export default function DestinationPage({ user, onLogout }) {
     const value = event.target.value;
     setPlannerDays(value);
     const nextDays = Math.min(30, Math.max(1, Number(value) || 1));
+    localStorage.setItem("tripDays", String(nextDays));
+    setBudgetPlanComplete(false);
+    const stayStartDate = hotelCheckIn || departureDate;
+    if (stayStartDate) {
+      const nextCheckOut = new Date(`${stayStartDate}T12:00:00`);
+      nextCheckOut.setDate(nextCheckOut.getDate() + nextDays);
+      setHotelCheckIn(stayStartDate);
+      setHotelCheckOut(nextCheckOut.toISOString().slice(0, 10));
+    }
     const nextLimit = Math.min(30, nextDays * 3);
     setSelectedPlaceNames((current) => {
       if (current.length <= nextLimit) return current;
@@ -181,6 +194,9 @@ export default function DestinationPage({ user, onLogout }) {
     if (!selectedPlaceNames.length) return;
     localStorage.setItem(`tripPlaces:${id}`, JSON.stringify(selectedPlaceNames));
     setPlannerStep(2);
+    requestAnimationFrame(() => {
+      planBuilderRef.current?.scrollIntoView({ behavior: "auto", block: "start" });
+    });
   }
 
   async function searchLiveFlights() {
@@ -241,27 +257,45 @@ export default function DestinationPage({ user, onLogout }) {
     setTimeout(() => hotelResultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 150);
   }
 
-  function buildSelectedPlan(event) {
+  async function buildSelectedPlan(event) {
     event.preventDefault();
+    const budgetScrollPosition = window.scrollY;
+    setBudgetPlanComplete(false);
     const normalizedBudget = Math.max(1000, Number(plannerBudget) || 0);
     const normalizedDays = Math.min(30, Math.max(1, Number(plannerDays) || 1));
+    const normalizedTravelers = Math.min(20, Math.max(1, Number(hotelAdults) || 1));
+    const groupBudget = normalizedBudget * normalizedTravelers;
     setPlannerBudget(String(normalizedBudget));
     setPlannerDays(String(normalizedDays));
-    localStorage.setItem("tripBudget", String(normalizedBudget));
+    localStorage.setItem("tripBudgetPerPerson", String(normalizedBudget));
+    localStorage.setItem("tripBudget", String(groupBudget));
     localStorage.setItem("tripDays", String(normalizedDays));
+    localStorage.setItem("tripTravelers", String(normalizedTravelers));
+    localStorage.setItem("hotelAdults", String(normalizedTravelers));
     localStorage.setItem("tripDepartureCity", departureCity.trim());
     localStorage.setItem("tripDepartureDate", departureDate);
     localStorage.setItem("tripDepartureTime", departureTime);
     localStorage.setItem(`tripPlaces:${id}`, JSON.stringify(selectedPlaceNames));
-    setPlanVersion((version) => version + 1);
-    searchLiveFlights();
     const tripCheckOut = new Date(`${departureDate}T12:00:00`);
     tripCheckOut.setDate(tripCheckOut.getDate() + normalizedDays);
     const tripCheckOutValue = tripCheckOut.toISOString().slice(0, 10);
     setHotelCheckIn(departureDate);
     setHotelCheckOut(tripCheckOutValue);
-    searchLiveHotels(departureDate, tripCheckOutValue, hotelAdults);
-    setTimeout(() => flightsSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 150);
+    await Promise.all([
+      searchLiveFlights(),
+      searchLiveHotels(departureDate, tripCheckOutValue, String(normalizedTravelers)),
+    ]);
+    setBudgetPlanComplete(true);
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: budgetScrollPosition, left: 0, behavior: "instant" });
+      requestAnimationFrame(() => window.scrollTo({ top: budgetScrollPosition, left: 0, behavior: "instant" }));
+    });
+  }
+
+  function continueToFlights() {
+    setPlannerStep(3);
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    flightsSectionRef.current?.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
   }
 
   function toggleFlightSelection(flightId) {
@@ -328,16 +362,16 @@ export default function DestinationPage({ user, onLogout }) {
   const dailyDrivingMinutes = routeAnalysis ? routeAnalysis.durationMinutes / planningDayCount : 0;
   const routeIsImpossible = selectedPlaces.length > 1 && routeAnalysis && !routeAnalysis.loading && (dailyRouteDistance > 250 || dailyDrivingMinutes > 300);
   const recommendedRouteDays = routeAnalysis ? Math.max(1, Math.ceil(Math.max(routeAnalysis.distanceKm / 250, routeAnalysis.durationMinutes / 300))) : planningDayCount;
-  const tripEstimate = savedBudget ? buildTripEstimate(destination, savedDays, savedBudget) : null;
+  const travelerCount = Math.min(20, Math.max(1, Number(hotelAdults) || 1));
+  const tripEstimate = savedBudget ? buildTripEstimate(destination, savedDays, savedBudget, travelerCount) : null;
   const selectedFlight = flightOffers.find((flight) => flight.id === selectedFlightId) || null;
   const selectedHotel = liveHotels.find((hotel) => hotel.id === selectedHotelId) || null;
-  const travelerCount = Math.max(1, Number(hotelAdults) || 1);
   const liveHotelNights = hotelCheckIn && hotelCheckOut
     ? Math.max(1, Math.round((new Date(`${hotelCheckOut}T12:00:00`) - new Date(`${hotelCheckIn}T12:00:00`)) / 86400000))
     : Math.max(1, savedDays - 1);
   const selectedFlightCost = selectedFlight ? selectedFlight.price * travelerCount : 0;
   const selectedHotelCost = selectedHotel ? (selectedHotel.totalPrice || selectedHotel.pricePerNight * liveHotelNights) : 0;
-  const activityCost = (tripEstimate?.dailyExpenses || 0) * savedDays;
+  const activityCost = (tripEstimate?.dailyExpenses || 0) * savedDays * travelerCount;
   const tripBudgetCost = activityCost + selectedHotelCost;
   const budgetPlanTotal = tripBudgetCost + selectedFlightCost;
   const flightDurationMinutes = 110 + (Number(destination.id) % 5) * 25;
@@ -447,7 +481,7 @@ export default function DestinationPage({ user, onLogout }) {
 
         <section className="trip-plan-section">
           <div className="shell">
-            <div className="plan-builder" key={planVersion}>
+            <div className="plan-builder" ref={planBuilderRef}>
               <header className="plan-builder-header">
                 <div>
                   <p className="eyebrow">Build your route</p>
@@ -455,8 +489,8 @@ export default function DestinationPage({ user, onLogout }) {
                 </div>
                 <ol className="plan-steps" aria-label="Trip planning steps">
                   <li className={plannerStep === 1 ? "is-active" : "is-complete"}><span>{plannerStep > 1 ? <Check size={15} /> : "1"}</span> Select places</li>
-                  <li className={plannerStep === 2 && !flightOffers.length ? "is-active" : flightOffers.length ? "is-complete" : ""}><span>{flightOffers.length ? <Check size={15} /> : "2"}</span> Budget</li>
-                  <li className={flightOffers.length && !selectedFlight ? "is-active" : selectedFlight ? "is-complete" : ""}><span>{selectedFlight ? <Check size={15} /> : "3"}</span> Live flights</li>
+                  <li className={plannerStep === 2 ? "is-active" : plannerStep > 2 ? "is-complete" : ""}><span>{plannerStep > 2 ? <Check size={15} /> : "2"}</span> Budget</li>
+                  <li className={plannerStep === 3 && !selectedFlight ? "is-active" : selectedFlight ? "is-complete" : ""}><span>{selectedFlight ? <Check size={15} /> : "3"}</span> Live flights</li>
                   <li className={selectedFlight && !selectedHotel ? "is-active" : selectedHotel ? "is-complete" : ""}><span>{selectedHotel ? <Check size={15} /> : "4"}</span> Hotels</li>
                 </ol>
               </header>
@@ -498,12 +532,14 @@ export default function DestinationPage({ user, onLogout }) {
                     <MapPin size={21} />
                     <div><strong>{selectedPlaceNames.length} selected stops</strong><span>{selectedPlaceNames.join(" · ")}</span></div>
                   </div>
-                  <label><span>Stay & activity budget</span><div><b>₹</b><input type="number" min="1000" step="500" value={plannerBudget} onChange={(event) => setPlannerBudget(event.target.value)} placeholder="25000" required /></div><small>Live flight travel is calculated separately as an add-on.</small></label>
+                  <label><span>Budget per person</span><div><b>₹</b><input type="number" min="1000" step="500" value={plannerBudget} onChange={(event) => setPlannerBudget(event.target.value)} placeholder="25000" required /></div><small>The group budget is this amount multiplied by the number of travellers.</small></label>
                   <label><span>Number of days</span><div><input type="number" min="1" max="30" value={plannerDays} onChange={handlePlannerDaysChange} required /><b>days</b></div><small>Distance is checked against a maximum of roughly 250 km or 5 driving hours per day.</small></label>
+                  <label><span>How many are travelling?</span><div><Users size={17} /><input type="number" min="1" max="20" value={hotelAdults} onChange={(event) => setHotelAdults(event.target.value)} required /><b>people</b></div><small>Food, activities, flights, and your group budget update for everyone.</small></label>
                   <label className="departure-location-field"><span>Flying from</span><div><Plane size={17} /><input type="text" value={departureCity} onChange={(event) => setDepartureCity(event.target.value)} placeholder="Chennai" required /><button type="button" onClick={useLiveLocation} title="Use my live location" aria-label="Use my live location"><Crosshair size={17} /></button></div>{locationStatus && <small role="status">{locationStatus}</small>}</label>
                   <label><span>Travel date</span><div><input type="date" min={new Date().toISOString().slice(0, 10)} value={departureDate} onChange={(event) => setDepartureDate(event.target.value)} required /></div></label>
                   <label><span>Flight departure time</span><div><Clock3 size={17} /><input type="time" value={departureTime} onChange={(event) => setDepartureTime(event.target.value)} required /></div></label>
-                  <button className="button" type="submit"><WalletCards size={17} /> Make my budget plan</button>
+                  <button className="button" type="submit" disabled={flightLoading || hotelsLoading}><WalletCards size={17} /> {flightLoading || hotelsLoading ? "Calculating your plan..." : "Make my budget plan"}</button>
+                  {budgetPlanComplete && <button className="button planner-continue-flights" type="button" onClick={continueToFlights}><Plane size={17} /> Continue to live flights <ChevronRight size={17} /></button>}
                 </form>
               )}
             </div>
@@ -593,7 +629,7 @@ export default function DestinationPage({ user, onLogout }) {
             <form className="hotel-search-form" onSubmit={handleHotelSearch}>
               <label><span>Check in</span><input type="date" min={new Date().toISOString().slice(0, 10)} value={hotelCheckIn} onChange={(event) => setHotelCheckIn(event.target.value)} required /></label>
               <label><span>Check out</span><input type="date" min={hotelCheckIn || new Date().toISOString().slice(0, 10)} value={hotelCheckOut} onChange={(event) => setHotelCheckOut(event.target.value)} required /></label>
-              <label><span>Guests</span><select value={hotelAdults} onChange={(event) => setHotelAdults(event.target.value)}><option value="1">1 adult</option><option value="2">2 adults</option><option value="3">3 adults</option><option value="4">4 adults</option><option value="5">5 adults</option><option value="6">6 adults</option></select></label>
+              <label><span>Guests</span><select value={hotelAdults} onChange={(event) => setHotelAdults(event.target.value)}>{Array.from({ length: 20 }, (_, index) => index + 1).map((count) => <option value={count} key={count}>{count} {count === 1 ? "adult" : "adults"}</option>)}</select></label>
               <button className="button" type="submit" disabled={hotelsLoading}><Search size={17} /> {hotelsLoading ? "Searching..." : "Search hotels"}</button>
             </form>
             <div className="hotel-results-anchor" ref={hotelResultsRef} aria-hidden="true" />
@@ -653,11 +689,11 @@ export default function DestinationPage({ user, onLogout }) {
                 <aside className="plan-summary">
                   <p className="plan-summary-label">Overall total</p>
                   <strong className="plan-total">{currencyFormatter.format(budgetPlanTotal)}</strong>
-                  <p className={`plan-budget-note ${tripBudgetCost > savedBudget ? "is-over" : ""}`}>{tripBudgetCost > savedBudget ? `${currencyFormatter.format(tripBudgetCost - savedBudget)} over` : "within"} your {currencyFormatter.format(savedBudget)} stay & activity budget</p>
+                  <p className={`plan-budget-note ${tripBudgetCost > savedBudget ? "is-over" : ""}`}>{tripBudgetCost > savedBudget ? `${currencyFormatter.format(tripBudgetCost - savedBudget)} over` : "within"} your {currencyFormatter.format(savedBudget)} group budget for {travelerCount} {travelerCount === 1 ? "traveller" : "travellers"}</p>
                   <dl className="plan-costs">
-                    <div><dt>Stay & activity budget</dt><dd>{currencyFormatter.format(savedBudget)}</dd></div>
+                    <div><dt>Group budget ({currencyFormatter.format(Number(localStorage.getItem("tripBudgetPerPerson")) || savedBudget)} × {travelerCount})</dt><dd>{currencyFormatter.format(savedBudget)}</dd></div>
                     {selectedHotel ? <><div><dt>{selectedHotel.name}</dt><dd>{currencyFormatter.format(selectedHotelCost)}</dd></div><div><dt>{liveHotelNights} {liveHotelNights === 1 ? "night" : "nights"}</dt><dd>{currencyFormatter.format(selectedHotel.pricePerNight)}/night</dd></div></> : <div><dt>Hotel</dt><dd>Not selected</dd></div>}
-                    <div><dt>Food, activities & local travel</dt><dd>{currencyFormatter.format(activityCost)}</dd></div>
+                    <div><dt>Food, activities & local travel ({travelerCount} {travelerCount === 1 ? "traveller" : "travellers"})<small>{currencyFormatter.format(tripEstimate.dailyExpenses)} per person/day × {savedDays} {savedDays === 1 ? "day" : "days"}</small></dt><dd>{currencyFormatter.format(activityCost)}</dd></div>
                     <div className={`plan-money-left ${tripBudgetCost > savedBudget ? "is-over" : ""}`}><dt>{tripBudgetCost > savedBudget ? "Trip budget exceeded" : "Trip budget left"}</dt><dd>{currencyFormatter.format(Math.abs(savedBudget - tripBudgetCost))}</dd></div>
                     {selectedFlight ? <div className="plan-travel-addon"><dt>Travel add-on · {selectedFlight.airline} · {travelerCount} {travelerCount === 1 ? "traveler" : "travelers"}</dt><dd>+{currencyFormatter.format(selectedFlightCost)}</dd></div> : <div><dt>Flight travel</dt><dd>Not selected</dd></div>}
                   </dl>

@@ -44,15 +44,16 @@ export function getDestinationHotels(destination) {
   return hotels.map((hotel) => ({ ...hotel, image: hotelImages[destination.id]?.[hotel.name] || hotel.image }));
 }
 
-export function buildTripEstimate(destination, days, budget = Infinity) {
+export function buildTripEstimate(destination, days, budget = Infinity, travelers = 1) {
   const tripDays = Math.max(1, Number(days) || 1);
+  const travelerCount = Math.min(20, Math.max(1, Number(travelers) || 1));
   const nights = Math.max(1, tripDays - 1);
   const dailyExpenses = tripPlanning[destination.id]?.dailyExpenses ?? 1800;
   const hotels = getDestinationHotels(destination).filter((hotel) => hotel.roomsAvailable > 0);
   const choices = hotels
     .map((hotel) => {
       const hotelCost = hotel.pricePerNight * nights;
-      const estimatedTripCost = hotelCost + dailyExpenses * tripDays;
+      const estimatedTripCost = hotelCost + dailyExpenses * tripDays * travelerCount;
       return { hotel, hotelCost, estimatedTripCost };
     })
     .filter((choice) => choice.estimatedTripCost <= budget)
