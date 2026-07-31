@@ -230,7 +230,7 @@ export default function DestinationPage({ user, onLogout }) {
     setSelectedHotelId("");
     try {
       const params = new URLSearchParams({
-        destination: destination.name,
+        destination: selectedPlaceNames[0] || destination.name,
         checkIn,
         checkOut,
         adults,
@@ -357,6 +357,7 @@ export default function DestinationPage({ user, onLogout }) {
   const savedBudget = Number(localStorage.getItem("tripBudget")) || 0;
   const savedDays = Math.max(1, Number(localStorage.getItem("tripDays")) || 3);
   const selectedPlaces = selectedPlaceNames.map((name) => touristPlaces.find((place) => place.name === name)).filter(Boolean);
+  const hotelSearchArea = selectedPlaces[0]?.name || destination.name;
   const routeCheckPending = selectedPlaces.length > 1 && (!routeAnalysis || routeAnalysis.loading);
   const dailyRouteDistance = routeAnalysis ? routeAnalysis.distanceKm / planningDayCount : 0;
   const dailyDrivingMinutes = routeAnalysis ? routeAnalysis.durationMinutes / planningDayCount : 0;
@@ -621,9 +622,9 @@ export default function DestinationPage({ user, onLogout }) {
             <header className="places-heading">
               <div>
                 <p className="eyebrow">Live accommodation <span className="optional-step-label">Optional</span></p>
-                <h2>Hotels available in {destination.name}.</h2>
+                <h2>Hotels near your first stop: {hotelSearchArea}.</h2>
               </div>
-              <p>Search Google Hotels using your selected travel dates and compare current nightly prices.</p>
+              <p>Your first selected place is used as the stay area. Search using your travel dates and compare current nightly prices.</p>
             </header>
 
             <form className="hotel-search-form" onSubmit={handleHotelSearch}>
@@ -641,7 +642,7 @@ export default function DestinationPage({ user, onLogout }) {
             ) : liveHotels.length > 0 && (
               <div className="live-hotel-grid">
                 {liveHotels.filter((hotel) => !selectedHotelId || hotel.id === selectedHotelId).map((hotel) => {
-                  const hotelSearch = `https://www.google.com/travel/hotels?q=${encodeURIComponent(`${hotel.name}, ${destination.name}`)}`;
+                  const hotelSearch = `https://www.google.com/travel/hotels?q=${encodeURIComponent(`${hotel.name}, ${hotelSearchArea}`)}`;
                   return (
                     <article className={`live-hotel-card ${selectedHotelId === hotel.id ? "is-selected" : ""}`} key={hotel.id}>
                       <div className="live-hotel-image">
