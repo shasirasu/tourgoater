@@ -158,7 +158,7 @@ export default function AuthForm({ mode, onAuth, theme, onThemeChange }) {
               <input id="auth-email" name="email" type="text" inputMode="email" value={form.email} onChange={handleChange} autoComplete="email" required placeholder=" " aria-invalid={Boolean(error)} />
               <label htmlFor="auth-email">Email or Gmail username</label>
             </div>
-            <p className="auth-email-hint">Example: <strong>adminsd</strong> becomes <strong>adminsd@gmail.com</strong>.</p>
+            <p className="auth-email-hint">Example: <strong>admin</strong> becomes <strong>admin@gmail.com</strong>.</p>
             <div className={`animated-field has-action ${form.password ? "has-value" : ""}`}>
               <input id="auth-password" name="password" type={showPassword ? "text" : "password"} value={form.password} onChange={handleChange} minLength="8" autoComplete={isSignup ? "new-password" : "current-password"} required placeholder=" " aria-invalid={Boolean(error)} />
               <label htmlFor="auth-password">Password</label>
@@ -179,7 +179,7 @@ export default function AuthForm({ mode, onAuth, theme, onThemeChange }) {
             {error && <div className="auth-login-error"><p className="animated-auth-error" role="alert">{error}</p>{!isSignup && error.includes("Please sign up first") && <Link className="auth-signup-prompt" to="/signup">Sign up now</Link>}</div>}
             <button className="animated-auth-submit" disabled={submitting} type="submit">
               {submitting && <span className="button-spinner" aria-hidden="true" />}
-              {submitting ? "Please wait..." : otpChallenge ? "Verify OTP" : isSignup ? "Create account" : "Sign in"}
+              {submitting ? "Please wait..." : otpChallenge ? "Verify OTP" : isSignup ? "Create account" : "Login In"}
             </button>
           </form>}
 
