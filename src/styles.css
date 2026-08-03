@@ -108,22 +108,28 @@ img { max-width: 100%; }
 .welcome-card p { margin: 0; }
 .welcome-card .button { width: fit-content; margin-top: 14px; }
 
-.moments-section { padding-top: 96px; background: var(--color-foreground); color: white; }
+.moments-section { padding-top: 0; background: var(--color-foreground); color: white; }
 .moments-intro { display: flex; align-items: end; justify-content: space-between; gap: 40px; padding-bottom: 36px; }
 .moments-intro .eyebrow { color: #fb923c; }
 .moments-intro h2 { max-width: 720px; margin: 0; font-size: clamp(2.1rem, 5vw, 4.4rem); line-height: 1.06; letter-spacing: -.045em; }
 .moments-intro > p { max-width: 380px; margin: 0 0 8px; color: #cbd5e1; font-size: 1.08rem; }
-.moments-player { position: relative; min-height: min(82vh, 900px); overflow: hidden; isolation: isolate; background: #020617; }
+.moments-player { position: relative; min-height: 100svh; overflow: hidden; isolation: isolate; background: #020617; }
 .moments-scenes, .moments-scene { position: absolute; inset: 0; }
 .moments-scene { opacity: 0; transition: opacity 1100ms ease; }
 .moments-scene.is-active { z-index: 1; opacity: 1; }
 .moments-media { width: 100%; height: 100%; display: block; object-fit: cover; transform: scale(1.06); }
 .moments-scene.is-active .moments-media { animation: moments-camera 7s cubic-bezier(.2, .65, .3, 1) both; }
+.moments-media-video { background: #020617; transform: none; }
+.moments-scene.is-active .moments-media-video { animation: none; }
 .moments-shade { position: absolute; z-index: 2; inset: 0; background: linear-gradient(90deg, rgba(2, 6, 23, .86) 0%, rgba(2, 6, 23, .34) 56%, rgba(2, 6, 23, .12) 100%), linear-gradient(0deg, rgba(2, 6, 23, .92) 0%, transparent 48%); }
 .moments-content { position: absolute; z-index: 3; top: 50%; right: 0; left: 0; transform: translateY(-54%); }
 .moments-eyebrow { margin: 0 0 12px; color: #67e8f9; font-size: .8rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
 .moments-content h3 { max-width: 760px; margin: 0 0 16px; font-size: clamp(2.7rem, 7vw, 6.8rem); line-height: .98; letter-spacing: -.055em; text-wrap: balance; }
 .moments-content > p { margin: 0 0 28px; color: #e2e8f0; font-size: clamp(1rem, 2vw, 1.25rem); }
+.moments-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.moments-primary-link, .moments-link { min-height: 48px; display: inline-flex; align-items: center; gap: 12px; padding: 11px 18px; border-radius: 999px; color: white; font-weight: 800; text-decoration: none; }
+.moments-primary-link { border: 1px solid #f97316; background: #f97316; box-shadow: 0 12px 30px rgba(234, 88, 12, .32); }
+.moments-primary-link:hover { border-color: #ea580c; background: #ea580c; }
 .moments-link { min-height: 48px; display: inline-flex; align-items: center; gap: 12px; padding: 11px 18px; border: 1px solid rgba(255, 255, 255, .58); border-radius: 999px; background: rgba(15, 23, 42, .28); color: white; font-weight: 800; text-decoration: none; backdrop-filter: blur(10px); }
 .moments-controls { position: absolute; z-index: 4; right: 0; bottom: 28px; left: 0; display: flex; align-items: end; gap: 24px; }
 .moments-play { width: 46px; height: 46px; flex: 0 0 auto; display: grid; place-items: center; border: 1px solid rgba(255, 255, 255, .55); border-radius: 50%; background: rgba(15, 23, 42, .44); color: white; cursor: pointer; }
@@ -138,7 +144,19 @@ img { max-width: 100%; }
 @keyframes moments-camera { from { transform: scale(1.06); } to { transform: scale(1.14) translate3d(-1.2%, -.8%, 0); } }
 @keyframes moments-progress { to { transform: scaleX(1); } }
 
-.mood-section { padding-block: 104px; background: white; }
+.mood-section { position: relative; padding-block: 104px; overflow: hidden; background: linear-gradient(135deg, #fffdf8 0%, #f7f3e9 52%, #edf2ef 100%); isolation: isolate; }
+.mood-section > .shell { position: relative; z-index: 1; }
+.mood-treasure-map { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.treasure-contours { fill: none; stroke: #64748b; stroke-width: 2; stroke-dasharray: 3 12; opacity: .16; }
+.treasure-route-shadow { fill: none; stroke: rgba(255, 255, 255, .82); stroke-width: 13; stroke-linecap: round; }
+.treasure-route { fill: none; stroke: #c2410c; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 10 16; opacity: .33; }
+.treasure-pin path { fill: #fff7ed; stroke: #ea580c; stroke-width: 4; }
+.treasure-pin circle { fill: #ea580c; }
+.treasure-pin text { fill: white; font-family: "Lexend", sans-serif; font-size: 15px; font-weight: 800; text-anchor: middle; }
+.treasure-compass { fill: none; stroke: #0f766e; stroke-width: 3; opacity: .22; }
+.treasure-compass path { fill: rgba(15, 118, 110, .16); }
+.treasure-compass text { fill: #0f766e; stroke: none; font-family: "Lexend", sans-serif; font-size: 20px; font-weight: 800; text-anchor: middle; }
+.treasure-finish { fill: rgba(255, 247, 237, .7); stroke: #ea580c; stroke-width: 7; stroke-linecap: round; opacity: .32; }
 .mood-heading { display: flex; align-items: end; justify-content: space-between; gap: 48px; }
 .mood-heading h2 { max-width: 760px; margin: 0; font-size: clamp(2.3rem, 4.8vw, 4.3rem); line-height: 1.08; letter-spacing: -.04em; }
 .mood-heading > p { max-width: 390px; margin: 0; color: var(--color-body); font-size: 1.05rem; line-height: 1.65; }
@@ -199,6 +217,8 @@ img { max-width: 100%; }
 .scroll-morph-hero { position: relative; width: 100%; height: min(820px, calc(100vh - 78px)); min-height: 680px; overflow: hidden; background: radial-gradient(circle at 50% 44%, #fff 0%, #f8fafc 46%, #eef2f7 100%); isolation: isolate; touch-action: pan-y; }
 .morph-card-stage { position: absolute; inset: 0; display: grid; place-items: center; perspective: 1000px; }
 .morph-card { position: absolute; width: 60px; height: 85px; cursor: pointer; perspective: 1000px; transform-style: preserve-3d; }
+.morph-card-link { width: 100%; height: 100%; display: block; border-radius: 9px; color: inherit; text-decoration: none; }
+.morph-card-link:focus-visible { outline: 3px solid #f97316; outline-offset: 5px; }
 .morph-card-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; }
 .morph-card-face { position: absolute; inset: 0; overflow: hidden; border: 1px solid rgba(255,255,255,.7); border-radius: 9px; box-shadow: 0 10px 28px rgba(15,23,42,.2); backface-visibility: hidden; }
 .morph-card-front { background: #cbd5e1; }
@@ -503,6 +523,11 @@ input[aria-invalid="true"] { border-color: var(--color-destructive); }
 
 body:has(.cinematic-hero) .site-header { position: absolute; z-index: 30; top: 0; left: 0; width: 100%; border-color: rgba(255, 255, 255, .16); background: linear-gradient(180deg, rgba(2, 6, 23, .62), transparent); backdrop-filter: none; }
 body:has(.cinematic-hero) .brand, body:has(.cinematic-hero) .nav-links > a:not(.button), body:has(.cinematic-hero) .nav-text-button { color: white; }
+body:has(.moments-section) .site-header { position: absolute; z-index: 30; top: 0; left: 0; width: 100%; border-color: rgba(255, 255, 255, .14); background: linear-gradient(180deg, rgba(2, 6, 23, .72) 0%, rgba(2, 6, 23, .3) 58%, transparent 100%); backdrop-filter: none; }
+body:has(.moments-section) .brand,
+body:has(.moments-section) .nav-links > a:not(.button),
+body:has(.moments-section) .nav-text-button,
+body:has(.moments-section) .nav-notification-button { color: white; }
 .cinematic-hero { position: relative; min-height: max(760px, 100svh); display: grid; overflow: hidden; background: #020617; color: white; isolation: isolate; }
 .cinematic-media, .cinematic-shade, .cinematic-grain { position: absolute; inset: 0; }
 .cinematic-media { z-index: -3; animation: cinema-fade 900ms ease-out both; }
@@ -824,6 +849,8 @@ body:has(.cinematic-hero) .brand, body:has(.cinematic-hero) .nav-links > a:not(.
 .departure-location-field > div > button:hover { background: #cffafe; }
 .departure-location-field > small { color: #0f766e; font-size: .72rem; font-weight: 700; line-height: 1.35; }
 .planner-budget-step .button { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; white-space: nowrap; }
+.planner-skip-flight { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 10px 16px; border: 1px solid #0f766e; border-radius: 10px; background: white; color: #0f766e; font: inherit; font-weight: 900; cursor: pointer; }
+.planner-skip-flight:hover { background: #f0fdfa; }
 .flight-timeline { margin: 0 0 26px; padding: clamp(20px, 3vw, 28px); border: 1px solid #bae6fd; border-radius: 20px; background: linear-gradient(135deg, #f0f9ff, #ecfeff); box-shadow: var(--shadow-sm); }
 .flight-route-heading { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 13px; }
 .flight-route-heading > span { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 12px; background: #0369a1; color: white; }
@@ -1089,9 +1116,9 @@ body:has(.cinematic-hero) .brand, body:has(.cinematic-hero) .nav-links > a:not(.
   .hero-actions > * { width: 100%; }
   .hero-proof { gap: 20px; }
   .hero-visual { min-height: 430px; border-radius: 24px 24px 70px 24px; }
-  .moments-section { padding-top: 68px; }
+  .moments-section { padding-top: 0; }
   .moments-intro { align-items: flex-start; flex-direction: column; gap: 14px; padding-bottom: 28px; }
-  .moments-player { min-height: 760px; }
+  .moments-player { min-height: 100svh; }
   .moments-shade { background: linear-gradient(0deg, rgba(2, 6, 23, .96) 0%, rgba(2, 6, 23, .42) 72%, rgba(2, 6, 23, .18) 100%); }
   .moments-content { top: auto; bottom: 190px; transform: none; }
   .moments-content h3 { font-size: clamp(2.7rem, 14vw, 4.5rem); }
@@ -1259,3 +1286,29 @@ body:has(.cinematic-hero) .brand, body:has(.cinematic-hero) .nav-links > a:not(.
 :root[data-theme="dark"] .admin-message-thread { border-color: #334155; }
 :root[data-theme="dark"] .planner-skip-action { border-color: #475569; background: #0f172a; color: #cbd5e1; }
 :root[data-theme="dark"] .optional-step-label { background: #334155; color: #e2e8f0; }
+
+/* Shared treasure-map paper for light page-level backgrounds. */
+:root:not([data-theme="dark"]) body,
+:root:not([data-theme="dark"]) .featured-section,
+:root:not([data-theme="dark"]) .closing-section,
+:root:not([data-theme="dark"]) .browse-page,
+:root:not([data-theme="dark"]) .browse-planning-area,
+:root:not([data-theme="dark"]) .browse-flow-results .flow-section-inner,
+:root:not([data-theme="dark"]) .destination-page,
+:root:not([data-theme="dark"]) .stays-section,
+:root:not([data-theme="dark"]) .places-section,
+:root:not([data-theme="dark"]) .auth-page,
+:root:not([data-theme="dark"]) .animated-auth.is-light,
+:root:not([data-theme="dark"]) .saved-page,
+:root:not([data-theme="dark"]) .admin-page,
+:root:not([data-theme="dark"]) .admin-content,
+:root:not([data-theme="dark"]) .not-found-page,
+:root:not([data-theme="dark"]) .trip-plan-section,
+:root:not([data-theme="dark"]) .overall-total-section,
+:root:not([data-theme="dark"]) .booking-page {
+  background-color: #f8f5ec;
+  background-image:
+    url("data:image/svg+xml,%3Csvg width='980' height='560' viewBox='0 0 980 560' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cpath d='M-60 455C90 390 142 195 295 238s166 176 326 87 158-211 313-127 101 165 154 128' stroke='%23c2410c' stroke-width='3' stroke-linecap='round' stroke-dasharray='8 15' opacity='.13'/%3E%3Cpath d='M-30 95C125 8 220 146 370 63s286-54 420 34 190 38 250-15M93 540c120-108 190-12 322-79s250-92 410-20' stroke='%2364748b' stroke-width='2' stroke-dasharray='3 12' opacity='.09'/%3E%3Cg transform='translate(295 238)'%3E%3Cpath d='M0-23c-16 0-28 12-28 27 0 21 28 48 28 48S28 25 28 4C28-11 16-23 0-23Z' fill='%23fff7ed' stroke='%23ea580c' stroke-width='3' opacity='.3'/%3E%3Ccircle cy='3' r='8' fill='%23ea580c' opacity='.25'/%3E%3C/g%3E%3Cg stroke='%230f766e' opacity='.12' transform='translate(812 92)'%3E%3Ccircle r='42' stroke-width='2'/%3E%3Ccircle r='31'/%3E%3Cpath d='M0-29 10-7 0 29-10 7Z' fill='%230f766e'/%3E%3C/g%3E%3Cg stroke='%23ea580c' stroke-width='5' stroke-linecap='round' opacity='.16' transform='translate(926 327)'%3E%3Cpath d='M-18-18 18 18M18-18-18 18'/%3E%3Ccircle r='30' stroke-width='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+    linear-gradient(135deg, #fffdf8 0%, #f7f3e9 52%, #edf2ef 100%);
+  background-size: 980px 560px, cover;
+}

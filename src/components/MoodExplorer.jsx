@@ -51,6 +51,34 @@ export default function MoodExplorer() {
 
   return (
     <section className="mood-section" aria-labelledby="mood-heading">
+      <svg className="mood-treasure-map" viewBox="0 0 1600 920" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <g className="treasure-contours">
+          <path d="M-80 180C170 15 350 250 590 112S1050 35 1260 170s315 70 430-20" />
+          <path d="M-110 770c245-180 390 45 625-80s410-165 625-40 375 120 560-35" />
+          <path d="M1180-70c-95 175 95 270 2 420s35 265 182 360" />
+        </g>
+        <path className="treasure-route-shadow" d="M-30 690C190 610 175 390 390 420s238 220 468 105 235-315 455-218 182 250 320 180" />
+        <path className="treasure-route" d="M-30 690C190 610 175 390 390 420s238 220 468 105 235-315 455-218 182 250 320 180" />
+        <g className="treasure-pin" transform="translate(390 420)">
+          <path d="M0-35c-24 0-42 18-42 41 0 31 42 72 42 72S42 37 42 6C42-17 24-35 0-35Z" />
+          <circle cy="5" r="13" />
+          <text y="10">1</text>
+        </g>
+        <g className="treasure-pin" transform="translate(858 525)">
+          <path d="M0-35c-24 0-42 18-42 41 0 31 42 72 42 72S42 37 42 6C42-17 24-35 0-35Z" />
+          <circle cy="5" r="13" />
+          <text y="10">2</text>
+        </g>
+        <g className="treasure-compass" transform="translate(1330 178)">
+          <circle r="72" /><circle r="54" />
+          <path d="M0-52 17-12 0 52-17 12Z" />
+          <text y="-86">N</text>
+        </g>
+        <g className="treasure-finish" transform="translate(1518 488)">
+          <path d="M-29-29 29 29M29-29-29 29" />
+          <circle r="48" />
+        </g>
+      </svg>
       <div className="shell">
         <div className="mood-heading">
           <div>

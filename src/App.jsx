@@ -7,7 +7,6 @@ import SiteHeader from "./components/SiteHeader.jsx";
 import SiteFooter from "./components/SiteFooter.jsx";
 import MoodExplorer from "./components/MoodExplorer.jsx";
 import RouteTransition from "./components/RouteTransition.jsx";
-import CinematicHero from "./components/CinematicHero.jsx";
 import BrowsePage from "./pages/BrowsePage.jsx";
 import DestinationPage from "./pages/DestinationPage.jsx";
 import SavedPlansPage from "./pages/SavedPlansPage.jsx";
@@ -23,7 +22,6 @@ function HomePage({ user, onLogout }) {
     <>
       <SiteHeader user={user} onLogout={onLogout} />
       <main id="main-content">
-        <CinematicHero destinations={travelData.state} />
         {/* <section className="hero shell">
           <div className="hero-copy">
             <p className="eyebrow">Plan smart · travel happy</p>

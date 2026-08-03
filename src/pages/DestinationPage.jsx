@@ -46,6 +46,7 @@ export default function DestinationPage({ user, onLogout }) {
   const [locationStatus, setLocationStatus] = useState("");
   const [flightOffers, setFlightOffers] = useState([]);
   const [selectedFlightId, setSelectedFlightId] = useState("");
+  const [flightSkipped, setFlightSkipped] = useState(false);
   const [flightLoading, setFlightLoading] = useState(false);
   const [flightError, setFlightError] = useState("");
   const [liveHotels, setLiveHotels] = useState([]);
@@ -281,10 +282,6 @@ export default function DestinationPage({ user, onLogout }) {
     const tripCheckOutValue = tripCheckOut.toISOString().slice(0, 10);
     setHotelCheckIn(departureDate);
     setHotelCheckOut(tripCheckOutValue);
-    await Promise.all([
-      searchLiveFlights(),
-      searchLiveHotels(departureDate, tripCheckOutValue, String(normalizedTravelers)),
-    ]);
     setBudgetPlanComplete(true);
     requestAnimationFrame(() => {
       window.scrollTo({ top: budgetScrollPosition, left: 0, behavior: "instant" });
@@ -293,15 +290,30 @@ export default function DestinationPage({ user, onLogout }) {
   }
 
   function continueToFlights() {
+    setFlightSkipped(false);
     setPlannerStep(3);
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     flightsSectionRef.current?.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+    if (!flightOffers.length && !flightLoading) searchLiveFlights();
+  }
+
+  function continueWithoutFlight() {
+    setSelectedFlightId("");
+    setFlightSkipped(true);
+    setPlannerStep(4);
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    hotelsSectionRef.current?.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+    if (!liveHotels.length && !hotelsLoading) searchLiveHotels();
   }
 
   function toggleFlightSelection(flightId) {
     const isRemoving = selectedFlightId === flightId;
+    setFlightSkipped(false);
     setSelectedFlightId(isRemoving ? "" : flightId);
-    if (!isRemoving) setTimeout(() => hotelsSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 150);
+    if (!isRemoving) {
+      if (!liveHotels.length && !hotelsLoading) searchLiveHotels();
+      setTimeout(() => hotelsSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 150);
+    }
   }
 
   function toggleHotelSelection(hotelId) {
@@ -491,8 +503,8 @@ export default function DestinationPage({ user, onLogout }) {
                 <ol className="plan-steps" aria-label="Trip planning steps">
                   <li className={plannerStep === 1 ? "is-active" : "is-complete"}><span>{plannerStep > 1 ? <Check size={15} /> : "1"}</span> Select places</li>
                   <li className={plannerStep === 2 ? "is-active" : plannerStep > 2 ? "is-complete" : ""}><span>{plannerStep > 2 ? <Check size={15} /> : "2"}</span> Budget</li>
-                  <li className={plannerStep === 3 && !selectedFlight ? "is-active" : selectedFlight ? "is-complete" : ""}><span>{selectedFlight ? <Check size={15} /> : "3"}</span> Live flights</li>
-                  <li className={selectedFlight && !selectedHotel ? "is-active" : selectedHotel ? "is-complete" : ""}><span>{selectedHotel ? <Check size={15} /> : "4"}</span> Hotels</li>
+                  <li className={plannerStep === 3 && !selectedFlight && !flightSkipped ? "is-active" : selectedFlight || flightSkipped ? "is-complete" : ""}><span>{selectedFlight || flightSkipped ? <Check size={15} /> : "3"}</span> Live flights</li>
+                  <li className={plannerStep === 4 && !selectedHotel ? "is-active" : selectedHotel ? "is-complete" : ""}><span>{selectedHotel ? <Check size={15} /> : "4"}</span> Hotels</li>
                 </ol>
               </header>
 
@@ -541,6 +553,7 @@ export default function DestinationPage({ user, onLogout }) {
                   <label><span>Flight departure time</span><div><Clock3 size={17} /><input type="time" value={departureTime} onChange={(event) => setDepartureTime(event.target.value)} required /></div></label>
                   <button className="button" type="submit" disabled={flightLoading || hotelsLoading}><WalletCards size={17} /> {flightLoading || hotelsLoading ? "Calculating your plan..." : "Make my budget plan"}</button>
                   {budgetPlanComplete && <button className="button planner-continue-flights" type="button" onClick={continueToFlights}><Plane size={17} /> Continue to live flights <ChevronRight size={17} /></button>}
+                  {budgetPlanComplete && <button className="planner-skip-flight" type="button" onClick={continueWithoutFlight}><BedDouble size={17} /> Skip flight and view hotels <ChevronRight size={17} /></button>}
                 </form>
               )}
             </div>
@@ -605,7 +618,7 @@ export default function DestinationPage({ user, onLogout }) {
                     <p className="flight-search-hint">Complete Step 2 to search flights for your selected date.</p>
                   )}
                 </section>
-                {!selectedFlight && <button className="planner-skip-action" type="button" onClick={() => hotelsSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}>Continue without a flight →</button>}
+                {!selectedFlight && <button className="planner-skip-action" type="button" onClick={continueWithoutFlight}>Continue without a flight →</button>}
               </>
             ) : (
               <div className="budget-empty">

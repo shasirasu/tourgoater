@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import SafeImage from "./SafeImage.jsx";
 
 const CARD_COUNT = 20;
@@ -7,10 +8,12 @@ const CARD_COUNT = 20;
 function FlipCard({ destination, index, target }) {
   return (
     <motion.div className="morph-card" animate={{ x: target.x, y: target.y, rotate: target.rotation, scale: target.scale, opacity: target.opacity }} transition={{ type: "spring", stiffness: 42, damping: 16 }}>
-      <motion.div className="morph-card-inner" whileHover={{ rotateY: 180 }} transition={{ duration: .55, type: "spring", stiffness: 240, damping: 20 }}>
-        <div className="morph-card-face morph-card-front"><SafeImage sources={destination.img} alt={destination.name} fallbackLabel={destination.name} width="180" height="250" /></div>
-        <div className="morph-card-face morph-card-back"><span>Explore</span><strong>{destination.name}</strong></div>
-      </motion.div>
+      <Link className="morph-card-link" to={`/destination/${destination.id}`} aria-label={`Explore ${destination.name}`}>
+        <motion.div className="morph-card-inner" whileHover={{ rotateY: 180 }} whileFocus={{ rotateY: 180 }} transition={{ duration: .55, type: "spring", stiffness: 240, damping: 20 }}>
+          <div className="morph-card-face morph-card-front"><SafeImage sources={destination.img} alt={destination.name} fallbackLabel={destination.name} width="180" height="250" /></div>
+          <div className="morph-card-face morph-card-back"><span>Explore</span><strong>{destination.name}</strong></div>
+        </motion.div>
+      </Link>
     </motion.div>
   );
 }
@@ -48,8 +51,8 @@ export default function ScrollMorphHero({ destinations }) {
 
   return (
     <section ref={containerRef} className="scroll-morph-hero" onMouseMove={(event) => { const rect = event.currentTarget.getBoundingClientRect(); setParallax((((event.clientX - rect.left) / rect.width) * 2 - 1) * 70); }} onMouseLeave={() => setParallax(0)}>
-      <div className={`morph-intro-copy ${phase === "circle" ? "is-visible" : ""}`}><p>India is waiting.</p><h1>Choose a moment.<br />Build the journey.</h1><span>Hover a card, then scroll normally to plan</span></div>
-      <div className="morph-card-stage" aria-hidden="true">
+      <div className={`morph-intro-copy ${phase === "circle" ? "is-visible" : ""}`}><p>India is waiting.</p><h1>Choose a moment.<br />Build the journey.</h1><span>Select a card to open its destination</span></div>
+      <div className="morph-card-stage" aria-label="Destination cards">
         {items.map((destination, index) => {
           let target = scatter[index];
           if (phase === "line") {
