@@ -316,7 +316,6 @@ export default function DestinationPage({ user, onLogout, theme, onThemeChange }
     setPlannerStep(4);
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     hotelsSectionRef.current?.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
-    if (!liveHotels.length && !hotelsLoading) searchLiveHotels();
   }
 
   function toggleFlightSelection(flightId) {
@@ -324,7 +323,6 @@ export default function DestinationPage({ user, onLogout, theme, onThemeChange }
     setFlightSkipped(false);
     setSelectedFlightId(isRemoving ? "" : flightId);
     if (!isRemoving) {
-      if (!liveHotels.length && !hotelsLoading) searchLiveHotels();
       setTimeout(() => hotelsSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 150);
     }
   }
