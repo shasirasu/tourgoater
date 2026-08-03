@@ -46,11 +46,11 @@ export default function CinematicMoments() {
                 className="moments-media moments-media-video"
                 ref={(element) => { videoRefs.current[index] = element; }}
                 muted
+                loop
                 playsInline
                 preload={index === 0 ? "auto" : "metadata"}
                 poster={scene.destination.img?.[1] || scene.destination.img?.[0]}
                 aria-label={`Cinematic view of ${scene.destination.name}`}
-                onEnded={() => isPlaying && setActiveIndex((current) => (current + 1) % scenes.length)}
               >
                 <source src={scene.video} type="video/mp4" />
               </video>
