@@ -29,13 +29,7 @@ export default function DestinationPage({ user, onLogout }) {
   const [saveError, setSaveError] = useState(null);
   const [plannerStep, setPlannerStep] = useState(1);
   const [budgetPlanComplete, setBudgetPlanComplete] = useState(false);
-  const [selectedPlaceNames, setSelectedPlaceNames] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem(`tripPlaces:${id}`) || "[]");
-    } catch {
-      return [];
-    }
-  });
+  const [selectedPlaceNames, setSelectedPlaceNames] = useState([]);
   const [plannerBudget, setPlannerBudget] = useState(() => localStorage.getItem("tripBudgetPerPerson") || localStorage.getItem("tripBudget") || "");
   const [plannerDays, setPlannerDays] = useState(() => localStorage.getItem("tripDays") || "3");
   const [placeSelectionMessage, setPlaceSelectionMessage] = useState("");
@@ -65,6 +59,25 @@ export default function DestinationPage({ user, onLogout }) {
   const planBuilderRef = useRef(null);
   const planningDayCount = Math.min(30, Math.max(1, Number(plannerDays) || 1));
   const placeSelectionLimit = Math.min(30, planningDayCount * 3);
+
+  useEffect(() => {
+    if (editingTripId) return;
+
+    setSelectedPlaceNames([]);
+    setPlannerStep(1);
+    setBudgetPlanComplete(false);
+    setPlaceSelectionMessage("");
+    setRouteAnalysis(null);
+    setFlightOffers([]);
+    setSelectedFlightId("");
+    setFlightSkipped(false);
+    setFlightError("");
+    setLiveHotels([]);
+    setSelectedHotelId("");
+    setHotelsError("");
+    setTripSaveStatus("");
+    localStorage.removeItem(`tripPlaces:${id}`);
+  }, [editingTripId, id]);
 
   useEffect(() => {
     if (!user || !destination || !editingTripId) return;
