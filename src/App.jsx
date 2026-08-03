@@ -15,12 +15,12 @@ import AdminPage from "./pages/AdminPage.jsx";
 import OverallBookingPage from "./pages/OverallBookingPage.jsx";
 import { clearAuthToken, getAuthToken, saveAuthToken } from "./data/authStorage.js";
 
-function HomePage({ user, onLogout }) {
+function HomePage({ user, onLogout, theme, onThemeChange }) {
   const featuredDestinations = travelData.state.slice(1, 4);
 
   return (
     <>
-      <SiteHeader user={user} onLogout={onLogout} />
+      <SiteHeader user={user} onLogout={onLogout} theme={theme} onThemeChange={onThemeChange} />
       <main id="main-content">
         {/* <section className="hero shell">
           <div className="hero-copy">
@@ -173,12 +173,12 @@ export default function App() {
     <>
       <RouteTransition />
       <Routes>
-        <Route path="/" element={<HomePage user={user} onLogout={handleLogout} />} />
-        <Route path="/browse" element={user ? <BrowsePage user={user} onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
-        <Route path="/destination/:id" element={user ? <DestinationPage user={user} onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
-        <Route path="/booking" element={user ? <OverallBookingPage user={user} onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
-        <Route path="/saved" element={user ? <SavedPlansPage user={user} onLogout={handleLogout} /> : <Navigate to="/login" />} />
-        <Route path="/admin" element={user?.role === "admin" ? <AdminPage user={user} onLogout={handleLogout} /> : <Navigate to="/" />} />
+        <Route path="/" element={<HomePage user={user} onLogout={handleLogout} theme={theme} onThemeChange={setTheme} />} />
+        <Route path="/browse" element={user ? <BrowsePage user={user} onLogout={handleLogout} theme={theme} onThemeChange={setTheme} /> : <Navigate to="/login" replace />} />
+        <Route path="/destination/:id" element={user ? <DestinationPage user={user} onLogout={handleLogout} theme={theme} onThemeChange={setTheme} /> : <Navigate to="/login" replace />} />
+        <Route path="/booking" element={user ? <OverallBookingPage user={user} onLogout={handleLogout} theme={theme} onThemeChange={setTheme} /> : <Navigate to="/login" replace />} />
+        <Route path="/saved" element={user ? <SavedPlansPage user={user} onLogout={handleLogout} theme={theme} onThemeChange={setTheme} /> : <Navigate to="/login" />} />
+        <Route path="/admin" element={user?.role === "admin" ? <AdminPage user={user} onLogout={handleLogout} theme={theme} onThemeChange={setTheme} /> : <Navigate to="/" />} />
         <Route
           path="/signup"
           element={user ? <Navigate to="/" /> : <AuthForm mode="signup" onAuth={handleAuth} theme={theme} onThemeChange={setTheme} />}

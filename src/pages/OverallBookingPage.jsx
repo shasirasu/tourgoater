@@ -9,7 +9,7 @@ import BookingSuccessAnimation from "../components/BookingSuccessAnimation.jsx";
 
 const money = new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 });
 
-export default function OverallBookingPage({ user, onLogout }) {
+export default function OverallBookingPage({ user, onLogout, theme, onThemeChange }) {
   const location = useLocation();
   const booking = useMemo(() => {
     if (location.state?.booking) return location.state.booking;
@@ -24,7 +24,7 @@ export default function OverallBookingPage({ user, onLogout }) {
 
   if (!booking) return (
     <>
-      <SiteHeader user={user} onLogout={onLogout} />
+      <SiteHeader user={user} onLogout={onLogout} theme={theme} onThemeChange={onThemeChange} />
       <main className="booking-page shell" id="main-content">
         <div className="booking-empty"><h1>No booking selected.</h1><p>Choose a flight and hotel from a destination plan first.</p><Link className="button" to="/browse">Explore destinations</Link></div>
       </main>
@@ -60,7 +60,7 @@ export default function OverallBookingPage({ user, onLogout }) {
 
   return (
     <>
-      <SiteHeader user={user} onLogout={onLogout} />
+      <SiteHeader user={user} onLogout={onLogout} theme={theme} onThemeChange={onThemeChange} />
       <main className="booking-page" id="main-content">
         {successOpen && <BookingSuccessAnimation destinationName={booking.destinationName} inquiryId={inquiryId} travelerName={bookingDetails?.travelerName} onClose={() => setSuccessOpen(false)} />}
         <section className="booking-hero shell">

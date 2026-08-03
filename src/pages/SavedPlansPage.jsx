@@ -6,7 +6,7 @@ import SiteFooter from "../components/SiteFooter.jsx";
 import SiteHeader from "../components/SiteHeader.jsx";
 import { getAuthToken } from "../data/authStorage.js";
 
-export default function SavedPlansPage({ user, onLogout }) {
+export default function SavedPlansPage({ user, onLogout, theme, onThemeChange }) {
   const [plans, setPlans] = useState([]);
   const [trips, setTrips] = useState([]);
   const [bookingInquiries, setBookingInquiries] = useState([]);
@@ -120,7 +120,7 @@ export default function SavedPlansPage({ user, onLogout }) {
 
   return (
     <>
-      <SiteHeader user={user} onLogout={onLogout} />
+      <SiteHeader user={user} onLogout={onLogout} theme={theme} onThemeChange={onThemeChange} />
       <main className="saved-page" id="main-content">
         <div className="shell">
           <header className="saved-header">

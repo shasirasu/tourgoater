@@ -8,7 +8,7 @@ import SiteFooter from "../components/SiteFooter.jsx";
 import { buildTripEstimate } from "../data/tripPlanning.js";
 import { getAuthToken } from "../data/authStorage.js";
 
-export default function BrowsePage({ user, onLogout }) {
+export default function BrowsePage({ user, onLogout, theme, onThemeChange }) {
   const [budget, setBudget] = useState(() => localStorage.getItem("tripBudgetPerPerson") ?? localStorage.getItem("tripBudget") ?? "");
   const [days, setDays] = useState(() => localStorage.getItem("tripDays") ?? "3");
   const [travelers, setTravelers] = useState(() => localStorage.getItem("tripTravelers") ?? "1");
@@ -83,7 +83,7 @@ export default function BrowsePage({ user, onLogout }) {
 
   return (
     <>
-      <SiteHeader user={user} onLogout={onLogout} />
+      <SiteHeader user={user} onLogout={onLogout} theme={theme} onThemeChange={onThemeChange} />
       <main className="browse-page" id="main-content">
         <ScrollMorphHero destinations={travelData.state} />
         <div className="browse-planning-area">

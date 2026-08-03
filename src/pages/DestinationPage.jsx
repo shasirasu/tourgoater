@@ -17,7 +17,7 @@ const currencyFormatter = new Intl.NumberFormat("en-IN", {
   maximumFractionDigits: 0,
 });
 
-export default function DestinationPage({ user, onLogout }) {
+export default function DestinationPage({ user, onLogout, theme, onThemeChange }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -367,7 +367,7 @@ export default function DestinationPage({ user, onLogout }) {
   if (!destination) {
     return (
       <>
-        <SiteHeader user={user} onLogout={onLogout} />
+        <SiteHeader user={user} onLogout={onLogout} theme={theme} onThemeChange={onThemeChange} />
         <main className="not-found-page shell" id="main-content">
           <p className="eyebrow">Destination not found</p>
           <h1>We could not find that place.</h1>
@@ -475,7 +475,7 @@ export default function DestinationPage({ user, onLogout }) {
 
   return (
     <>
-      <SiteHeader user={user} onLogout={onLogout} />
+      <SiteHeader user={user} onLogout={onLogout} theme={theme} onThemeChange={onThemeChange} />
       <main className="destination-page" id="main-content">
         <section className="destination-hero shell">
           <div className="destination-hero-copy">

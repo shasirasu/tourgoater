@@ -6,7 +6,7 @@ import { getAuthToken } from "../data/authStorage.js";
 
 const emptyDestination = { id: "", name: "", capital: "", bestFor: "", about: "", dailyExpenses: 1800 };
 
-export default function AdminPage({ user, onLogout }) {
+export default function AdminPage({ user, onLogout, theme, onThemeChange }) {
   const [tab, setTab] = useState("overview");
   const [stats, setStats] = useState({});
   const [users, setUsers] = useState([]);
@@ -70,7 +70,7 @@ export default function AdminPage({ user, onLogout }) {
 
   const statCards = [["users", "Users", Users], ["destinations", "Destinations", MapPinned], ["places", "Places", LayoutDashboard], ["hotels", "Hotels", Building2], ["savedPlans", "Saved plans", ShieldCheck], ["inquiries", "Inquiries", MessageSquareText]];
   return <>
-    <SiteHeader user={user} onLogout={onLogout} />
+    <SiteHeader user={user} onLogout={onLogout} theme={theme} onThemeChange={onThemeChange} />
     <main className="admin-page" id="main-content">
       <aside className="admin-sidebar">
         <div><p>Tourgoater</p><h1>Admin control</h1></div>

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { Bell } from "lucide-react";
+import { Bell, Moon, Sun } from "lucide-react";
 import { Link } from "react-router-dom";
 import Brand from "./Brand.jsx";
 import { getAuthToken } from "../data/authStorage.js";
 
-export default function SiteHeader({ user, onLogout }) {
+export default function SiteHeader({ user, onLogout, theme = "light", onThemeChange }) {
   const [notifications, setNotifications] = useState([]);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
 
@@ -49,6 +49,9 @@ export default function SiteHeader({ user, onLogout }) {
                 <Link className="button button-small" to="/signup">Sign up</Link>
               </>
             )}
+            <button className="nav-theme-toggle" type="button" onClick={() => onThemeChange?.(theme === "dark" ? "light" : "dark")} aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`} title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`} aria-pressed={theme === "dark"}>
+              {theme === "dark" ? <Sun size={19} /> : <Moon size={19} />}
+            </button>
           </nav>
         </div>
       </header>
