@@ -1174,6 +1174,19 @@ body:has(.moments-section) .nav-theme-toggle { color: white; }
   .moments-section { padding-top: 0; }
   .moments-intro { align-items: flex-start; flex-direction: column; gap: 14px; padding-bottom: 28px; }
   .moments-player { min-height: 100svh; }
+  .moments-media-video {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+    object-position: center;
+    background: #020617;
+  }
   .moments-shade { background: linear-gradient(0deg, rgba(2, 6, 23, .96) 0%, rgba(2, 6, 23, .42) 72%, rgba(2, 6, 23, .18) 100%); }
   .moments-content { top: auto; bottom: 190px; transform: none; }
   .moments-content h3 { font-size: clamp(2.7rem, 14vw, 4.5rem); }
@@ -1255,6 +1268,10 @@ body:has(.moments-section) .nav-theme-toggle { color: white; }
 @media (pointer: coarse), (prefers-reduced-motion: reduce) {
   .ink-reveal-canvas { display: none; }
   .mood-hint { display: none; }
+}
+
+@media (max-width: 900px) and (orientation: landscape) {
+  .moments-media-video { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; object-fit: contain; object-position: center; }
 }
 
 /* Global theme selected from the authentication screen. */
