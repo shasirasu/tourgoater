@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { CalendarDays, IndianRupee, Search, Sparkles, Users, WalletCards } from "lucide-react";
 import travelData from "../data/travelData.js";
 import DestinationCard from "../components/DestinationCard.jsx";
@@ -9,10 +9,10 @@ import { buildTripEstimate } from "../data/tripPlanning.js";
 import { getAuthToken } from "../data/authStorage.js";
 
 export default function BrowsePage({ user, onLogout, theme, onThemeChange }) {
-  const [budget, setBudget] = useState(() => localStorage.getItem("tripBudgetPerPerson") ?? localStorage.getItem("tripBudget") ?? "");
+  const [budget, setBudget] = useState("00000");
   const [days, setDays] = useState(() => localStorage.getItem("tripDays") ?? "3");
   const [travelers, setTravelers] = useState(() => localStorage.getItem("tripTravelers") ?? "1");
-  const [savedBudget, setSavedBudget] = useState(() => localStorage.getItem("tripBudget") ?? "");
+  const [savedBudget, setSavedBudget] = useState("");
   const [savedDays, setSavedDays] = useState(() => localStorage.getItem("tripDays") ?? "3");
   const [savedTravelers, setSavedTravelers] = useState(() => localStorage.getItem("tripTravelers") ?? "1");
   const [searchQuery, setSearchQuery] = useState("");
@@ -21,22 +21,6 @@ export default function BrowsePage({ user, onLogout, theme, onThemeChange }) {
     const tripDays = Number(savedDays);
     return total > 0 && tripDays > 0 ? Math.round(total / tripDays) : 0;
   }, [savedBudget, savedDays]);
-
-  useEffect(() => {
-    if (!user) return;
-    const token = getAuthToken();
-    fetch("/api/preferences", { headers: { Authorization: `Bearer ${token}` } })
-      .then((response) => response.ok ? response.json() : Promise.reject())
-      .then(({ preferences }) => {
-        if (!preferences.trip_budget) return;
-        const serverBudget = String(preferences.trip_budget);
-        const serverDays = String(preferences.trip_days);
-        const travelerCount = Math.max(1, Number(localStorage.getItem("tripTravelers")) || 1);
-        setBudget(String(Math.round(Number(serverBudget) / travelerCount))); setDays(serverDays); setSavedBudget(serverBudget); setSavedDays(serverDays);
-        localStorage.setItem("tripBudget", serverBudget); localStorage.setItem("tripDays", serverDays);
-      })
-      .catch(() => {});
-  }, [user]);
 
   const matchingDestinations = useMemo(() => {
     if (!Number(savedBudget)) return travelData.state;
@@ -91,7 +75,7 @@ export default function BrowsePage({ user, onLogout, theme, onThemeChange }) {
             <section className="budget-planner" aria-labelledby="budget-title">
               <div className="budget-copy"><p className="eyebrow"><WalletCards size={15} /> Plan within your limits</p><h2 id="budget-title">What is your trip budget?</h2><p>Enter a per-person budget, trip length, and group size. We will calculate the complete group budget.</p></div>
               <form className="budget-form" onSubmit={handleBudgetSubmit}>
-                <label><span>Budget per person</span><span className="budget-input-wrap"><IndianRupee size={17} /><input type="number" min="1000" step="500" value={budget} onChange={(event) => setBudget(event.target.value)} placeholder="25,000" required /></span></label>
+                <label><span>Budget per person</span><span className="budget-input-wrap"><IndianRupee size={17} /><input type="number" min="1000" step="500" value={budget} onFocus={(event) => event.currentTarget.select()} onChange={(event) => setBudget(event.target.value)} placeholder="00000" required /></span></label>
                 <label><span>Trip length</span><span className="budget-input-wrap"><CalendarDays size={17} /><input type="number" min="1" max="30" value={days} onChange={(event) => setDays(event.target.value)} required /><b>days</b></span></label>
                 <label><span>Travellers</span><span className="budget-input-wrap"><Users size={17} /><input type="number" min="1" max="20" value={travelers} onChange={(event) => setTravelers(event.target.value)} required /><b>people</b></span></label>
                 <button className="button" type="submit"><Sparkles size={17} /> Match trips</button>
