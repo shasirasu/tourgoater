@@ -1,13 +1,25 @@
 import { useEffect, useState } from "react";
-import { Bell, Menu, Moon, Sun, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { createPortal } from "react-dom";
+import { ArrowLeft, Bell, Menu, Moon, Sun, X } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Brand from "./Brand.jsx";
 import { getAuthToken } from "../data/authStorage.js";
 
 export default function SiteHeader({ user, onLogout, theme = "light", onThemeChange }) {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [notifications, setNotifications] = useState([]);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [backButtonFloating, setBackButtonFloating] = useState(false);
+
+  useEffect(() => {
+    if (location.pathname === "/") { setBackButtonFloating(false); return undefined; }
+    const updateBackButton = () => setBackButtonFloating(window.scrollY > 110);
+    updateBackButton();
+    window.addEventListener("scroll", updateBackButton, { passive: true });
+    return () => window.removeEventListener("scroll", updateBackButton);
+  }, [location.pathname]);
 
   useEffect(() => {
     if (!user || user.role === "admin") { setNotifications([]); return undefined; }
@@ -29,12 +41,20 @@ export default function SiteHeader({ user, onLogout, theme = "light", onThemeCha
     setNotifications([]);
   }
 
+  function goBack() {
+    if (location.key && location.key !== "default") navigate(-1);
+    else navigate("/");
+  }
+
   return (
     <>
       <a className="skip-link" href="#main-content">Skip to main content</a>
       <header className="site-header">
         <div className="nav shell">
-          <Brand />
+          <div className="nav-brand-group">
+            {location.pathname !== "/" && !backButtonFloating && <button className="nav-back-button" type="button" onClick={goBack} aria-label="Go back" title="Go back"><ArrowLeft size={20} /></button>}
+            <Brand />
+          </div>
           <button className="mobile-menu-toggle" type="button" onClick={() => setMobileMenuOpen((open) => !open)} aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"} aria-expanded={mobileMenuOpen} aria-controls="main-navigation">
             {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
@@ -59,6 +79,10 @@ export default function SiteHeader({ user, onLogout, theme = "light", onThemeCha
           </nav>
         </div>
       </header>
+      {location.pathname !== "/" && backButtonFloating && createPortal(
+        <button className="nav-back-button is-floating" type="button" onClick={goBack} aria-label="Go back" title="Go back"><ArrowLeft size={20} /></button>,
+        document.body,
+      )}
     </>
   );
 }

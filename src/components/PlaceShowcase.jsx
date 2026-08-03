@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
+import { Utensils } from "lucide-react";
 import { Link } from "react-router-dom";
 import SafeImage from "./SafeImage.jsx";
+import { getLocalFood } from "../data/localFoods.js";
 
 function BookmarkIcon({ filled = false }) {
   return (
@@ -17,15 +19,19 @@ export default function PlaceShowcase({
   savingPlaceName,
   saveError,
   onSave,
+  destinationName,
 }) {
   const showcaseRef = useRef(null);
   const playbackTimerRef = useRef(null);
   const [activePlace, setActivePlace] = useState(places[0]?.name ?? "");
   const [playingPlace, setPlayingPlace] = useState("");
+  const [foodPlace, setFoodPlace] = useState("");
+  const localFood = getLocalFood(destinationName);
 
   function playMoment(placeName) {
     window.clearTimeout(playbackTimerRef.current);
     setPlayingPlace("");
+    setFoodPlace(placeName);
     window.requestAnimationFrame(() => {
       setPlayingPlace(placeName);
       playbackTimerRef.current = window.setTimeout(() => setPlayingPlace(""), 7000);
@@ -103,11 +109,20 @@ export default function PlaceShowcase({
               {remainingWords && <span>{remainingWords}</span>}
             </div>
 
+            {localFood && foodPlace === place.name && (
+              <aside className="must-try-food" aria-live="polite">
+                <span><Utensils size={17} /> Must try near {place.name}</span>
+                <strong>{localFood.name}</strong>
+                <p>{localFood.detail}</p>
+              </aside>
+            )}
+
             <div className="place-story-content">
               <p className="place-story-count">Stop {String(index + 1).padStart(2, "0")}</p>
               <h3>{place.name}</h3>
               <p>{place.info}</p>
               <div className="place-story-actions">
+                {localFood && <button className="place-food-button" type="button" aria-expanded={foodPlace === place.name} onClick={() => setFoodPlace((current) => current === place.name ? "" : place.name)}><Utensils size={18} /> {foodPlace === place.name ? "Hide local food" : "Must-try food"}</button>}
                 {place.location && (
                   <a className="place-map-button" href={place.location} target="_blank" rel="noreferrer">
                     View map <span aria-hidden="true">↗</span>

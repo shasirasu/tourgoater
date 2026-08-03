@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
-import { AlertTriangle, BedDouble, BookmarkCheck, Check, ChevronRight, Clock3, Crosshair, ExternalLink, MapPin, Plane, Search, ShoppingCart, Users, WalletCards } from "lucide-react";
+import { AlertTriangle, BedDouble, BookmarkCheck, Check, ChevronRight, Clock3, Crosshair, ExternalLink, MapPin, Plane, Search, ShoppingCart, Users, Utensils, WalletCards } from "lucide-react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import travelData from "../data/travelData.js";
 import PlaceShowcase from "../components/PlaceShowcase.jsx";
@@ -8,6 +8,7 @@ import SiteFooter from "../components/SiteFooter.jsx";
 import SiteHeader from "../components/SiteHeader.jsx";
 import { buildTripEstimate } from "../data/tripPlanning.js";
 import { getAuthToken } from "../data/authStorage.js";
+import { getLocalFood } from "../data/localFoods.js";
 
 const SelectedRouteMap = lazy(() => import("../components/SelectedRouteMap.jsx"));
 
@@ -23,6 +24,7 @@ export default function DestinationPage({ user, onLogout, theme, onThemeChange }
   const [searchParams] = useSearchParams();
   const editingTripId = searchParams.get("editTrip");
   const destination = travelData.state.find((state) => state.id === id);
+  const destinationFood = getLocalFood(destination?.name);
 
   const [savedPlaceNames, setSavedPlaceNames] = useState(new Set());
   const [savingPlaceName, setSavingPlaceName] = useState("");
@@ -488,6 +490,13 @@ export default function DestinationPage({ user, onLogout, theme, onThemeChange }
               <div><span>Places listed</span><strong>{touristPlaces.length}</strong></div>
               <div><span>Best for</span><strong>{destination.bestFor ?? "Exploring"}</strong></div>
             </div>
+            {destinationFood && (
+              <aside className="destination-food-slot">
+                <span><Utensils size={18} /> Must try in {destination.name}</span>
+                <div><strong>{destinationFood.name}</strong></div>
+                <p>{destinationFood.detail}</p>
+              </aside>
+            )}
           </div>
           <div className="destination-hero-image">
             <SafeImage
@@ -770,6 +779,7 @@ export default function DestinationPage({ user, onLogout, theme, onThemeChange }
                 savingPlaceName={savingPlaceName}
                 saveError={saveError}
                 onSave={handleSavePlace}
+                destinationName={destination.name}
               />
             ) : (
               <div className="empty-state">
