@@ -5,7 +5,7 @@ import SafeImage from "./SafeImage.jsx";
 
 const MotionLink = motion.create(Link);
 
-export default function DestinationCard({ destination, estimate, budget }) {
+export default function DestinationCard({ destination, estimate, budget, tripDays = 3, travelers = 1 }) {
   const placeCount = destination.tourist?.length ?? 0;
   const reduceMotion = useReducedMotion();
   const destinationImages = Array.isArray(destination.img) ? destination.img : [destination.img].filter(Boolean);
@@ -43,7 +43,10 @@ export default function DestinationCard({ destination, estimate, budget }) {
           <div className="trip-estimate">
             <span><Hotel size={14} /> {estimate.hotel.name}</span>
             <strong>₹{estimate.estimatedTripCost.toLocaleString("en-IN")}</strong>
-            <small>Hotel ₹{estimate.hotelCost.toLocaleString("en-IN")} for {estimate.nights} {estimate.nights === 1 ? "night" : "nights"} · ₹{(budget - estimate.estimatedTripCost).toLocaleString("en-IN")} left</small>
+            <small>{budget > 0
+              ? `Hotel ₹${estimate.hotelCost.toLocaleString("en-IN")} for ${estimate.nights} ${estimate.nights === 1 ? "night" : "nights"} · ₹${(budget - estimate.estimatedTripCost).toLocaleString("en-IN")} left`
+              : `Estimated total for ${tripDays} ${Number(tripDays) === 1 ? "day" : "days"} and ${travelers} ${Number(travelers) === 1 ? "traveller" : "travellers"}`}
+            </small>
           </div>
         )}
       </div>

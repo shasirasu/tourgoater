@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CalendarDays, IndianRupee, Search, Sparkles, Users, WalletCards } from "lucide-react";
 import travelData from "../data/travelData.js";
 import DestinationCard from "../components/DestinationCard.jsx";
@@ -9,13 +9,51 @@ import { buildTripEstimate } from "../data/tripPlanning.js";
 import { getAuthToken } from "../data/authStorage.js";
 
 export default function BrowsePage({ user, onLogout, theme, onThemeChange }) {
-  const [budget, setBudget] = useState("00000");
+  const [budget, setBudget] = useState(() => localStorage.getItem("tripBudgetPerPerson") ?? "00000");
   const [days, setDays] = useState(() => localStorage.getItem("tripDays") ?? "3");
   const [travelers, setTravelers] = useState(() => localStorage.getItem("tripTravelers") ?? "1");
-  const [savedBudget, setSavedBudget] = useState("");
+  const [savedBudget, setSavedBudget] = useState(() => localStorage.getItem("tripBudget") ?? "");
   const [savedDays, setSavedDays] = useState(() => localStorage.getItem("tripDays") ?? "3");
   const [savedTravelers, setSavedTravelers] = useState(() => localStorage.getItem("tripTravelers") ?? "1");
   const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    if (!user) return undefined;
+    const token = getAuthToken();
+    if (!token) return undefined;
+    const controller = new AbortController();
+
+    async function loadSavedPreferences() {
+      try {
+        const response = await fetch("/api/preferences", {
+          headers: { Authorization: `Bearer ${token}` },
+          signal: controller.signal,
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || !data.preferences) return;
+
+        const groupBudget = Math.max(0, Number(data.preferences.trip_budget) || 0);
+        const savedTripDays = String(Math.max(1, Number(data.preferences.trip_days) || 3));
+        const travelerCount = String(Math.min(20, Math.max(1, Number(localStorage.getItem("tripTravelers")) || 1)));
+        const perPersonBudget = groupBudget > 0 ? String(Math.round(groupBudget / Number(travelerCount))) : "00000";
+
+        setBudget(perPersonBudget);
+        setDays(savedTripDays);
+        setTravelers(travelerCount);
+        setSavedBudget(groupBudget > 0 ? String(groupBudget) : "");
+        setSavedDays(savedTripDays);
+        setSavedTravelers(travelerCount);
+        localStorage.setItem("tripBudgetPerPerson", perPersonBudget);
+        localStorage.setItem("tripBudget", groupBudget > 0 ? String(groupBudget) : "");
+        localStorage.setItem("tripDays", savedTripDays);
+      } catch (error) {
+        if (error.name !== "AbortError") console.warn("Could not load saved trip preferences", error);
+      }
+    }
+
+    loadSavedPreferences();
+    return () => controller.abort();
+  }, [user]);
   const dailyBudget = useMemo(() => {
     const total = Number(savedBudget);
     const tripDays = Number(savedDays);
@@ -23,14 +61,13 @@ export default function BrowsePage({ user, onLogout, theme, onThemeChange }) {
   }, [savedBudget, savedDays]);
 
   const matchingDestinations = useMemo(() => {
-    if (!Number(savedBudget)) return travelData.state;
     return travelData.state
       .map((destination) => {
-        const estimate = buildTripEstimate(destination, savedDays, Number(savedBudget), savedTravelers);
+        const estimate = buildTripEstimate(destination, savedDays, Number(savedBudget) || Infinity, savedTravelers);
         return estimate ? { ...destination, ...estimate } : null;
       })
       .filter(Boolean)
-      .sort((first, second) => second.estimatedTripCost - first.estimatedTripCost);
+      .sort((first, second) => Number(savedBudget) ? second.estimatedTripCost - first.estimatedTripCost : 0);
   }, [savedBudget, savedDays, savedTravelers]);
 
   const visibleDestinations = useMemo(() => {
@@ -90,7 +127,7 @@ export default function BrowsePage({ user, onLogout, theme, onThemeChange }) {
               </div>
               {savedBudget && <p className="results-note">Estimates include a comfortable stay, food, and local travel for {savedTravelers} {Number(savedTravelers) === 1 ? "traveller" : "travellers"} over {savedDays} days.</p>}
               {visibleDestinations.length > 0 ? (
-                <section className="destination-grid" aria-label={savedBudget ? "Trips within your budget" : "Destinations"}>{visibleDestinations.map((destination) => <DestinationCard key={destination.id} destination={destination} estimate={destination} budget={Number(savedBudget)} />)}</section>
+                <section className="destination-grid" aria-label={savedBudget ? "Trips within your budget" : "Destinations"}>{visibleDestinations.map((destination) => <DestinationCard key={destination.id} destination={destination} estimate={destination} budget={Number(savedBudget)} tripDays={savedDays} travelers={savedTravelers} />)}</section>
               ) : (
                 <div className="budget-empty" role="status"><Search size={30} /><h2>{searchQuery ? "No destinations match your search" : "No trips fit this budget yet"}</h2><p>{searchQuery ? "Try another state, capital, or clear the search." : "Increase your budget or shorten the trip length to see hotel-inclusive plans."}</p></div>
               )}

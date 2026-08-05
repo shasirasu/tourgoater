@@ -1,0 +1,408 @@
+### Tourgoater API request collection
+### Change baseUrl to https://tourgoater.vercel.app to test production.
+@baseUrl = http://localhost:3000
+@token =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJzaGFzaXJhc3VAZ21haWwuY29tIiwiaWF0IjoxNzg1OTI2NDMwLCJleHAiOjE3ODYwMTI4MzB9.mnCdMcBqyywvjzHw90k0kfk0Hm2rozZlzUHfH8bcee8
+
+@adminToken = PASTE_ADMIN_JWT_HERE
+@email = shasirasu@gmail.com
+@password = 8220092881
+@challengeId = 1
+@otp = 123456
+@savedPlaceId = 1
+@tripId = 1
+@bookingId = 1
+@userId = 1
+@destinationId = 4
+@placeId = 1
+@hotelId = 1
+
+### Health
+GET {{baseUrl}}/api/health
+Accept: application/json
+
+### Sign up
+POST {{baseUrl}}/api/auth/signup
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+### Log in
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+### Verify login/signup OTP
+POST {{baseUrl}}/api/auth/verify-otp
+Content-Type: application/json
+
+{
+  "challengeId": {{challengeId}},
+  "code": "{{otp}}"
+}
+
+### Request password-reset OTP
+POST {{baseUrl}}/api/auth/forgot-password
+Content-Type: application/json
+
+{
+  "email": "{{email}}"
+}
+
+### Reset password
+POST {{baseUrl}}/api/auth/reset-password
+Content-Type: application/json
+
+{
+  "challengeId": {{challengeId}},
+  "code": "{{otp}}",
+  "password": "NewPassword123"
+}
+
+### Current logged-in user
+GET {{baseUrl}}/api/auth/me
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Get preferences
+GET {{baseUrl}}/api/preferences
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Save preferences
+PUT {{baseUrl}}/api/preferences
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "tripBudget": 2000,
+  "tripDays": 3
+}
+
+### List all saved places
+GET {{baseUrl}}/api/plans
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### List saved places for a destination
+GET {{baseUrl}}/api/plans?destinationKey=4
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Save a place
+POST {{baseUrl}}/api/plans
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "destinationKey": "4",
+  "destinationName": "Kerala",
+  "placeName": "Munnar",
+  "placeLocation": "https://maps.google.com/?q=Munnar"
+}
+
+### Delete a saved place
+DELETE {{baseUrl}}/api/plans/{{savedPlaceId}}
+Authorization: Bearer {{token}}
+
+### List complete saved trips
+GET {{baseUrl}}/api/plans/trips
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Save a complete trip
+POST {{baseUrl}}/api/plans/trips
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "destinationKey": "4",
+  "destinationName": "Kerala",
+  "places": [
+    { "name": "Munnar", "location": "https://maps.google.com/?q=Munnar" }
+  ],
+  "flight": null,
+  "hotel": null,
+  "departureCity": "Chennai",
+  "departureDate": "2026-09-10",
+  "checkIn": "2026-09-10",
+  "checkOut": "2026-09-13",
+  "travelers": 2,
+  "budget": 30000,
+  "totalCost": 24500
+}
+
+### Update a complete trip
+PUT {{baseUrl}}/api/plans/trips/{{tripId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "destinationKey": "4",
+  "destinationName": "Kerala",
+  "places": [
+    { "name": "Munnar", "location": "https://maps.google.com/?q=Munnar" },
+    { "name": "Kochi", "location": "https://maps.google.com/?q=Kochi" }
+  ],
+  "flight": null,
+  "hotel": null,
+  "departureCity": "Chennai",
+  "departureDate": "2026-09-10",
+  "checkIn": "2026-09-10",
+  "checkOut": "2026-09-13",
+  "travelers": 2,
+  "budget": 30000,
+  "totalCost": 24500
+}
+
+### Delete a complete trip
+DELETE {{baseUrl}}/api/plans/trips/{{tripId}}
+Authorization: Bearer {{token}}
+
+### Search live flights (uses SerpApi quota)
+GET {{baseUrl}}/api/flights?origin=Chennai&destination=Kochi&date=2026-09-10
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Search live hotels (uses SerpApi quota)
+GET {{baseUrl}}/api/hotels?destination=Munnar&checkIn=2026-09-10&checkOut=2026-09-13&adults=2
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Resolve coordinates for places (public)
+POST {{baseUrl}}/api/route-map/coordinates
+Content-Type: application/json
+
+{
+  "places": [
+    { "name": "Munnar", "destination": "Kerala" },
+    { "name": "Kochi", "destination": "Kerala" }
+  ]
+}
+
+### Calculate road route (public)
+POST {{baseUrl}}/api/route-map
+Content-Type: application/json
+
+{
+  "coordinates": [
+    { "lat": 10.0889, "lng": 77.0595 },
+    { "lat": 9.9312, "lng": 76.2673 }
+  ]
+}
+
+### List my booking inquiries
+GET {{baseUrl}}/api/bookings
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### List my booking messages
+GET {{baseUrl}}/api/bookings/messages
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### List unread booking notifications
+GET {{baseUrl}}/api/bookings/notifications
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Mark booking notifications as read
+PATCH {{baseUrl}}/api/bookings/notifications/read
+Authorization: Bearer {{token}}
+
+### Send a follow-up booking message
+POST {{baseUrl}}/api/bookings/{{bookingId}}/messages
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "message": "Please confirm hotel availability."
+}
+
+### Create a booking inquiry
+POST {{baseUrl}}/api/bookings
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "booking": {
+    "destinationId": "4",
+    "destinationName": "Kerala",
+    "places": [{ "name": "Munnar" }],
+    "flight": null,
+    "hotel": null,
+    "overallTotal": 24500
+  },
+  "travelerName": "Test User",
+  "email": "{{email}}",
+  "phone": "9876543210",
+  "address": "12 Sample Street",
+  "city": "Chennai",
+  "postalCode": "600001",
+  "inquiry": "Please contact me about this trip."
+}
+
+### Admin overview
+GET {{baseUrl}}/api/admin/overview
+Authorization: Bearer {{adminToken}}
+Accept: application/json
+
+### Admin: list inquiries
+GET {{baseUrl}}/api/admin/inquiries
+Authorization: Bearer {{adminToken}}
+Accept: application/json
+
+### Admin: list inquiry messages
+GET {{baseUrl}}/api/admin/inquiry-messages
+Authorization: Bearer {{adminToken}}
+Accept: application/json
+
+### Admin: reply to an inquiry
+POST {{baseUrl}}/api/admin/inquiries/{{bookingId}}/messages
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "message": "Your booking request is being reviewed."
+}
+
+### Admin: update inquiry status
+PATCH {{baseUrl}}/api/admin/inquiries/{{bookingId}}
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "status": "contacted"
+}
+
+### Admin: list users
+GET {{baseUrl}}/api/admin/users
+Authorization: Bearer {{adminToken}}
+Accept: application/json
+
+### Admin: update user role
+PATCH {{baseUrl}}/api/admin/users/{{userId}}
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "role": "admin"
+}
+
+### Admin: delete a user (destructive; cannot delete yourself)
+DELETE {{baseUrl}}/api/admin/users/{{userId}}
+Authorization: Bearer {{adminToken}}
+
+### Admin: list destinations
+GET {{baseUrl}}/api/admin/destinations
+Authorization: Bearer {{adminToken}}
+Accept: application/json
+
+### Admin: get destination details
+GET {{baseUrl}}/api/admin/destinations/{{destinationId}}/details
+Authorization: Bearer {{adminToken}}
+Accept: application/json
+
+### Admin: create destination
+POST {{baseUrl}}/api/admin/destinations
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "id": "kerala-test",
+  "name": "Kerala Test",
+  "capital": "Thiruvananthapuram",
+  "bestFor": "Backwaters",
+  "about": "Test destination",
+  "dailyExpenses": 2200
+}
+
+### Admin: update destination
+PUT {{baseUrl}}/api/admin/destinations/{{destinationId}}
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "name": "Kerala Test Updated",
+  "capital": "Thiruvananthapuram",
+  "bestFor": "Backwaters and food",
+  "about": "Updated test destination",
+  "dailyExpenses": 2400
+}
+
+### Admin: delete destination (destructive)
+DELETE {{baseUrl}}/api/admin/destinations/{{destinationId}}
+Authorization: Bearer {{adminToken}}
+
+### Admin: import db.json catalog
+POST {{baseUrl}}/api/admin/import-catalog
+Authorization: Bearer {{adminToken}}
+
+### Admin: create place
+POST {{baseUrl}}/api/admin/places
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "destinationId": "4",
+  "name": "Test Viewpoint",
+  "city": "Munnar",
+  "info": "A test place for API checking.",
+  "mapUrl": "https://maps.google.com/?q=Munnar"
+}
+
+### Admin: update place
+PUT {{baseUrl}}/api/admin/places/{{placeId}}
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "name": "Updated Test Viewpoint",
+  "city": "Munnar",
+  "info": "Updated test place.",
+  "mapUrl": "https://maps.google.com/?q=Munnar"
+}
+
+### Admin: delete place (destructive)
+DELETE {{baseUrl}}/api/admin/places/{{placeId}}
+Authorization: Bearer {{adminToken}}
+
+### Admin: create catalog hotel
+POST {{baseUrl}}/api/admin/hotels
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "destinationId": "4",
+  "name": "API Test Hotel",
+  "type": "Hotel",
+  "area": "Munnar",
+  "pricePerNight": 2500,
+  "roomsAvailable": 5,
+  "rating": 4.2
+}
+
+### Admin: update catalog hotel
+PUT {{baseUrl}}/api/admin/hotels/{{hotelId}}
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "name": "Updated API Test Hotel",
+  "type": "Resort",
+  "area": "Munnar",
+  "pricePerNight": 2800,
+  "roomsAvailable": 4,
+  "rating": 4.4
+}
+
+### Admin: delete catalog hotel (destructive)
+DELETE {{baseUrl}}/api/admin/hotels/{{hotelId}}
+Authorization: Bearer {{adminToken}}
